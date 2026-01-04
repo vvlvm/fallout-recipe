@@ -1,0 +1,16 @@
+export const EFFECT_NAMES = [
+	'HP',
+	'AP',
+	'Weight',
+	'Value',
+	'MaxHP',
+	'MaxAP',
+	'Rads',
+	'RadResist',
+	'CarryWeight',
+	'Caffeine',
+	'STR',
+	'END',
+	'AGI',
+	'DMGResist',
+] as const

@@ -1,0 +1,58 @@
+header {
+  text-align: center;
+  margin-bottom: 40px;
+  border-bottom: 2px solid var(--color-primary);
+  padding-bottom: 20px;
+}
+
+.container {
+  width: 1200px;
+  margin: 0 auto;
+
+  h1 {
+    color: var(--color-primary);
+    margin: 0;
+  }
+
+  > .tablist {
+    display: flex;
+    align-items: end;
+    gap: 8px;
+    padding-left: 8px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--color-gray-500);
+
+    .tab {
+      margin-bottom: -1px;
+      padding: 8px 20px;
+      border-top: solid 1px var(--color-gray-500);
+      border-left: solid 1px var(--color-gray-500);
+      border-right: solid 1px var(--color-gray-600);
+      border-bottom: solid 0px red;
+      border-radius: 8px 8px 0 0;
+
+      &[aria-selected="true"] {
+        padding-top: 12px;
+        border-bottom: 2px solid var(--color-primary);
+      }
+    }
+  }
+
+  .tabpanel {
+    margin: 4px;
+  }
+}
+
+#tabpanel-unmakeableIngredients {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+
+  div {
+    background: hsl(from var(--color-card-bg) h s calc(l * 0.9));
+    padding: 3px 12px;
+    border-radius: 3px;
+    box-shadow: 1px 3px 3px rgba(0, 0, 0, 0.1);
+  }
+}
