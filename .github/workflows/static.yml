@@ -24,16 +24,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Set up Node
-        uses: actions/setup-node@v6
-        with:
-          node-version: lts/*
-          cache: "pnpm" # ← キャッシュを pnpm に変更
-
-      - name: Install pnpm
-        run: npm install -g pnpm
-
+      - name: Setup PNPM
       - uses: pnpm/action-setup@v2.2.2
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
