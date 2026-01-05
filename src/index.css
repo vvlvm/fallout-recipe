@@ -5,16 +5,25 @@
  * @themeのカラーが出力されないときはこのcss内でvar(--color-colorname)して
  * 使用をアピールする */
 @theme {
-  --color-primary: #e3d629; /* Fallout UI Yellowish */
+  --color-primary: #9d9312;
   --color-bg: #ffffff;
   --color-text: #213547;
-  --color-card-bg: #2a2a2a;
+  --color-card-bg: #fafafa;
   --color-highlight: #4caf50;
 }
 
 @theme dark {
+  --color-primary: #e3d629; /* Fallout UI Yellowish */
   --color-bg: #1a1a1a;
   --color-text: #f0f0f0;
+  --color-card-bg: #2a2a2a;
+}
+
+:root {
+  --color-primary: light-dark(#9d9312, #e3d629);
+  --color-bg: light-dark(#ffffff, #1a1a1a);
+  --color-text: light-dark(#213547, #f0f0f0);
+  --color-card-bg: light-dark(#fafafa, #2a2a2a);
 }
 
 body {

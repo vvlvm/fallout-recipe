@@ -1,7 +1,6 @@
 import type { RequiredItem } from "@/types/RecipieType"
 import clsx from "clsx"
-import { useQueriedIngredientNames } from "./QueriedIngredientNamesContext"
-import "./recipeGrid.css"
+import { useQueriedIngredientNames } from "../QueriedIngredientNamesContext"
 
 interface Props {
   requiredItems: RequiredItem[]
@@ -33,12 +32,7 @@ function RequiredItem(props: ItemProps) {
 
   return (
     <div key={item.requiredItemName} className="item">
-      <span
-        className={clsx(
-          "mr-4 font-bold text-nowrap",
-          isHighlighted && "text-highlight",
-        )}
-      >
+      <span className={clsx("item-name", isHighlighted && "highlight")}>
         {item.requiredItemName}
       </span>
       <span>x{amount}</span>

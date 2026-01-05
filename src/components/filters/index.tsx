@@ -9,7 +9,7 @@ import Autocomplete from "@mui/material/Autocomplete"
 import TextField from "@mui/material/TextField"
 import { memo, useMemo, useState } from "react"
 import { IngredientQueryAutoComplete } from "./IngredientQueryAutoComplete.tsx"
-import { RecipeGrid } from "./RecipeGrid.tsx"
+import { RecipeGrid } from "./recipe-grid/RecipeGrid.tsx"
 import { QueriedIngredientNamesProvider } from "./QueriedIngredientNamesContext.tsx"
 
 export const Filters = memo(function Filters() {
