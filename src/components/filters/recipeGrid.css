@@ -1,6 +1,10 @@
 .recipe-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  /* 最大幅を割り出す
+    Array.from(document.querySelectorAll('.recipe-card'))
+    .reduce((max, e) => Math.max(max, e.offsetWidth), 0)
+  */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-template-rows: auto auto auto;
   gap: 20px;
 
@@ -14,6 +18,7 @@
     padding: 20px 16px;
     gap: 16px;
     transition: transform 0.2s;
+    width: fit-content;
 
     &:hover {
       transform: translateY(-2px);
@@ -41,16 +46,9 @@
       .list-like-grid {
         display: grid;
         grid-template-columns: 1fr auto;
-        width: fit-content;
         margin-left: 2px;
         gap: 2px;
-
-        .dead {
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          left: 32px;
-        }
+        width: fit-content;
 
         .item {
           display: grid;
