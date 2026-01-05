@@ -1,13 +1,12 @@
 import Tab from '@mui/material/Tab'
 import Tabs from '@mui/material/Tabs'
 import { useState } from 'react'
-// import './App.scss'
 import { Filters } from './components/filters/index.tsx'
 import { INGREDIENT_NAMES } from './constants/INGREDIENT_NAMES.ts'
 import { RECIPE_MAP } from './constants/RECIPE_MAP.ts'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
 
 const RECIPE_NAMES = Object.keys(RECIPE_MAP)
 const UNMAKEABLE_INGREDIENTS = INGREDIENT_NAMES.filter(
@@ -19,19 +18,20 @@ export function App() {
 
 	return (
 		<Container>
-			<Button variant='contained' color='primary' sx={{ ml: 2 }}>
-				Primary
-			</Button>
-			<Button variant='contained' color='secondary' sx={{ ml: 2 }}>
-				Secondary
-			</Button>
 			<Box component='header'>
-				<Box component='h1' color='secondary' sx={{ fontSize: '2em' }}>
+				<Typography variant='h1' color='primary.main'>
 					Fallout Nuka-Mixer Station
-				</Box>
-				<p>ヌカ・コーラ レシピ検索 & 逆引きツール</p>
+				</Typography>
+				<Typography variant='body2'>
+					ヌカ・コーラ レシピ検索 & 逆引きツール
+				</Typography>
 			</Box>
-			<Tabs aria-label='ツールを選択' value={tab} onChange={handleTabClick}>
+			<Tabs
+				aria-label='ツールを選択'
+				value={tab}
+				onChange={handleTabClick}
+				sx={{ mb: 4 }}
+			>
 				<Tab
 					id='tab-search'
 					role='tab'
@@ -47,7 +47,7 @@ export function App() {
 					label='レシピで作れない材料リスト'
 				/>
 			</Tabs>
-			<div
+			<Box
 				id='tabpanel-search'
 				className='tabpanel'
 				role='tabpanel'
@@ -55,8 +55,8 @@ export function App() {
 				hidden={tab !== 0}
 			>
 				<Filters />
-			</div>
-			<div
+			</Box>
+			<Box
 				id='tabpanel-unmakeableIngredients'
 				className='tabpanel'
 				role='tabpanel'
@@ -64,10 +64,10 @@ export function App() {
 				hidden={tab !== 1}
 			>
 				{UNMAKEABLE_INGREDIENTS.map((itemName) => (
-					<div key={itemName}>{itemName}</div>
+					<Box key={itemName}>{itemName}</Box>
 				))}
-			</div>
-			<div className='h-screen'></div>
+			</Box>
+			<Box sx={{ height: '100vh' }} />
 		</Container>
 	)
 

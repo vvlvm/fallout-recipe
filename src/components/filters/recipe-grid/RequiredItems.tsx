@@ -1,41 +1,41 @@
-import type { RequiredItem } from "@/types/RecipieType"
-import clsx from "clsx"
-import { useQueriedIngredientNames } from "../QueriedIngredientNamesContext"
+import type { RequiredItem } from '@/types/RecipieType'
+import clsx from 'clsx'
+import { useQueriedIngredientNames } from '../QueriedIngredientNamesContext'
 
 interface Props {
-  requiredItems: RequiredItem[]
+	requiredItems: RequiredItem[]
 }
 
 export function RequiredItems(props: Props) {
-  const { requiredItems } = props
+	const { requiredItems } = props
 
-  return (
-    <div className="list-like-grid">
-      {requiredItems.map((item) => (
-        <RequiredItem item={item} key={item.requiredItemName} />
-      ))}
-    </div>
-  )
+	return (
+		<div className='list-like-grid'>
+			{requiredItems.map((item) => (
+				<RequiredItem item={item} key={item.requiredItemName} />
+			))}
+		</div>
+	)
 }
 
 interface ItemProps {
-  item: RequiredItem
+	item: RequiredItem
 }
 
 function RequiredItem(props: ItemProps) {
-  const { item } = props
-  const { requiredItemName, amount } = item
-  const queriedIngredientNames = useQueriedIngredientNames()
-  const isHighlighted = queriedIngredientNames.some(
-    (e) => e === requiredItemName,
-  )
+	const { item } = props
+	const { requiredItemName, amount } = item
+	const queriedIngredientNames = useQueriedIngredientNames()
+	const isHighlighted = queriedIngredientNames.some(
+		(e) => e === requiredItemName
+	)
 
-  return (
-    <div key={item.requiredItemName} className="item">
-      <span className={clsx("item-name", isHighlighted && "highlight")}>
-        {item.requiredItemName}
-      </span>
-      <span>x{amount}</span>
-    </div>
-  )
+	return (
+		<div className='item'>
+			<span className={clsx('item-name', isHighlighted && 'highlight')}>
+				{item.requiredItemName}
+			</span>
+			<span>x{amount}</span>
+		</div>
+	)
 }
