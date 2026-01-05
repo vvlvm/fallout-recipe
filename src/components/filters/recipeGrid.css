@@ -1,24 +1,14 @@
 .recipe-grid {
-  display: grid;
-  /* 最大幅を割り出す
-    Array.from(document.querySelectorAll('.recipe-card'))
-    .reduce((max, e) => Math.max(max, e.offsetWidth), 0)
-  */
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  grid-template-rows: auto auto auto;
-  gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px 16px;
 
   .recipe-card {
-    display: grid;
-    grid-row: span 3;
-    grid-template-rows: subgrid;
     background: var(--color-card-bg);
     border: 1px solid #444;
     border-radius: 8px;
     padding: 20px 16px;
-    gap: 16px;
     transition: transform 0.2s;
-    width: fit-content;
 
     &:hover {
       transform: translateY(-2px);
