@@ -30,13 +30,7 @@ jobs:
           node-version: lts/*
           cache: "pnpm" # ← キャッシュを pnpm に変更
 
-      # After the 'Set up Node' step
-      - name: Enable Corepack
-        run: corepack enable
-
-      # Add this step right after enabling Corepack
-      - name: Install pnpm
-        run: corepack prepare pnpm@latest --activate
+      - uses: pnpm/action-setup@v2.2.2
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
