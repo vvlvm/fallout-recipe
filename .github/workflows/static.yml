@@ -2,7 +2,7 @@ name: Deploy static content to Pages
 
 on:
   push:
-    branches: ['main']
+    branches: ["main"]
   workflow_dispatch:
 
 permissions:
@@ -11,7 +11,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: 'pages'
+  group: "pages"
   cancel-in-progress: true
 
 jobs:
@@ -28,10 +28,15 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          cache: 'pnpm'            # ← キャッシュを pnpm に変更
+          cache: "pnpm" # ← キャッシュを pnpm に変更
 
+      # After the 'Set up Node' step
       - name: Enable Corepack
-        run: corepack enable     # runner に pnpm がない場合に備え有効化
+        run: corepack enable
+
+      # Add this step right after enabling Corepack
+      - name: Install pnpm
+        run: corepack prepare pnpm@latest --activate
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -45,7 +50,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: './dist'
+          path: "./dist"
 
       - name: Deploy to GitHub Pages
         id: deployment
