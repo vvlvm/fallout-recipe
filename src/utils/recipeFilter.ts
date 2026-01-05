@@ -8,28 +8,17 @@ type LogicNode =
 interface Props<T> {
   recipes: T[]
   itemNameSearchTerm: string
-  selectedIngredientName: IngredientName | ""
   selectedEffectName: EffectName | ""
   /** @param ingredientQuery 入力された検索クエリ (例: "Meat & (Water | Rice)"" */
   ingredientQuery: string
 }
 
 export function filterRecipes(props: Props<Recipe>): Recipe[] {
-  const {
-    recipes,
-    itemNameSearchTerm,
-    selectedIngredientName,
-    selectedEffectName,
-    ingredientQuery,
-  } = props
+  const { recipes, itemNameSearchTerm, selectedEffectName, ingredientQuery } =
+    props
 
   return recipes.filter((recipe) => {
     const matchesItemName = recipe.itemName.includes(itemNameSearchTerm)
-    const matchesIngredientName =
-      selectedIngredientName === "" ||
-      recipe.requiredItems.some(
-        (item) => item.requiredItemName === selectedIngredientName,
-      )
     const matchesEffectName =
       selectedEffectName === "" ||
       Object.hasOwn(recipe.effects, selectedEffectName)
@@ -38,12 +27,7 @@ export function filterRecipes(props: Props<Recipe>): Recipe[] {
       recipe.requiredItems.map((e) => e.requiredItemName),
     )
 
-    return (
-      matchesItemName &&
-      matchesIngredientName &&
-      matchesEffectName &&
-      matchesIngredientQuery
-    )
+    return matchesItemName && matchesEffectName && matchesIngredientQuery
   })
 }
 
@@ -75,7 +59,7 @@ function tokenize(input: string): string[] {
     .replace(/）/g, ")")
     .replace(/、/g, "|") // OR演算子として扱う
     .replace(/,/g, "|") // OR演算子として扱う
-    .replace(/　/g, " ") // 暗黙のANDとして扱う
+    .replace(/\u3000/g, " ") // 全角スペース 暗黙のANDとして扱う
 
   // & | ( ) と半角・全角スペースで分割。ただし演算子はトークンとして維持する。
   return normalized

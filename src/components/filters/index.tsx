@@ -1,21 +1,19 @@
 import { EFFECT_LABELS } from "@/constants/EFFECT_LABELS.ts"
 import { EFFECT_NAMES } from "@/constants/EFFECT_NAMES.ts"
-import { INGREDIENT_NAMES } from "@/constants/INGREDIENT_NAMES.ts"
+import { ITEM_NAME } from "@/constants/ITEM_NAMES.ts"
 import { RECIPE_LIST } from "@/constants/RECIPE_LIST.ts"
 import type { EffectName, IngredientName } from "@/types/RecipieType.ts"
-import { memo, useMemo, useState } from "react"
-import { RecipeGrid } from "./RecipeGrid.tsx"
-import { IngredientQueryAutoComplete } from "./IngredientQueryAutoComplete.tsx"
+import { parseIngredientQuery } from "@/utils/parseIngredientQuery.tsx"
 import { filterRecipes } from "@/utils/recipeFilter.ts"
 import Autocomplete from "@mui/material/Autocomplete"
 import TextField from "@mui/material/TextField"
-import { ITEM_NAME } from "@/constants/ITEM_NAMES.ts"
+import { memo, useMemo, useState } from "react"
+import { IngredientQueryAutoComplete } from "./IngredientQueryAutoComplete.tsx"
+import { RecipeGrid } from "./RecipeGrid.tsx"
+import { QueriedIngredientNamesProvider } from "./QueriedIngredientNamesContext.tsx"
 
 export const Filters = memo(function Filters() {
   const [itemNameSearchTerm, setItemNameSearchTerm] = useState("")
-  const [selectedIngredientName, setSelectedIngredientName] = useState<
-    IngredientName | ""
-  >("")
   const [selectedEffectName, setSelectedEffectName] = useState<EffectName | "">(
     "",
   )
@@ -26,16 +24,15 @@ export const Filters = memo(function Filters() {
     return filterRecipes({
       recipes: RECIPE_LIST,
       itemNameSearchTerm,
-      selectedIngredientName,
       selectedEffectName,
       ingredientQuery,
     })
-  }, [
-    itemNameSearchTerm,
-    selectedIngredientName,
-    selectedEffectName,
-    ingredientQuery,
-  ])
+  }, [itemNameSearchTerm, selectedEffectName, ingredientQuery])
+
+  const queriedIngredientNames = useMemo<IngredientName[]>(
+    () => parseIngredientQuery(ingredientQuery),
+    [ingredientQuery],
+  )
 
   return (
     <>
@@ -50,21 +47,6 @@ export const Filters = memo(function Filters() {
               <TextField {...params} placeholder="アイテム名を入力..." />
             )}
           />
-        </div>
-
-        <div className="filter-group">
-          <label>必要素材</label>
-          <select
-            value={selectedIngredientName}
-            onChange={handleIngredientChange}
-          >
-            <option value="">全て</option>
-            {INGREDIENT_NAMES.map((ing) => (
-              <option key={ing} value={ing}>
-                {ing}
-              </option>
-            ))}
-          </select>
         </div>
 
         <div className="filter-group">
@@ -92,20 +74,17 @@ export const Filters = memo(function Filters() {
         ヒット数: {filteredRecipes.length} 件
       </div>
 
-      <RecipeGrid
-        filteredRecipes={filteredRecipes}
-        selectedIngredient={selectedIngredientName}
-        selectedEffect={selectedEffectName}
-      />
+      <QueriedIngredientNamesProvider value={queriedIngredientNames}>
+        <RecipeGrid
+          filteredRecipes={filteredRecipes}
+          selectedEffect={selectedEffectName}
+        />
+      </QueriedIngredientNamesProvider>
     </>
   )
 
   function handleItemNameSearchTermChange(_: any, newValue: string) {
     setItemNameSearchTerm(newValue)
-  }
-
-  function handleIngredientChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    setSelectedIngredientName(event.target.value as IngredientName | "")
   }
 
   function handleEffectChange(event: React.ChangeEvent<HTMLSelectElement>) {

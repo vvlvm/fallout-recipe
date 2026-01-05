@@ -1,10 +1,11 @@
 import { INGREDIENT_NAMES } from "@/constants/INGREDIENT_NAMES"
 import Autocomplete from "@mui/material/Autocomplete"
 import TextField from "@mui/material/TextField"
+import "./ingredientQueryAutoComplete.css"
 
-const options = INGREDIENT_NAMES
+const OPTIONS = INGREDIENT_NAMES
 // 「、」「,」はor。全角スペース・スペースはand。
-const lastTokenRegex = /[^&|()（）　、, ]+$/
+const lastTokenRegex = /[^&|()（）\u3000、, ]+$/
 
 interface Props {
   inputValue: string
@@ -19,7 +20,7 @@ export function IngredientQueryAutoComplete(props: Props) {
       <Autocomplete
         id="ingredient-query-autocomplete"
         freeSolo
-        options={options}
+        options={OPTIONS}
         inputValue={inputValue}
         value={inputValue}
         onInputChange={(_, newInputValue, reason) => {
@@ -53,27 +54,49 @@ export function IngredientQueryAutoComplete(props: Props) {
         }}
         renderInput={(params) => <TextField {...params} />}
       />
-      <HelperText />
+      <QueryExplain />
     </>
   )
 }
 
-function HelperText() {
+function QueryExplain() {
   return (
-    <table className="ml-2 w-fit text-sm">
-      <tbody>
-        <tr className="align-baseline">
-          <td className="pr-2 font-bold">andとして扱われる文字</td>
-          <td className="px-1">&</td>
-          <td className="px-1">スペース</td>
-          <td className="px-1">全角スペース</td>
-        </tr>
-        <tr className="align-baseline">
-          <td className="pr-2 font-bold">orとして扱われる文字</td>
-          <td className="px-1">|</td>
-          <td className="px-1">、</td>
-        </tr>
-      </tbody>
-    </table>
+    <div id="ingredient-query-explain">
+      <div className="row">
+        <span className="head">andとして扱われる文字</span>
+        <div className="examples">
+          <span className="example">&</span>
+          <div>
+            <span className="example"> </span>
+            <span className="note">(スペース)</span>
+          </div>
+          <div>
+            {" "}
+            <span className="example">　</span>
+            <span className="note">(全角スペース)</span>
+          </div>
+        </div>
+      </div>
+      <div className="row">
+        <span className="head">orとして扱われる文字</span>
+        <div className="examples">
+          <div>
+            {" "}
+            <span className="example">|</span>
+            <span className="note">(パイプ)</span>
+          </div>
+          <div>
+            {" "}
+            <span className="example">,</span>
+            <span className="note">(スペース)</span>
+          </div>
+          <div>
+            {" "}
+            <span className="example">、</span>
+            <span className="note">(全角読点)</span>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }

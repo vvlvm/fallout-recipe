@@ -1,37 +1,35 @@
-import type { RequiredItem, IngredientName } from "@/types/RecipieType";
-import "./recipeGrid.css";
-import clsx from "clsx";
+import type { RequiredItem } from "@/types/RecipieType"
+import clsx from "clsx"
+import { useQueriedIngredientNames } from "./QueriedIngredientNamesContext"
+import "./recipeGrid.css"
 
 interface Props {
-  requiredItems: RequiredItem[];
-  selectedIngredient: IngredientName | "";
+  requiredItems: RequiredItem[]
 }
 
 export function RequiredItems(props: Props) {
-  const { requiredItems, selectedIngredient } = props;
+  const { requiredItems } = props
 
   return (
     <div className="list-like-grid">
       {requiredItems.map((item) => (
-        <RequiredItem
-          item={item}
-          selectedIngredient={selectedIngredient}
-          key={item.requiredItemName}
-        />
+        <RequiredItem item={item} key={item.requiredItemName} />
       ))}
     </div>
-  );
+  )
 }
 
 interface ItemProps {
-  item: RequiredItem;
-  selectedIngredient: IngredientName | "";
+  item: RequiredItem
 }
 
 function RequiredItem(props: ItemProps) {
-  const { item, selectedIngredient } = props;
-  const { requiredItemName, amount } = item;
-  const isHighlighted = requiredItemName === selectedIngredient;
+  const { item } = props
+  const { requiredItemName, amount } = item
+  const queriedIngredientNames = useQueriedIngredientNames()
+  const isHighlighted = queriedIngredientNames.some(
+    (e) => e === requiredItemName,
+  )
 
   return (
     <div key={item.requiredItemName} className="item">
@@ -45,5 +43,5 @@ function RequiredItem(props: ItemProps) {
       </span>
       <span>x{amount}</span>
     </div>
-  );
+  )
 }

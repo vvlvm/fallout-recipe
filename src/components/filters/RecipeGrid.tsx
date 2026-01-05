@@ -1,41 +1,36 @@
-import type { EffectName, Recipe, IngredientName } from "@/types/RecipieType";
-import { Effects } from "./Effects";
-import "./recipeGrid.css";
-import { RequiredItems } from "./RequiredItems";
+import type { EffectName, Recipe } from "@/types/RecipieType"
+import { Effects } from "./Effects"
+import "./recipeGrid.css"
+import { RequiredItems } from "./RequiredItems"
 
 interface Props {
-  filteredRecipes: Recipe[];
-  selectedIngredient: IngredientName | "";
-  selectedEffect: EffectName | "";
+  filteredRecipes: Recipe[]
+  selectedEffect: EffectName | ""
 }
 
 export function RecipeGrid(props: Props) {
-  const { filteredRecipes, selectedIngredient, selectedEffect } = props;
+  const { filteredRecipes, selectedEffect } = props
 
   return (
     <div className="recipe-grid">
       {filteredRecipes.map((recipe) => (
         <Card
           recipe={recipe}
-          selectedIngredient={selectedIngredient}
           selectedEffect={selectedEffect}
           key={recipe.itemName}
         />
       ))}
     </div>
-  );
+  )
 }
 
-interface CardProps extends Pick<
-  Props,
-  "selectedEffect" | "selectedIngredient"
-> {
-  recipe: Recipe;
+interface CardProps extends Pick<Props, "selectedEffect"> {
+  recipe: Recipe
 }
 
 function Card(props: CardProps) {
-  const { recipe, selectedIngredient, selectedEffect } = props;
-  const { itemName, requiredItems, effects } = recipe;
+  const { recipe, selectedEffect } = props
+  const { itemName, requiredItems, effects } = recipe
 
   return (
     <div className="recipe-card">
@@ -43,10 +38,7 @@ function Card(props: CardProps) {
 
       <div className="recipe-section">
         <h3>必要素材</h3>
-        <RequiredItems
-          requiredItems={requiredItems}
-          selectedIngredient={selectedIngredient}
-        />
+        <RequiredItems requiredItems={requiredItems} />
       </div>
 
       <div className="recipe-section">
@@ -54,5 +46,5 @@ function Card(props: CardProps) {
         <Effects effects={effects} selectedEffect={selectedEffect} />
       </div>
     </div>
-  );
+  )
 }
