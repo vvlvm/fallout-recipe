@@ -10,7 +10,7 @@ export const EFFECT_LABELS: Record<EffectName, string> = {
 	Rads: 'Rads',
 	RadResist: 'Rad Resist',
 	CarryWeight: '総重量',
-	Caffeine: 'カフェイン接種',
+	Caffeine: 'カフェイン摂取',
 	STR: 'STR',
 	END: 'END',
 	AGI: 'AGI',
