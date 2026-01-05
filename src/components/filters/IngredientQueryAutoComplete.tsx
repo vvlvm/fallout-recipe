@@ -1,7 +1,6 @@
 import { INGREDIENT_NAMES } from "@/constants/INGREDIENT_NAMES"
 import Autocomplete from "@mui/material/Autocomplete"
 import TextField from "@mui/material/TextField"
-import "./ingredientQueryAutoComplete.css"
 
 const OPTIONS = INGREDIENT_NAMES
 // 「、」「,」はor。全角スペース・スペースはand。

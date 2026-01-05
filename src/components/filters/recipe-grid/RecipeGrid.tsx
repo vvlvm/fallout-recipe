@@ -1,6 +1,6 @@
 import type { EffectName, Recipe } from "@/types/RecipieType"
 import { Effects } from "./Effects"
-import "./recipeGrid.css"
+import "./recipeGrid.scss"
 import { RequiredItems } from "./RequiredItems"
 
 interface Props {
