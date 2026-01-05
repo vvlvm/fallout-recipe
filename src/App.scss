@@ -19,16 +19,17 @@ header {
     gap: 8px;
     padding-left: 8px;
     margin-bottom: 16px;
-    border-bottom: 1px solid var(--color-gray-500);
+    border-bottom: 1px solid var(--color-card-bg);
 
     .tab {
       margin-bottom: -1px;
       padding: 8px 20px;
-      border-top: solid 1px var(--color-gray-500);
-      border-left: solid 1px var(--color-gray-500);
-      border-right: solid 1px var(--color-gray-600);
+      border-top: solid 1px var(--color-card-bg);
+      border-left: solid 1px var(--color-card-bg);
+      border-right: solid 1px var(--color-card-bg);
       border-bottom: solid 0px red;
       border-radius: 8px 8px 0 0;
+      background-color: var(--color-card-bg);
 
       &[aria-selected="true"] {
         padding-top: 12px;
@@ -39,6 +40,10 @@ header {
 
   .tabpanel {
     margin: 4px;
+    
+    &[hidden] {
+      display: none;
+    }
   }
 }
 

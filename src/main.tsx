@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./App.tsx";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import "./index.css";
+import "./index.scss";
 
 const theme = createTheme({
   colorSchemes: {

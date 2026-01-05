@@ -1,5 +1,5 @@
 import { useState } from "react"
-import "./App.css"
+import "./App.scss"
 import { Filters } from "./components/filters/index.tsx"
 import { RECIPE_MAP } from "./constants/RECIPE_MAP.ts"
 import { INGREDIENT_NAMES } from "./constants/INGREDIENT_NAMES.ts"
@@ -24,7 +24,7 @@ export function App() {
       <div role="tablist" className="tablist" aria-label="ツールを選択">
         <button
           id="tab-search"
-          className="tab p-16px"
+          className="tab"
           onClick={handleTabClick}
           role="tab"
           aria-selected={tab === "search"}
@@ -34,7 +34,7 @@ export function App() {
         </button>
         <button
           id="tab-unmakeableIngredients"
-          className="tab p-16px"
+          className="tab"
           onClick={handleTabClick}
           role="tab"
           aria-selected={tab === "unmakeableIngredients"}
