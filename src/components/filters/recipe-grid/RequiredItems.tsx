@@ -1,7 +1,8 @@
+import { AlignedTwoColumnGrid } from '@/components/aligned-two-column-grid/AlignedTwoColumnGrid'
+import { AlignedTwoColumnGridItem } from '@/components/aligned-two-column-grid/AlignedTwoColumnGridItem'
 import type { RequiredItem } from '@/types/RecipieType'
-import clsx from 'clsx'
-import { useQueriedIngredientNames } from '../queried-ingredient-names-context/useQueriedIngredientNames'
 import Typography from '@mui/material/Typography'
+import { useQueriedIngredientNames } from '../queried-ingredient-names-context/useQueriedIngredientNames'
 
 interface Props {
 	requiredItems: RequiredItem[]
@@ -11,11 +12,11 @@ export function RequiredItems(props: Props) {
 	const { requiredItems } = props
 
 	return (
-		<div className='list-like-grid'>
+		<AlignedTwoColumnGrid>
 			{requiredItems.map((item) => (
 				<RequiredItem item={item} key={item.requiredItemName} />
 			))}
-		</div>
+		</AlignedTwoColumnGrid>
 	)
 }
 
@@ -33,11 +34,11 @@ function RequiredItem(props: ItemProps) {
 	const textColor = isHighlighted ? 'highlight' : undefined
 
 	return (
-		<div className='item'>
-			<Typography color={textColor} className={clsx('item-name')}>
+		<AlignedTwoColumnGridItem>
+			<Typography sx={{ whiteSpace: 'nowrap', mr: 1 }} color={textColor}>
 				{item.requiredItemName}
 			</Typography>
 			<Typography color={textColor}>x{amount}</Typography>
-		</div>
+		</AlignedTwoColumnGridItem>
 	)
 }

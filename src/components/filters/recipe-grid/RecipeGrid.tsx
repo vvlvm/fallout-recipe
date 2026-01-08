@@ -19,13 +19,17 @@ export function RecipeGrid(props: Props) {
 		<Box
 			sx={{
 				display: 'grid',
-				/* ↓ util関数 gridTemplateColumns用にカードの最大幅を割り出す 下の要素に width:fit-content; を設定してから実行すること
+				/* ↓ util関数
+				 * gridTemplateColumns用にカードの最大幅を割り出す
+				 * 下の要素に width:fit-content; を設定してから実行すること
+				 *
 				 * Array.from(document.querySelectorAll('.recipe-card')).reduce((max, e) => Math.max(max, e.offsetWidth),0)
+				 *
 				 */
-				gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))',
+				gridTemplateColumns: 'repeat(auto-fit, 280px)',
 				gridTemplateRows: 'auto auto auto',
 				alignItems: 'start',
-				gap: '0px 16px',
+				gap: '0px 6px',
 			}}
 		>
 			{filteredRecipes.map((recipe) => (
@@ -49,6 +53,7 @@ function GridItem(props: CardProps) {
 
 	return (
 		<Card
+			className='recipe-card'
 			sx={{
 				display: 'grid',
 				gridRow: 'span 3',
