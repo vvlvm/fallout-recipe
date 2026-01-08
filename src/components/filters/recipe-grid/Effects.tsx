@@ -5,6 +5,9 @@ import {
 	type EffectMap,
 	type EffectName,
 } from '@/types/RecipieType'
+import Box from '@mui/material/Box'
+import SvgIcon from '@mui/material/SvgIcon'
+import Typography from '@mui/material/Typography'
 import clsx from 'clsx'
 import { IoIosTimer } from 'react-icons/io'
 
@@ -40,40 +43,61 @@ function ListItem({ effect, selectedEffect }: TagProps) {
 		effectName === 'Caffeine' || effectName === 'CarryWeight'
 	const hasOverTime = 'isOverTime' in effect && effect.isOverTime
 	const hasAmount = 'amount' in effect
+	const textColor = isHighlighted ? 'highlight' : undefined
 
 	return (
-		<div
+		<Box
 			className={clsx('item', isSingleColumn && 'single-column')}
 			key={effectName}
 		>
 			{isSingleColumn && (
-				<span className={clsx('item-name', isHighlighted && 'highlight')}>
+				<Typography
+					component='span'
+					color={textColor}
+					className={clsx('item-name')}
+				>
 					{isCarryWeightEffect(effect) ? `${label}+${effect.amount}` : label}
-				</span>
+				</Typography>
 			)}
 
 			{!isSingleColumn && (
 				<>
-					<span className={clsx('item-name', isHighlighted && 'highlight')}>
-						{label}
-					</span>
-					<span className='amount'>
+					<Box>
+						<Typography
+							component='span'
+							color={textColor}
+							className={clsx('item-name')}
+						>
+							{label}
+						</Typography>
+					</Box>
+					<Box sx={{ textAlign: 'right' }}>
 						{hasOverTime && (
-							<IoIosTimer
-								className={clsx(
-									'effect-is-time-over',
-									isHighlighted && 'highlight'
-								)}
+							<SvgIcon
+								color={textColor}
+								component={IoIosTimer}
+								inheritViewBox
+								sx={{
+									position: 'relative',
+									top: '2px',
+									marginRight: '2px',
+									strokeWidth: '10px',
+									fontSize: '1em',
+								}}
 							/>
 						)}
 						{hasAmount && (
-							<span className={clsx(isHighlighted && 'highlight')}>
+							<Typography
+								component='span'
+								color={textColor}
+								sx={{ justifySelf: 'right' }}
+							>
 								{effect.amount}
-							</span>
+							</Typography>
 						)}
-					</span>
+					</Box>
 				</>
 			)}
-		</div>
+		</Box>
 	)
 }

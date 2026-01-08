@@ -24,10 +24,6 @@
 		width: fit-content;
 		border-radius: 8px;
 
-		.highlight {
-			color: #4caf50;
-		}
-
 		.item {
 			display: grid;
 			grid-column: span 2;
@@ -39,7 +35,6 @@
 			&.single-column {
 				grid-template-columns: none;
 				text-align: center;
-
 				.item-name {
 					margin-right: 0;
 				}
@@ -48,19 +43,6 @@
 			.item-name {
 				white-space: nowrap;
 				margin-right: 16px;
-			}
-
-			.amount {
-				text-align: right;
-
-				.effect-is-time-over {
-					display: inline;
-					position: relative;
-					top: -1px;
-					margin-right: 3px;
-					stroke-width: 10px;
-					color: hsl(from black h s calc(l + 2));
-				}
 			}
 		}
 	}

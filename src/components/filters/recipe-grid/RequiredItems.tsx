@@ -1,6 +1,7 @@
 import type { RequiredItem } from '@/types/RecipieType'
 import clsx from 'clsx'
 import { useQueriedIngredientNames } from '../QueriedIngredientNamesContext'
+import Typography from '@mui/material/Typography'
 
 interface Props {
 	requiredItems: RequiredItem[]
@@ -29,13 +30,14 @@ function RequiredItem(props: ItemProps) {
 	const isHighlighted = queriedIngredientNames.some(
 		(e) => e === requiredItemName
 	)
+	const textColor = isHighlighted ? 'highlight' : undefined
 
 	return (
 		<div className='item'>
-			<span className={clsx('item-name', isHighlighted && 'highlight')}>
+			<Typography color={textColor} className={clsx('item-name')}>
 				{item.requiredItemName}
-			</span>
-			<span>x{amount}</span>
+			</Typography>
+			<Typography color={textColor}>x{amount}</Typography>
 		</div>
 	)
 }

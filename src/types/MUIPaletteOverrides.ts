@@ -10,3 +10,15 @@ declare module '@mui/material/styles' {
 		highlight?: PaletteColorOptions
 	}
 }
+
+declare module '@mui/material/Typography' {
+	interface TypographyPropsColorOverrides {
+		highlight: true
+	}
+}
+
+declare module '@mui/material/SvgIcon' {
+	interface SvgIconPropsColorOverrides {
+		highlight: true
+	}
+}
