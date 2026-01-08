@@ -7,6 +7,8 @@ import { useState } from 'react'
 import { Filters } from './components/filters/index.tsx'
 import { INGREDIENT_NAMES } from './constants/INGREDIENT_NAMES.ts'
 import { RECIPE_MAP } from './constants/RECIPE_MAP.ts'
+import ListItem from '@mui/material/ListItem'
+import Paper from '@mui/material/Paper'
 
 const RECIPE_NAMES = Object.keys(RECIPE_MAP)
 const UNMAKEABLE_INGREDIENTS = INGREDIENT_NAMES.filter(
@@ -19,7 +21,7 @@ export function App() {
 	return (
 		<Container>
 			<Box component='header'>
-				<Typography variant='h1' color='primary.main'>
+				<Typography variant='h1' fontSize='2rem' color='primary.main'>
 					Fallout Nuka-Mixer Station
 				</Typography>
 				<Typography variant='body2'>
@@ -49,24 +51,36 @@ export function App() {
 			</Tabs>
 			<Box
 				id='tabpanel-search'
-				className='tabpanel'
 				role='tabpanel'
 				aria-labelledby='tab-search'
-				hidden={tab !== 0}
+				sx={
+					tab === 0
+						? {}
+						: {
+								display: 'none',
+							}
+				}
 			>
 				<Filters />
 			</Box>
-			<Box
+			<Paper
 				id='tabpanel-unmakeableIngredients'
-				className='tabpanel'
 				role='tabpanel'
 				aria-labelledby='tab-unmakeableIngredients'
-				hidden={tab !== 1}
+				sx={
+					tab === 1
+						? {}
+						: {
+								display: 'none',
+							}
+				}
 			>
 				{UNMAKEABLE_INGREDIENTS.map((itemName) => (
-					<Box key={itemName}>{itemName}</Box>
+					<ListItem component={Paper} dense sx={{ mb: 1 }} key={itemName}>
+						{itemName}
+					</ListItem>
 				))}
-			</Box>
+			</Paper>
 			<Box sx={{ height: '100vh' }} />
 		</Container>
 	)
