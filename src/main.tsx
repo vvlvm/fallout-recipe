@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { App } from './App.tsx'
 import CssBaseline from '@mui/material/CssBaseline'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { yellow, lime } from '@mui/material/colors'
 
 const theme = createTheme({
 	colorSchemes: {
@@ -10,7 +11,7 @@ const theme = createTheme({
 			palette: {
 				mode: 'dark',
 				primary: {
-					main: '#e3d629',
+					main: yellow['500'],
 				},
 			},
 		},
@@ -18,7 +19,7 @@ const theme = createTheme({
 			palette: {
 				mode: 'light',
 				primary: {
-					main: '#9d9312',
+					main: lime['800'],
 				},
 			},
 		},
