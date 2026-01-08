@@ -1,7 +1,7 @@
 import { INGREDIENT_NAMES } from '@/constants/INGREDIENT_NAMES'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
-import Box from '@mui/material/Box'
+import { QueryExplain } from './query-explain/QueryExplain'
 
 const OPTIONS = INGREDIENT_NAMES
 // 「、」「,」はor。全角スペース・スペースはand。
@@ -56,102 +56,5 @@ export function IngredientQueryAutoComplete(props: Props) {
 			/>
 			<QueryExplain />
 		</>
-	)
-}
-
-function QueryExplain() {
-	return (
-		<Box
-			id='ingredient-query-explain'
-			sx={{
-				display: ' grid',
-				gridTemplateColumns: ' auto 1fr',
-				gap: ' 4px',
-				marginTop: ' 8px',
-				marginLeft: ' 8px',
-
-				'.row': {
-					display: 'grid',
-					gridColumn: 'span 2',
-					gridTemplateColumns: 'subgrid',
-
-					'.head': {
-						fontSize: '0.9em',
-						marginRight: '8px',
-					},
-
-					'.examples': {
-						display: 'flex',
-						gap: '0px 16px',
-
-						'.example': {
-							whiteSpace: 'pre',
-							border: 'solid 1px',
-							borderColor: 'text.secondary',
-						},
-
-						'.note': {
-							fontSize: '0.8em',
-							color: 'text.secondary',
-						},
-					},
-				},
-			}}
-		>
-			<Box className='row'>
-				<Box component='span' className='head'>
-					andとして扱われる文字
-				</Box>
-				<Box className='examples'>
-					<Box component='span' className='example'>
-						&
-					</Box>
-					<Box>
-						<Box component='span' className='example'>
-							{' '}
-						</Box>
-						<Box component='span' className='note'>
-							(スペース)
-						</Box>
-					</Box>
-					<Box>
-						<Box component='span' className='example'>
-							{'　'}
-						</Box>
-						<Box component='span' className='note'>
-							(全角スペース)
-						</Box>
-					</Box>
-				</Box>
-			</Box>
-			<Box className='row'>
-				<Box component='span' className='head'>
-					orとして扱われる文字
-				</Box>
-				<Box className='examples'>
-					<Box>
-						<Box component='span' className='example'>
-							|
-						</Box>
-						<Box component='span' className='note'>
-							(パイプ)
-						</Box>
-					</Box>
-					<Box>
-						<Box component='span' className='example'>
-							,
-						</Box>
-					</Box>
-					<Box>
-						<Box component='span' className='example'>
-							、
-						</Box>
-						<Box component='span' className='note'>
-							(全角読点)
-						</Box>
-					</Box>
-				</Box>
-			</Box>
-		</Box>
 	)
 }
