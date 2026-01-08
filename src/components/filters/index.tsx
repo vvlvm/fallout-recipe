@@ -17,7 +17,7 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { memo, useMemo, useState } from 'react'
 import { IngredientQueryAutoComplete } from './IngredientQueryAutoComplete.tsx'
-import { QueriedIngredientNamesProvider } from './QueriedIngredientNamesContext.tsx'
+import { Provider } from './queried-ingredient-names-context/Provider.tsx'
 import { RecipeGrid } from './recipe-grid/RecipeGrid.tsx'
 
 export const Filters = memo(function Filters() {
@@ -99,16 +99,16 @@ export const Filters = memo(function Filters() {
 				ヒット数: {filteredRecipes.length} 件
 			</Typography>
 
-			<QueriedIngredientNamesProvider value={queriedIngredientNames}>
+			<Provider value={queriedIngredientNames}>
 				<RecipeGrid
 					filteredRecipes={filteredRecipes}
 					selectedEffect={selectedEffectName}
 				/>
-			</QueriedIngredientNamesProvider>
+			</Provider>
 		</>
 	)
 
-	function handleItemNameSearchTermChange(_: any, newValue: string) {
+	function handleItemNameSearchTermChange(_: unknown, newValue: string) {
 		setItemNameSearchTerm(newValue)
 	}
 

@@ -1,6 +1,6 @@
 import type { RequiredItem } from '@/types/RecipieType'
 import clsx from 'clsx'
-import { useQueriedIngredientNames } from '../QueriedIngredientNamesContext'
+import { useQueriedIngredientNames } from '../queried-ingredient-names-context/useQueriedIngredientNames'
 import Typography from '@mui/material/Typography'
 
 interface Props {

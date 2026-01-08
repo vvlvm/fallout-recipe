@@ -7,16 +7,16 @@ import { INGREDIENT_NAMES } from '../constants/INGREDIENT_NAMES'
  */
 export type IngredientName = (typeof INGREDIENT_NAMES)[number]
 
-export function isIngredientName(e: any): e is IngredientName {
-	return INGREDIENT_NAMES.includes(e)
+export function isIngredientName(e: unknown): e is IngredientName {
+	return INGREDIENT_NAMES.includes(e as IngredientName)
 }
 
 export type ItemName = (typeof ITEM_NAME)[number]
 
 export type EffectName = (typeof EFFECT_NAMES)[number]
 
-export function isEffectName(e: any): e is EffectName {
-	return EFFECT_NAMES.includes(e)
+export function isEffectName(e: unknown): e is EffectName {
+	return EFFECT_NAMES.includes(e as EffectName)
 }
 
 type BaseEffect = {

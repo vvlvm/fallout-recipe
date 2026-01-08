@@ -77,7 +77,7 @@ export function App() {
 		</Container>
 	)
 
-	function handleTabClick(_: any, newValue: number) {
+	function handleTabClick(_: unknown, newValue: number) {
 		setTab(newValue)
 	}
 }
