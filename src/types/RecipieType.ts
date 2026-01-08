@@ -1,6 +1,7 @@
 import { EFFECT_NAMES } from '../constants/EFFECT_NAMES'
 import type { ITEM_NAME } from '../constants/ITEM_NAMES'
 import { INGREDIENT_NAMES } from '../constants/INGREDIENT_NAMES'
+import type { EFFECT_LABELS } from '@/constants/EFFECT_LABELS'
 
 /* ItemNameと統合しないほうが
  * レシピで生成できないアイテムとして区別できてよさそう
@@ -14,6 +15,8 @@ export function isIngredientName(e: unknown): e is IngredientName {
 export type ItemName = (typeof ITEM_NAME)[number]
 
 export type EffectName = (typeof EFFECT_NAMES)[number]
+
+export type EffectLabel = (typeof EFFECT_LABELS)[number]
 
 export function isEffectName(e: unknown): e is EffectName {
 	return EFFECT_NAMES.includes(e as EffectName)

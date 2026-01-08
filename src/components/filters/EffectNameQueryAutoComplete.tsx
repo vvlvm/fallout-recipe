@@ -1,0 +1,79 @@
+import { EFFECT_LABELS } from '@/constants/EFFECT_LABELS'
+import Autocomplete, {
+	type AutocompleteChangeReason,
+} from '@mui/material/Autocomplete'
+import TextField from '@mui/material/TextField'
+import type { FilterOptionsState } from '@mui/material/useAutocomplete'
+import type { AutocompleteInputChangeReason } from 'node_modules/@mui/material'
+import { QueryExplain } from './query-explain/QueryExplain'
+
+// 「、」「,」はor。「全角スペース」「。」「&」はand。
+const lastTokenRegex = /[^&|()（）\u3000、,。]+$/
+
+// コンポーネントの外に出すことで、レンダリングごとの関数再生成を防ぐ
+function filterOptions(options: string[], state: FilterOptionsState<string>) {
+	const match = state.inputValue.match(lastTokenRegex)
+	const searchTerm = match ? match[0].trim() : ''
+	return options.filter((option) =>
+		option.toLowerCase().includes(searchTerm.toLowerCase())
+	)
+}
+
+interface Props {
+	inputValue: string
+	setInputValue: React.Dispatch<React.SetStateAction<string>>
+}
+
+export function EffectNameQueryAutoComplete(props: Props) {
+	const { inputValue, setInputValue } = props
+
+	function handleInputChange(
+		_: unknown,
+		newInputValue: string,
+		reason: AutocompleteInputChangeReason
+	) {
+		if (reason !== 'reset') {
+			setInputValue(newInputValue)
+		}
+	}
+
+	function handleChange(
+		_: unknown,
+		newValue: string | null,
+		reason: AutocompleteChangeReason
+	) {
+		if (reason === 'selectOption' && typeof newValue === 'string') {
+			const match = inputValue.match(lastTokenRegex)
+			let newQuery = ''
+			if (match) {
+				const token = match[0]
+				const leadingSpace = token.match(/^\s*/)?.[0] ?? ''
+				newQuery =
+					inputValue.substring(0, match.index) + leadingSpace + newValue
+			} else {
+				newQuery = inputValue + newValue
+			}
+
+			setInputValue(newQuery)
+		}
+	}
+
+	return (
+		<>
+			<Autocomplete
+				id='effect-name-query-autocomplete'
+				freeSolo
+				options={EFFECT_LABELS}
+				inputValue={inputValue}
+				value={inputValue}
+				onInputChange={handleInputChange}
+				onChange={handleChange}
+				filterOptions={filterOptions}
+				renderInput={(params) => (
+					<TextField {...params} placeholder='HP&最大AP...' />
+				)}
+			/>
+			<QueryExplain />
+		</>
+	)
+}

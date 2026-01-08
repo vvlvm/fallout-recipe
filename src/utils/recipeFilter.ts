@@ -1,27 +1,63 @@
-import type { EffectName, Recipe } from '@/types/RecipieType'
+import { EFFECT_LABEL_MAP } from '@/constants/EFFECT_LABELS'
+import { RECIPE_LIST } from '@/constants/RECIPE_LIST'
+import type { Recipe } from '@/types/RecipieType'
 
 type LogicNode =
 	| { type: 'AND'; left: LogicNode; right: LogicNode }
 	| { type: 'OR'; left: LogicNode; right: LogicNode }
 	| { type: 'LITERAL'; value: string }
 
-interface Props<T> {
-	recipes: T[]
+interface Props {
 	itemNameSearchTerm: string
-	selectedEffectName: EffectName | ''
+	/** @param effectNameQuery 入力された検索クエリ (例: "Meat & (Water | Rice)"" */
+	effectNameQuery: string
 	/** @param ingredientQuery 入力された検索クエリ (例: "Meat & (Water | Rice)"" */
 	ingredientQuery: string
 }
 
-export function filterRecipes(props: Props<Recipe>): Recipe[] {
-	const { recipes, itemNameSearchTerm, selectedEffectName, ingredientQuery } =
-		props
+export function filterRecipes(props: Props): Recipe[] {
+	const { itemNameSearchTerm, ingredientQuery, effectNameQuery } = props
 
-	const trimmedQuery = ingredientQuery.trim()
-	if (!trimmedQuery) return recipes
+	const ingredientAst = createAst(ingredientQuery)
+	const effectNameAst = createAst(effectNameQuery)
+
+	return RECIPE_LIST.filter((recipe) => {
+		const matchesItemName = recipe.itemName.includes(itemNameSearchTerm)
+
+		// ASTがない場合は条件なしとしてtrueを返す
+		const matchesIngredientQuery =
+			ingredientAst === null
+				? true
+				: ingredientAst(recipe.requiredItems.map((e) => e.requiredItemName))
+
+		// ASTがない場合は条件なしとしてtrueを返す
+		const matchesEffectNameQuery =
+			effectNameAst === null
+				? true
+				: effectNameAst(
+						Object.values(recipe.effects).map(
+							(e) => EFFECT_LABEL_MAP[e.effectName]
+						)
+					)
+
+		return matchesItemName && matchesIngredientQuery && matchesEffectNameQuery
+	})
+}
+
+/*
+ * Ast=Abstract Syntax Treeらしい
+ * 抽象構文木と訳されるデータ構造で、
+ *「式」や「ロジック」を 木構造で表現したもの。
+ */
+/**
+ * @returns nullならフィルター関数が渡されない
+ */
+function createAst(query: string): ((targets: string[]) => boolean) | null {
+	const trimmedQuery = query.trim()
+	if (!trimmedQuery) return null
 
 	const tokens = tokenize(trimmedQuery)
-	if (tokens.length === 0) return recipes
+	if (tokens.length === 0) return null
 
 	let ast: LogicNode
 	try {
@@ -32,23 +68,10 @@ export function filterRecipes(props: Props<Recipe>): Recipe[] {
 		// あるいは単純検索にフォールバックする等の戦略が考えられますが、
 		// 明示的な論理検索なのでエラー時はヒットなしとします。
 		console.warn(error)
-		return []
+		return null
 	}
 
-	return recipes.filter((recipe) => {
-		const matchesItemName = recipe.itemName.includes(itemNameSearchTerm)
-		const matchesEffectName =
-			selectedEffectName === '' ||
-			Object.hasOwn(recipe.effects, selectedEffectName)
-		// ASTがない（クエリが空）場合は条件なしとして true を返す
-		const matchesIngredientQuery = ast
-			? evaluate(
-					ast,
-					recipe.requiredItems.map((e) => e.requiredItemName)
-				)
-			: true
-		return matchesItemName && matchesEffectName && matchesIngredientQuery
-	})
+	return (targets: string[]) => evaluate(ast, targets)
 }
 
 function tokenize(input: string): string[] {
@@ -60,9 +83,9 @@ function tokenize(input: string): string[] {
 		.replace(/,/g, '|') // ORとして扱う
 		.replace(/＆/g, '&') // ORとして扱う
 		.replace(/\u3000/g, '&') // 全角スペース ANDとして扱う
-		.replace(/ /g, '&') // 半角スペース ANDとして扱う
+		.replace(/。/g, '&') // ANDとして扱う
 
-	// & | ( ) と半角・全角スペースで分割。ただし演算子はトークンとして維持する。
+	//&|()で分割。ただし演算子はトークンとして維持する。
 	return normalized
 		.split(/([&|()])| +/g)
 		.filter((t): t is string => t != null && t !== '')

@@ -1,30 +1,25 @@
-import { EFFECT_LABELS } from '@/constants/EFFECT_LABELS'
+import { EFFECT_LABEL_MAP } from '@/constants/EFFECT_LABELS'
 import {
 	isCarryWeightEffect,
 	type Effect,
 	type EffectMap,
-	type EffectName,
 } from '@/types/RecipieType'
 import Box from '@mui/material/Box'
 import SvgIcon from '@mui/material/SvgIcon'
 import Typography from '@mui/material/Typography'
 import clsx from 'clsx'
 import { IoIosTimer } from 'react-icons/io'
+import { useQueriedEffectNames } from '../queried-effect-names-context/useQueriedIngredientNames'
 
 interface Props {
 	effects: EffectMap
-	selectedEffect: EffectName | ''
 }
 
-export function Effects({ effects, selectedEffect }: Props) {
+export function Effects({ effects }: Props) {
 	return (
 		<div className='list-like-grid'>
 			{Object.values(effects).map((effect) => (
-				<ListItem
-					effect={effect}
-					selectedEffect={selectedEffect}
-					key={effect.effectName}
-				/>
+				<ListItem effect={effect} key={effect.effectName} />
 			))}
 		</div>
 	)
@@ -32,13 +27,15 @@ export function Effects({ effects, selectedEffect }: Props) {
 
 interface TagProps {
 	effect: Effect
-	selectedEffect: EffectName | ''
 }
 
-function ListItem({ effect, selectedEffect }: TagProps) {
+function ListItem({ effect }: TagProps) {
 	const { effectName } = effect
-	const label = EFFECT_LABELS[effectName]
-	const isHighlighted = effectName === selectedEffect
+	const label = EFFECT_LABEL_MAP[effectName]
+	const queriedEffectNames = useQueriedEffectNames()
+	const isHighlighted = queriedEffectNames.some((queried) =>
+		effectName.includes(queried)
+	)
 	const isSingleColumn =
 		effectName === 'Caffeine' || effectName === 'CarryWeight'
 	const hasOverTime = 'isOverTime' in effect && effect.isOverTime
