@@ -1,8 +1,8 @@
 ---
-name: アイデア
+name: feature
 about: 思いついた改善案や新機能
 title: ''
-labels: idea
+labels: feature
 assignees: ''
 
 ---
