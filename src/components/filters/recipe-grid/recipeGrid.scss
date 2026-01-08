@@ -1,49 +1,30 @@
-.recipe-grid {
+.list-like-grid {
 	display: grid;
-	/* カードの最大幅を割り出す .recipe-cardにwidth: fit-content;を設定してから実行すること
-    Array.from(document.querySelectorAll('.recipe-card')).reduce((max, e) => Math.max(max, e.offsetWidth),0)
-  */
-	grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-	grid-template-rows: auto auto auto;
-	align-items: start;
-	gap: 0px 16px;
+	grid-template-columns: 1fr auto;
+	gap: 2px 0px;
+	margin: 4px;
+	width: fit-content;
+	border-radius: 8px;
 
-	.recipe-grid-item {
+	.item {
 		display: grid;
-		grid-row: span 3;
-		grid-template-rows: subgrid;
-		padding: 16px;
-		margin-bottom: 32px;
-	}
+		grid-column: span 2;
+		grid-template-columns: subgrid;
+		padding: 3px 6px;
+		border-radius: 3px;
+		background: rgba(0, 0, 0, 0.2);
 
-	.list-like-grid {
-		display: grid;
-		grid-template-columns: 1fr auto;
-		gap: 2px 0px;
-		margin: 4px;
-		width: fit-content;
-		border-radius: 8px;
-
-		.item {
-			display: grid;
-			grid-column: span 2;
-			grid-template-columns: subgrid;
-			padding: 3px 6px;
-			border-radius: 3px;
-			background: rgba(0, 0, 0, 0.2);
-
-			&.single-column {
-				grid-template-columns: none;
-				text-align: center;
-				.item-name {
-					margin-right: 0;
-				}
-			}
-
+		&.single-column {
+			grid-template-columns: none;
+			text-align: center;
 			.item-name {
-				white-space: nowrap;
-				margin-right: 16px;
+				margin-right: 0;
 			}
+		}
+
+		.item-name {
+			white-space: nowrap;
+			margin-right: 16px;
 		}
 	}
 }

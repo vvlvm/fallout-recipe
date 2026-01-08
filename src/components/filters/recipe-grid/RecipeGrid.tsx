@@ -16,7 +16,18 @@ export function RecipeGrid(props: Props) {
 	const { filteredRecipes, selectedEffect } = props
 
 	return (
-		<div className='recipe-grid'>
+		<Box
+			sx={{
+				display: 'grid',
+				/* ↓ util関数 gridTemplateColumns用にカードの最大幅を割り出す 下の要素に width:fit-content; を設定してから実行すること
+				 * Array.from(document.querySelectorAll('.recipe-card')).reduce((max, e) => Math.max(max, e.offsetWidth),0)
+				 */
+				gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))',
+				gridTemplateRows: 'auto auto auto',
+				alignItems: 'start',
+				gap: '0px 16px',
+			}}
+		>
 			{filteredRecipes.map((recipe) => (
 				<GridItem
 					recipe={recipe}
@@ -24,7 +35,7 @@ export function RecipeGrid(props: Props) {
 					key={recipe.itemName}
 				/>
 			))}
-		</div>
+		</Box>
 	)
 }
 
@@ -37,7 +48,15 @@ function GridItem(props: CardProps) {
 	const { itemName, requiredItems, effects } = recipe
 
 	return (
-		<Card className='recipe-grid-item'>
+		<Card
+			sx={{
+				display: 'grid',
+				gridRow: 'span 3',
+				gridTemplateRows: 'subgrid',
+				padding: '16px',
+				marginBottom: '32px',
+			}}
+		>
 			<Typography
 				variant='h3'
 				sx={{
