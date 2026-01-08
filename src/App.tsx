@@ -1,13 +1,12 @@
+import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
 import Tab from '@mui/material/Tab'
 import Tabs from '@mui/material/Tabs'
+import Typography from '@mui/material/Typography'
 import { useState } from 'react'
 import { Filters } from './components/filters/index.tsx'
 import { INGREDIENT_NAMES } from './constants/INGREDIENT_NAMES.ts'
 import { RECIPE_MAP } from './constants/RECIPE_MAP.ts'
-import Container from '@mui/material/Container'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import { lightGreen } from '@mui/material/colors'
 
 const RECIPE_NAMES = Object.keys(RECIPE_MAP)
 const UNMAKEABLE_INGREDIENTS = INGREDIENT_NAMES.filter(
@@ -26,11 +25,6 @@ export function App() {
 				<Typography variant='body2'>
 					ヌカ・コーラ レシピ検索 & 逆引きツール
 				</Typography>
-				{Object.keys(lightGreen).map((e) => (
-					<Typography sx={{ color: lightGreen[e as keyof typeof lightGreen] }}>
-						{e}
-					</Typography>
-				))}
 			</Box>
 			<Tabs
 				aria-label='ツールを選択'
