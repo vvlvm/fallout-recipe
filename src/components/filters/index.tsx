@@ -1,12 +1,17 @@
-import Divider from '@mui/material/Divider'
 import { EFFECT_LABELS } from '@/constants/EFFECT_LABELS.ts'
 import { EFFECT_NAMES } from '@/constants/EFFECT_NAMES.ts'
 import { ITEM_NAME } from '@/constants/ITEM_NAMES.ts'
 import { RECIPE_LIST } from '@/constants/RECIPE_LIST.ts'
-import type { EffectName, IngredientName } from '@/types/RecipieType.ts'
+import {
+	type EffectName,
+	type IngredientName,
+	type Recipe,
+} from '@/types/RecipieType.ts'
 import { parseIngredientQuery } from '@/utils/parseIngredientQuery.tsx'
 import { filterRecipes } from '@/utils/recipeFilter.ts'
 import Autocomplete from '@mui/material/Autocomplete'
+import Button from '@mui/material/Button'
+import Divider from '@mui/material/Divider'
 import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
 import Grid from '@mui/material/Grid'
@@ -15,7 +20,7 @@ import Paper from '@mui/material/Paper'
 import Select, { type SelectChangeEvent } from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import { memo, useMemo, useState } from 'react'
+import { memo, useState } from 'react'
 import { IngredientQueryAutoComplete } from './IngredientQueryAutoComplete.tsx'
 import { Provider } from './queried-ingredient-names-context/Provider.tsx'
 import { RecipeGrid } from './recipe-grid/RecipeGrid.tsx'
@@ -28,19 +33,24 @@ export const Filters = memo(function Filters() {
 	const [ingredientQuery, setIngredientQuery] = useState<string>('')
 
 	// フィルタリングロジック
-	const filteredRecipes = useMemo(() => {
-		return filterRecipes({
-			recipes: RECIPE_LIST,
-			itemNameSearchTerm,
-			selectedEffectName,
-			ingredientQuery,
-		})
-	}, [itemNameSearchTerm, selectedEffectName, ingredientQuery])
+	const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>(RECIPE_LIST)
 
-	const queriedIngredientNames = useMemo<IngredientName[]>(
-		() => parseIngredientQuery(ingredientQuery),
-		[ingredientQuery]
-	)
+	// 検索された必要素材をハイライトする
+	const [queriedIngredientNames, setQueriedIngredientNames] = useState<
+		IngredientName[]
+	>([])
+
+	function handleSearchSubmit() {
+		setFilteredRecipes(
+			filterRecipes({
+				recipes: RECIPE_LIST,
+				ingredientQuery: ingredientQuery,
+				itemNameSearchTerm: itemNameSearchTerm,
+				selectedEffectName: selectedEffectName,
+			})
+		)
+		setQueriedIngredientNames(parseIngredientQuery(ingredientQuery))
+	}
 
 	return (
 		<>
@@ -92,6 +102,10 @@ export const Filters = memo(function Filters() {
 					</Grid>
 				</Grid>
 			</Paper>
+
+			<Button variant='contained' onClick={handleSearchSubmit}>
+				検索
+			</Button>
 
 			<Divider sx={{ my: 4 }} />
 

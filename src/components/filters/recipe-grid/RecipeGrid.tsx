@@ -6,13 +6,14 @@ import { grey } from '@mui/material/colors'
 import { Effects } from './Effects'
 import { RequiredItems } from './RequiredItems'
 import './recipeGrid.scss'
+import { memo } from 'react'
 
 interface Props {
 	filteredRecipes: Recipe[]
 	selectedEffect: EffectName | ''
 }
 
-export function RecipeGrid(props: Props) {
+export const RecipeGrid = memo(function RecipeGrid(props: Props) {
 	const { filteredRecipes, selectedEffect } = props
 
 	return (
@@ -41,7 +42,7 @@ export function RecipeGrid(props: Props) {
 			))}
 		</Box>
 	)
-}
+})
 
 interface CardProps extends Pick<Props, 'selectedEffect'> {
 	recipe: Recipe

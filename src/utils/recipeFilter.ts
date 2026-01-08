@@ -1,4 +1,4 @@
-import type { EffectName, IngredientName, Recipe } from '@/types/RecipieType'
+import type { EffectName, Recipe } from '@/types/RecipieType'
 
 type LogicNode =
 	| { type: 'AND'; left: LogicNode; right: LogicNode }
@@ -17,40 +17,38 @@ export function filterRecipes(props: Props<Recipe>): Recipe[] {
 	const { recipes, itemNameSearchTerm, selectedEffectName, ingredientQuery } =
 		props
 
-	return recipes.filter((recipe) => {
-		const matchesItemName = recipe.itemName.includes(itemNameSearchTerm)
-		const matchesEffectName =
-			selectedEffectName === '' ||
-			Object.hasOwn(recipe.effects, selectedEffectName)
-		const matchesIngredientQuery = ingredientQueryToSearchTerms(
-			ingredientQuery,
-			recipe.requiredItems.map((e) => e.requiredItemName)
-		)
-
-		return matchesItemName && matchesEffectName && matchesIngredientQuery
-	})
-}
-
-function ingredientQueryToSearchTerms(
-	ingredientQuery: string,
-	terms: IngredientName[]
-): boolean {
 	const trimmedQuery = ingredientQuery.trim()
-	if (!trimmedQuery) return true
+	if (!trimmedQuery) return recipes
 
+	const tokens = tokenize(trimmedQuery)
+	if (tokens.length === 0) return recipes
+
+	let ast: LogicNode
 	try {
-		const tokens = tokenize(trimmedQuery)
-		if (tokens.length === 0) return true
-		const ast = parse(tokens)
-		return evaluate(ast, terms)
+		ast = parse(tokens)
 	} catch (error: unknown) {
 		// 構文エラーなどがある場合（入力途中など）、安全のため空配列または全件を返す
 		// ここでは入力途中でも極力ヒットさせるため、エラー時はフィルタリングせず空を返すか、
 		// あるいは単純検索にフォールバックする等の戦略が考えられますが、
 		// 明示的な論理検索なのでエラー時はヒットなしとします。
-		console.error(error)
-		return false
+		console.warn(error)
+		return []
 	}
+
+	return recipes.filter((recipe) => {
+		const matchesItemName = recipe.itemName.includes(itemNameSearchTerm)
+		const matchesEffectName =
+			selectedEffectName === '' ||
+			Object.hasOwn(recipe.effects, selectedEffectName)
+		// ASTがない（クエリが空）場合は条件なしとして true を返す
+		const matchesIngredientQuery = ast
+			? evaluate(
+					ast,
+					recipe.requiredItems.map((e) => e.requiredItemName)
+				)
+			: true
+		return matchesItemName && matchesEffectName && matchesIngredientQuery
+	})
 }
 
 function tokenize(input: string): string[] {
@@ -58,9 +56,11 @@ function tokenize(input: string): string[] {
 	const normalized = input
 		.replace(/（/g, '(')
 		.replace(/）/g, ')')
-		.replace(/、/g, '|') // OR演算子として扱う
-		.replace(/,/g, '|') // OR演算子として扱う
-		.replace(/\u3000/g, ' ') // 全角スペース 暗黙のANDとして扱う
+		.replace(/、/g, '|') // ORとして扱う
+		.replace(/,/g, '|') // ORとして扱う
+		.replace(/＆/g, '&') // ORとして扱う
+		.replace(/\u3000/g, '&') // 全角スペース ANDとして扱う
+		.replace(/ /g, '&') // 半角スペース ANDとして扱う
 
 	// & | ( ) と半角・全角スペースで分割。ただし演算子はトークンとして維持する。
 	return normalized
@@ -83,7 +83,7 @@ function parse(tokens: string[]): LogicNode {
 
 	function parseTerm(): LogicNode {
 		let left = parseFactor()
-		// AND演算子は '&' または演算子なし（暗黙のAND）で処理
+
 		while (
 			pos < tokens.length &&
 			(tokens[pos] === '&' || tokens[pos] === '(' || !isOperator(tokens[pos]))
