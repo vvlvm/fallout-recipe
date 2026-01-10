@@ -27,6 +27,14 @@ const theme = createTheme({
 			},
 		},
 	},
+	typography: {
+		h3: {
+			fontSize: '1.1em',
+		},
+		h4: {
+			fontSize: '1em',
+		},
+	},
 })
 
 createRoot(document.getElementById('root')!).render(

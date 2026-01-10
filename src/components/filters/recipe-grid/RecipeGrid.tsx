@@ -62,7 +62,6 @@ function GridItem(props: CardProps) {
 			<Typography
 				variant='h3'
 				sx={{
-					fontSize: '1.2rem',
 					color: 'primary.main',
 					pb: 1,
 					borderBottom: '1px solid',
@@ -76,7 +75,6 @@ function GridItem(props: CardProps) {
 				<Typography
 					variant='h4'
 					sx={{
-						fontSize: '1rem',
 						mt: 2,
 						color: 'text.secondary',
 					}}
@@ -90,7 +88,6 @@ function GridItem(props: CardProps) {
 				<Typography
 					variant='h4'
 					sx={{
-						fontSize: '1rem',
 						mt: 2,
 						color: 'text.secondary',
 					}}
