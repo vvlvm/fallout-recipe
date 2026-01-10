@@ -1,56 +1,86 @@
-import type { EffectName, IngredientName, Recipe } from '@/types/RecipieType'
+import { EFFECT_LABEL_MAP } from '@/constants/EFFECT_LABELS'
+import { RECIPE_LIST } from '@/constants/RECIPE_LIST'
+import type { EffectLabel, IngredientName, Recipe } from '@/types/RecipieType'
 
 type LogicNode =
 	| { type: 'AND'; left: LogicNode; right: LogicNode }
 	| { type: 'OR'; left: LogicNode; right: LogicNode }
 	| { type: 'LITERAL'; value: string }
 
-interface Props<T> {
-	recipes: T[]
+interface Props {
 	itemNameSearchTerm: string
-	selectedEffectName: EffectName | ''
+	/** @param effectNameQuery 入力された検索クエリ (例: "Meat & (Water | Rice)"" */
+	effectNameQuery: string
 	/** @param ingredientQuery 入力された検索クエリ (例: "Meat & (Water | Rice)"" */
 	ingredientQuery: string
 }
 
-export function filterRecipes(props: Props<Recipe>): Recipe[] {
-	const { recipes, itemNameSearchTerm, selectedEffectName, ingredientQuery } =
-		props
+export function filterRecipes(props: Props): Recipe[] {
+	const { itemNameSearchTerm, ingredientQuery, effectNameQuery } = props
 
-	return recipes.filter((recipe) => {
+	const ingredientAst = createAst(ingredientQuery, ingredientNameEvaluate)
+	const effectNameAst = createAst(effectNameQuery, evaluateEffectName)
+
+	return RECIPE_LIST.filter((recipe) => {
 		const matchesItemName = recipe.itemName.includes(itemNameSearchTerm)
-		const matchesEffectName =
-			selectedEffectName === '' ||
-			Object.hasOwn(recipe.effects, selectedEffectName)
-		const matchesIngredientQuery = ingredientQueryToSearchTerms(
-			ingredientQuery,
-			recipe.requiredItems.map((e) => e.requiredItemName)
-		)
 
-		return matchesItemName && matchesEffectName && matchesIngredientQuery
+		// ASTがない場合は条件なしとしてtrueを返す
+		const matchesIngredientQuery =
+			ingredientAst === null
+				? true
+				: ingredientAst(recipe.requiredItems.map((e) => e.requiredItemName))
+
+		console.log(recipe.itemName)
+		// ASTがない場合は条件なしとしてtrueを返す
+		const matchesEffectNameQuery =
+			effectNameAst === null
+				? true
+				: effectNameAst(
+						Object.values(recipe.effects).map(
+							(e) => EFFECT_LABEL_MAP[e.effectName]
+						)
+					)
+		console.log('-----')
+
+		return matchesItemName && matchesIngredientQuery && matchesEffectNameQuery
 	})
 }
 
-function ingredientQueryToSearchTerms(
-	ingredientQuery: string,
-	terms: IngredientName[]
-): boolean {
-	const trimmedQuery = ingredientQuery.trim()
-	if (!trimmedQuery) return true
+/*
+ * Ast=Abstract Syntax Treeらしい
+ * 抽象構文木と訳されるデータ構造で、
+ *「式」や「ロジック」を 木構造で表現したもの。
+ */
+/**
+ * @returns nullならフィルター関数が渡されない
+ */
+function createAst<T extends string>(
+	query: string,
+	evaluateFunc: (node: LogicNode, terms: T[]) => boolean
+): ((targets: T[]) => boolean) | null {
+	const trimmedQuery = query.trim()
+	if (!trimmedQuery) return null
 
+	const tokens = tokenize(trimmedQuery)
+	if (tokens.length === 0) return null
+
+	console.log(tokens)
+
+	let node: LogicNode
 	try {
-		const tokens = tokenize(trimmedQuery)
-		if (tokens.length === 0) return true
-		const ast = parse(tokens)
-		return evaluate(ast, terms)
+		node = parse(tokens)
 	} catch (error: unknown) {
 		// 構文エラーなどがある場合（入力途中など）、安全のため空配列または全件を返す
 		// ここでは入力途中でも極力ヒットさせるため、エラー時はフィルタリングせず空を返すか、
 		// あるいは単純検索にフォールバックする等の戦略が考えられますが、
 		// 明示的な論理検索なのでエラー時はヒットなしとします。
-		console.error(error)
-		return false
+		console.warn(error)
+		return null
 	}
+
+	console.log(node)
+
+	return (targets: T[]) => evaluateFunc(node, targets)
 }
 
 function tokenize(input: string): string[] {
@@ -58,13 +88,15 @@ function tokenize(input: string): string[] {
 	const normalized = input
 		.replace(/（/g, '(')
 		.replace(/）/g, ')')
-		.replace(/、/g, '|') // OR演算子として扱う
-		.replace(/,/g, '|') // OR演算子として扱う
-		.replace(/\u3000/g, ' ') // 全角スペース 暗黙のANDとして扱う
+		.replace(/、/g, '|') // ORとして扱う
+		.replace(/,/g, '|') // ORとして扱う
+		.replace(/＆/g, '&') // ORとして扱う
+		.replace(/\u3000/g, '&') // 全角スペース ANDとして扱う
+		.replace(/。/g, '&') // ANDとして扱う
 
-	// & | ( ) と半角・全角スペースで分割。ただし演算子はトークンとして維持する。
+	//&|()で分割
 	return normalized
-		.split(/([&|()])| +/g)
+		.split(/([&|()])+/g)
 		.filter((t): t is string => t != null && t !== '')
 }
 
@@ -83,7 +115,7 @@ function parse(tokens: string[]): LogicNode {
 
 	function parseTerm(): LogicNode {
 		let left = parseFactor()
-		// AND演算子は '&' または演算子なし（暗黙のAND）で処理
+
 		while (
 			pos < tokens.length &&
 			(tokens[pos] === '&' || tokens[pos] === '(' || !isOperator(tokens[pos]))
@@ -123,11 +155,56 @@ function isOperator(token: string): boolean {
 	return token === '&' || token === '|' || token === ')'
 }
 
-function evaluate(node: LogicNode, terms: string[]): boolean {
-	if (node.type === 'AND')
-		return evaluate(node.left, terms) && evaluate(node.right, terms)
-	if (node.type === 'OR')
-		return evaluate(node.left, terms) || evaluate(node.right, terms)
+function ingredientNameEvaluate(
+	node: LogicNode,
+	terms: IngredientName[]
+): boolean {
+	if (node.type === 'AND') {
+		return (
+			ingredientNameEvaluate(node.left, terms) &&
+			ingredientNameEvaluate(node.right, terms)
+		)
+	} else if (node.type === 'OR') {
+		return (
+			ingredientNameEvaluate(node.left, terms) ||
+			ingredientNameEvaluate(node.right, terms)
+		)
+	}
 	// 部分一致検索 (大文字小文字無視)
-	return terms.some((t) => t.toLowerCase().includes(node.value.toLowerCase()))
+	else {
+		return terms.some((t) => t.toLowerCase().includes(node.value.toLowerCase()))
+	}
+}
+
+/**
+ * hpと最大hp, apと最大hpを厳密に比較するためingredientNameEvaluateと独立させた
+ */
+function evaluateEffectName(node: LogicNode, terms: EffectLabel[]): boolean {
+	if (node.type === 'AND') {
+		return (
+			evaluateEffectName(node.left, terms) &&
+			evaluateEffectName(node.right, terms)
+		)
+	} else if (node.type === 'OR') {
+		return (
+			evaluateEffectName(node.left, terms) ||
+			evaluateEffectName(node.right, terms)
+		)
+	} else {
+		return terms.some((t) => {
+			const lowerTerm = t.toLowerCase()
+			const lowerNodeValue = node.value.toLowerCase()
+
+			if (
+				lowerTerm === 'hp' ||
+				lowerTerm === 'ap' ||
+				lowerTerm === '最大hp' ||
+				lowerTerm === '最大ap'
+			) {
+				return lowerTerm === lowerNodeValue
+			} else {
+				return lowerTerm.includes(lowerNodeValue)
+			}
+		})
+	}
 }

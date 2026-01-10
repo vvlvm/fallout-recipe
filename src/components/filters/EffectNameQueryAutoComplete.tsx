@@ -1,4 +1,4 @@
-import { INGREDIENT_NAMES } from '@/constants/INGREDIENT_NAMES'
+import { EFFECT_LABELS } from '@/constants/EFFECT_LABELS'
 import Autocomplete, {
 	type AutocompleteChangeReason,
 } from '@mui/material/Autocomplete'
@@ -7,8 +7,8 @@ import type { FilterOptionsState } from '@mui/material/useAutocomplete'
 import type { AutocompleteInputChangeReason } from 'node_modules/@mui/material'
 import { QueryExplain } from './query-explain/QueryExplain'
 
-// 「、」「,」はor。全角スペース・スペースはand。
-const lastTokenRegex = /[^&|()（）\u3000、, ]+$/
+// 「、」「,」はor。「全角スペース」「。」「&」はand。
+const lastTokenRegex = /[^&|()（）\u3000、,。]+$/
 
 // コンポーネントの外に出すことで、レンダリングごとの関数再生成を防ぐ
 function filterOptions(options: string[], state: FilterOptionsState<string>) {
@@ -24,7 +24,7 @@ interface Props {
 	setInputValue: React.Dispatch<React.SetStateAction<string>>
 }
 
-export function IngredientQueryAutoComplete(props: Props) {
+export function EffectNameQueryAutoComplete(props: Props) {
 	const { inputValue, setInputValue } = props
 
 	function handleInputChange(
@@ -61,16 +61,16 @@ export function IngredientQueryAutoComplete(props: Props) {
 	return (
 		<>
 			<Autocomplete
-				id='ingredient-query-autocomplete'
+				id='effect-name-query-autocomplete'
 				freeSolo
-				options={INGREDIENT_NAMES}
+				options={EFFECT_LABELS}
 				inputValue={inputValue}
 				value={inputValue}
 				onInputChange={handleInputChange}
 				onChange={handleChange}
 				filterOptions={filterOptions}
 				renderInput={(params) => (
-					<TextField {...params} placeholder='クアンタム&チェリー' />
+					<TextField {...params} placeholder='HP&最大AP...' />
 				)}
 			/>
 			<QueryExplain />

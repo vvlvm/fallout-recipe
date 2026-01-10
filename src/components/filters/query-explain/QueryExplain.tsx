@@ -56,11 +56,10 @@ export function QueryExplain() {
 						&
 					</Example>
 					<Typography sx={{ mr: 1 }}>,</Typography>
-					<Example> </Example>
-					<Note>(スペース)</Note>
-					<Typography sx={{ mr: 1 }}>,</Typography>
 					<Example>{'　'}</Example>
 					<Note>(全角スペース)</Note>
+					<Typography sx={{ mr: 1 }}>,</Typography>
+					<Example>。</Example>
 				</Stack>
 			</Row>
 			<Divider sx={{ gridColumn: 'span 2' }} />

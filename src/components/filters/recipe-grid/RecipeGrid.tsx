@@ -1,19 +1,19 @@
-import type { EffectName, Recipe } from '@/types/RecipieType'
+import type { Recipe } from '@/types/RecipieType'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import { grey } from '@mui/material/colors'
+import { memo } from 'react'
 import { Effects } from './Effects'
 import { RequiredItems } from './RequiredItems'
 import './recipeGrid.scss'
 
 interface Props {
 	filteredRecipes: Recipe[]
-	selectedEffect: EffectName | ''
 }
 
-export function RecipeGrid(props: Props) {
-	const { filteredRecipes, selectedEffect } = props
+export const RecipeGrid = memo(function RecipeGrid(props: Props) {
+	const { filteredRecipes } = props
 
 	return (
 		<Box
@@ -33,22 +33,18 @@ export function RecipeGrid(props: Props) {
 			}}
 		>
 			{filteredRecipes.map((recipe) => (
-				<GridItem
-					recipe={recipe}
-					selectedEffect={selectedEffect}
-					key={recipe.itemName}
-				/>
+				<GridItem recipe={recipe} key={recipe.itemName} />
 			))}
 		</Box>
 	)
-}
+})
 
-interface CardProps extends Pick<Props, 'selectedEffect'> {
+interface CardProps {
 	recipe: Recipe
 }
 
 function GridItem(props: CardProps) {
-	const { recipe, selectedEffect } = props
+	const { recipe } = props
 	const { itemName, requiredItems, effects } = recipe
 
 	return (
@@ -100,7 +96,7 @@ function GridItem(props: CardProps) {
 				>
 					効果
 				</Typography>
-				<Effects effects={effects} selectedEffect={selectedEffect} />
+				<Effects effects={effects} />
 			</Box>
 		</Card>
 	)
