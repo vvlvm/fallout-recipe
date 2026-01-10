@@ -1,3 +1,5 @@
+import { AlignedTwoColumnGrid } from '@/components/aligned-two-column-grid/AlignedTwoColumnGrid.tsx'
+import { AlignedTwoColumnGridItem } from '@/components/aligned-two-column-grid/AlignedTwoColumnGridItem.tsx'
 import { EFFECT_LABEL_MAP } from '@/constants/EFFECT_LABELS'
 import {
 	isCarryWeightEffect,
@@ -7,7 +9,6 @@ import {
 import Box from '@mui/material/Box'
 import SvgIcon from '@mui/material/SvgIcon'
 import Typography from '@mui/material/Typography'
-import clsx from 'clsx'
 import { IoIosTimer } from 'react-icons/io'
 import { useQueriedEffectNames } from '../queried-effect-names-context/useQueriedIngredientNames'
 
@@ -17,11 +18,11 @@ interface Props {
 
 export function Effects({ effects }: Props) {
 	return (
-		<div className='list-like-grid'>
+		<AlignedTwoColumnGrid>
 			{Object.values(effects).map((effect) => (
 				<ListItem effect={effect} key={effect.effectName} />
 			))}
-		</div>
+		</AlignedTwoColumnGrid>
 	)
 }
 
@@ -43,16 +44,9 @@ function ListItem({ effect }: TagProps) {
 	const textColor = isHighlighted ? 'highlight' : undefined
 
 	return (
-		<Box
-			className={clsx('item', isSingleColumn && 'single-column')}
-			key={effectName}
-		>
+		<AlignedTwoColumnGridItem singleColumn={isSingleColumn}>
 			{isSingleColumn && (
-				<Typography
-					component='span'
-					color={textColor}
-					className={clsx('item-name')}
-				>
+				<Typography component='span' color={textColor}>
 					{isCarryWeightEffect(effect) ? `${label}+${effect.amount}` : label}
 				</Typography>
 			)}
@@ -60,11 +54,7 @@ function ListItem({ effect }: TagProps) {
 			{!isSingleColumn && (
 				<>
 					<Box>
-						<Typography
-							component='span'
-							color={textColor}
-							className={clsx('item-name')}
-						>
+						<Typography component='span' color={textColor} sx={{ mr: 2 }}>
 							{label}
 						</Typography>
 					</Box>
@@ -95,6 +85,6 @@ function ListItem({ effect }: TagProps) {
 					</Box>
 				</>
 			)}
-		</Box>
+		</AlignedTwoColumnGridItem>
 	)
 }
