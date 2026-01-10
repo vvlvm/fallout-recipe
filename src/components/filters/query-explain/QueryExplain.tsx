@@ -1,21 +1,21 @@
-import { useState, type FC, type ReactNode } from 'react'
+import Button, { type ButtonProps } from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
 import List, { type ListProps } from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
+import ListItem, { type ListItemProps } from '@mui/material/ListItem'
+import Paper from '@mui/material/Paper'
 import Stack, { type StackProps } from '@mui/material/Stack'
 import Typography, { type TypographyProps } from '@mui/material/Typography'
-import { styled } from '@mui/material/styles'
-import Button from '@mui/material/Button'
 
 const Container = (props: ListProps) => (
 	<List
 		dense
+		component={Paper}
 		{...props}
 		sx={{
 			display: 'grid',
 			gridTemplateColumns: 'auto 1fr',
-			paddingTop: (theme) => theme.spacing(0.5),
-			paddingBottom: 0,
+			p: 0,
+			m: (theme) => theme.spacing(1),
 			columnGap: (theme) => ({
 				xs: theme.spacing(1),
 				sm: theme.spacing(3),
@@ -25,42 +25,34 @@ const Container = (props: ListProps) => (
 	/>
 )
 
-const Row = styled(ListItem)(() => ({
-	display: 'grid',
-	gridColumn: 'span 2',
-	gridTemplateColumns: 'subgrid',
-	paddingBottom: 0,
-}))
+const Row = (props: ListItemProps) => (
+	<ListItem
+		{...props}
+		sx={{
+			display: 'grid',
+			gridColumn: 'span 2',
+			gridTemplateColumns: 'subgrid',
+			px: (theme) => theme.spacing(1),
+			py: (theme) => theme.spacing(0.5),
+			alignItems: 'start',
+		}}
+	/>
+)
 
-const Head: FC<{ children: ReactNode }> = ({ children }) => {
-	const [expanded, setExpanded] = useState(false)
-
-	function handleClick() {
-		setExpanded(!expanded)
-	}
-
+const Head = (props: ButtonProps) => {
 	return (
 		<Button
 			variant='text'
-			onClick={handleClick}
+			{...props}
 			sx={{
-				display: 'inline',
-				overflow: 'hidden',
-				textOverflow: 'ellipsis',
-				whiteSpace: 'nowrap',
 				padding: 0,
 				textAlign: 'left',
 				color: 'text.primary',
 				fontWeight: 'normal',
-				...(expanded && {
-					overflow: 'initial',
-					textOverflow: 'initial',
-					whiteSpace: 'initial',
-				}),
+				justifyContent: 'left',
+				...props.sx,
 			}}
-		>
-			{children}
-		</Button>
+		/>
 	)
 }
 
