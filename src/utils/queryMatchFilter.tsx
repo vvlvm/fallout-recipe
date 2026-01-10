@@ -10,31 +10,32 @@ export function ingredientNameQueryMatchFilter(
 ): IngredientName[] {
 	if (!query) return []
 	const tokens = query.split(TOKEN_SEPARATORS).filter(Boolean)
-	const deduplicated: string[] = Array.from(new Set(tokens))
+	const deduplicatedTokens: string[] = Array.from(new Set(tokens))
 
 	return INGREDIENT_NAMES.filter((name) =>
-		deduplicated.some((term) => name.includes(term))
+		deduplicatedTokens.some((token) => {
+			// 検索語が'ヌカ・コーラ'の場合はヌカ・コーラそのもののみ対象にする
+			if (token === 'ヌカ・コーラ') {
+				return name === 'ヌカ・コーラ'
+			} else {
+				return name.includes(token)
+			}
+		})
 	)
 }
 
 export function effectNameQueryMatchFilter(query: string): EffectName[] {
 	if (!query) return []
 	const tokens = query.split(TOKEN_SEPARATORS).filter(Boolean)
-	const deduplicated: string[] = Array.from(new Set(tokens))
+	const deduplicatedTokens: string[] = Array.from(new Set(tokens))
 
 	return EFFECT_NAMES.filter((name) =>
-		deduplicated.some((term) => {
-			const label = EFFECT_LABEL_MAP[name]
+		deduplicatedTokens.some((token) => {
 			const lowerCaseLabel = EFFECT_LABEL_MAP[name].toLocaleLowerCase()
-			const lowerCaseTerm = term.toLocaleLowerCase()
+			const lowerCaseTerm = token.toLocaleLowerCase()
 
 			// 検索のときHPが最大HPにかかってしまうので特別に処理
-			if (
-				label === 'HP' ||
-				label === 'AP' ||
-				label === '最大HP' ||
-				label === '最大AP'
-			) {
+			if (lowerCaseTerm === 'hp' || lowerCaseTerm === 'ap') {
 				return lowerCaseLabel === lowerCaseTerm
 			} else {
 				return lowerCaseLabel.includes(lowerCaseTerm)
