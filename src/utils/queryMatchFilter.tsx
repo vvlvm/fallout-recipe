@@ -3,7 +3,7 @@ import { EFFECT_NAMES } from '@/constants/EFFECT_NAMES'
 import { INGREDIENT_NAMES } from '@/constants/INGREDIENT_NAMES'
 import type { EffectName, IngredientName } from '@/types/RecipieType'
 
-const TOKEN_SEPARATORS = /[&()（）\u3000、,|]+/
+const TOKEN_SEPARATORS = /[&()（）\u3000、,|。]+/
 
 export function ingredientNameQueryMatchFilter(
 	query: string
@@ -24,26 +24,20 @@ export function effectNameQueryMatchFilter(query: string): EffectName[] {
 
 	return EFFECT_NAMES.filter((name) =>
 		deduplicated.some((term) => {
+			const label = EFFECT_LABEL_MAP[name]
 			const lowerCaseLabel = EFFECT_LABEL_MAP[name].toLocaleLowerCase()
 			const lowerCaseTerm = term.toLocaleLowerCase()
 
 			// 検索のときHPが最大HPにかかってしまうので特別に処理
 			if (
-				name === 'HP' ||
-				name === 'AP' ||
-				name === 'MaxHP' ||
-				name === 'MaxAP'
+				label === 'HP' ||
+				label === 'AP' ||
+				label === '最大HP' ||
+				label === '最大AP'
 			) {
-				return (
-					lowerCaseLabel.toLocaleLowerCase() ===
-					lowerCaseTerm.toLocaleLowerCase()
-				)
-			}
-			if (lowerCaseLabel === 'Rad Resist') {
+				return lowerCaseLabel === lowerCaseTerm
 			} else {
-				return lowerCaseLabel
-					.toLocaleLowerCase()
-					.includes(lowerCaseTerm.toLocaleLowerCase())
+				return lowerCaseLabel.includes(lowerCaseTerm)
 			}
 		})
 	)

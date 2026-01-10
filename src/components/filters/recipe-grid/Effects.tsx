@@ -33,8 +33,8 @@ function ListItem({ effect }: TagProps) {
 	const { effectName } = effect
 	const label = EFFECT_LABEL_MAP[effectName]
 	const queriedEffectNames = useQueriedEffectNames()
-	const isHighlighted = queriedEffectNames.some((queried) =>
-		effectName.includes(queried)
+	const isHighlighted = queriedEffectNames.some(
+		(queried) => effectName === queried
 	)
 	const isSingleColumn =
 		effectName === 'Caffeine' || effectName === 'CarryWeight'
