@@ -10,6 +10,7 @@ const Container = styled((props) => <List dense {...props} />)<ListProps>(
 		display: 'grid',
 		gridTemplateColumns: 'auto 1fr',
 		gap: theme.spacing(1),
+		paddingBottom: 0,
 	})
 )
 
