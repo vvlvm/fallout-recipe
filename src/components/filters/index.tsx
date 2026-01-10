@@ -95,7 +95,11 @@ export const Filters = memo(function Filters() {
 					</FormControl>
 				</Stack>
 
-				<Button variant='contained' onClick={handleSearchSubmit} sx={{ mt: 2 }}>
+				<Button
+					variant='contained'
+					onClick={handleSearchSubmit}
+					sx={{ mt: 2, ml: { xs: 2, sm: 0 } }}
+				>
 					検索
 				</Button>
 			</Paper>

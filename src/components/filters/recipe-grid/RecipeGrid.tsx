@@ -26,10 +26,10 @@ export const RecipeGrid = memo(function RecipeGrid(props: Props) {
 				 * Array.from(document.querySelectorAll('[data-name="recipe-card"]')).reduce((max, e) => Math.max(max, e.offsetWidth),0)
 				 *
 				 */
-				gridTemplateColumns: 'repeat(auto-fit, 247px)',
+				gridTemplateColumns: 'repeat(auto-fit, 263px)',
 				gridTemplateRows: 'auto auto auto',
 				alignItems: 'start',
-				gap: '0px 6px',
+				columnGap: 1,
 			}}
 		>
 			{filteredRecipes.map((recipe) => (
@@ -54,16 +54,9 @@ function GridItem(props: CardProps) {
 				display: 'grid',
 				gridRow: 'span 3',
 				gridTemplateRows: 'subgrid',
-				p: {
-					xs: 0,
-					sm: 2,
-				},
-				pt: {
-					xs: 2, // * pt:2にしてもp:{xs:0}を上書きできない
-					sm: 2,
-				},
-				marginBottom: '32px',
-				width: 'fit-content',
+				p: 2,
+				px: 1.5,
+				marginBottom: 4,
 			}}
 		>
 			<Typography
@@ -79,7 +72,7 @@ function GridItem(props: CardProps) {
 				{itemName}
 			</Typography>
 
-			<Box sx={{ ml: 1 }}>
+			<Box sx={{ ml: { xs: 0, sm: 1 } }}>
 				<Typography
 					variant='h4'
 					sx={{
@@ -93,7 +86,7 @@ function GridItem(props: CardProps) {
 				<RequiredItems requiredItems={requiredItems} />
 			</Box>
 
-			<Box sx={{ ml: 1 }}>
+			<Box sx={{ ml: { xs: 0, sm: 1 } }}>
 				<Typography
 					variant='h4'
 					sx={{
