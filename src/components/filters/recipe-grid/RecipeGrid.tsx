@@ -6,7 +6,6 @@ import { grey } from '@mui/material/colors'
 import { memo } from 'react'
 import { Effects } from './Effects'
 import { RequiredItems } from './RequiredItems'
-import './recipeGrid.scss'
 
 interface Props {
 	filteredRecipes: Recipe[]
