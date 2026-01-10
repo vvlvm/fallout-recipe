@@ -23,10 +23,10 @@ export const RecipeGrid = memo(function RecipeGrid(props: Props) {
 				 * gridTemplateColumns用にカードの最大幅を割り出す
 				 * 下の要素に width:fit-content; を設定してから実行すること
 				 *
-				 * Array.from(document.querySelectorAll('.recipe-card')).reduce((max, e) => Math.max(max, e.offsetWidth),0)
+				 * Array.from(document.querySelectorAll('[data-name="recipe-card"]')).reduce((max, e) => Math.max(max, e.offsetWidth),0)
 				 *
 				 */
-				gridTemplateColumns: 'repeat(auto-fit, 280px)',
+				gridTemplateColumns: 'repeat(auto-fit, 247px)',
 				gridTemplateRows: 'auto auto auto',
 				alignItems: 'start',
 				gap: '0px 6px',
@@ -49,13 +49,21 @@ function GridItem(props: CardProps) {
 
 	return (
 		<Card
-			className='recipe-card'
+			data-name='recipe-card'
 			sx={{
 				display: 'grid',
 				gridRow: 'span 3',
 				gridTemplateRows: 'subgrid',
-				padding: '16px',
+				p: {
+					xs: 0,
+					sm: 2,
+				},
+				pt: {
+					xs: 2, // * pt:2にしてもp:{xs:0}を上書きできない
+					sm: 2,
+				},
 				marginBottom: '32px',
+				width: 'fit-content',
 			}}
 		>
 			<Typography

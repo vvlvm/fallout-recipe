@@ -19,7 +19,7 @@ export function App() {
 	const [tab, setTab] = useState<number>(0)
 
 	return (
-		<Container>
+		<Container sx={{ p: { xs: 0, sm: 2 } }}>
 			<Box component='header'>
 				<Typography variant='h1' fontSize='2rem' color='primary.main'>
 					Fallout Nuka-Mixer Station

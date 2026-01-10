@@ -56,7 +56,7 @@ export const Filters = memo(function Filters() {
 
 	return (
 		<>
-			<Paper component='section' sx={{ p: 2 }}>
+			<Paper component='section' sx={{ p: 2, px: { xs: 0.5, sm: 2 } }}>
 				<Typography variant='h2' sx={{ fontSize: '1.5rem', mb: 2 }}>
 					検索フォーム
 				</Typography>
