@@ -1,4 +1,3 @@
-import Button, { type ButtonProps } from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
 import List, { type ListProps } from '@mui/material/List'
 import ListItem, { type ListItemProps } from '@mui/material/ListItem'
@@ -37,27 +36,13 @@ const Row = (props: ListItemProps) => (
 			p: 0,
 			pl: (theme) => theme.spacing(0.5),
 			py: (theme) => theme.spacing(0.5),
-			alignItems: 'start',
+			alignItems: 'baseline',
 		}}
 	/>
 )
 
-const Head = (props: ButtonProps) => {
-	return (
-		<Button
-			variant='text'
-			{...props}
-			sx={{
-				m: 0,
-				p: 0,
-				textAlign: 'left',
-				color: 'text.primary',
-				fontWeight: 'normal',
-				justifyContent: 'left',
-				...props.sx,
-			}}
-		/>
-	)
+const Head = (props: TypographyProps) => {
+	return <Typography variant='body2' {...props} />
 }
 
 const WrappableStack = (props: StackProps) => (

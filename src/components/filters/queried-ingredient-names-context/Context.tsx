@@ -1,4 +1,4 @@
 import { createContext } from 'react'
 import type { Value } from './Value'
 
-export const QueriedIngredientNamesContext = createContext<Value>([])
+export const QueriedIngredientNamesContext = createContext<Value>(new Set())

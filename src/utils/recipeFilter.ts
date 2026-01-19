@@ -23,7 +23,7 @@ export function filterRecipes(props: Props): Recipe[] {
 
 	return RECIPE_LIST.filter((recipe) => {
 		const matchesItemName = recipe.itemName.includes(itemNameSearchTerm)
-		console.log('-----\n', recipe.itemName)
+
 		// ASTがない場合は条件なしとしてtrueを返す
 		const matchesIngredientQuery =
 			ingredientAst === null
@@ -36,8 +36,8 @@ export function filterRecipes(props: Props): Recipe[] {
 				? true
 				: effectNameAst(
 						Object.values(recipe.effects).map(
-							(e) => EFFECT_LABEL_MAP[e.effectName]
-						)
+							(e) => EFFECT_LABEL_MAP[e.effectName],
+						),
 					)
 		return matchesItemName && matchesIngredientQuery && matchesEffectNameQuery
 	})
@@ -53,7 +53,7 @@ export function filterRecipes(props: Props): Recipe[] {
  */
 function createAst<T extends string>(
 	query: string,
-	evaluateFunc: (node: LogicNode, terms: T[]) => boolean
+	evaluateFunc: (node: LogicNode, terms: T[]) => boolean,
 ): ((targets: T[]) => boolean) | null {
 	const trimmedQuery = query.trim()
 	if (!trimmedQuery) return null
@@ -150,7 +150,7 @@ function isOperator(token: string): boolean {
 
 function ingredientNameEvaluate(
 	node: LogicNode,
-	ingredientNames: IngredientName[]
+	ingredientNames: IngredientName[],
 ): boolean {
 	if (node.type === 'AND') {
 		return (
@@ -184,7 +184,7 @@ function ingredientNameEvaluate(
  */
 function evaluateEffectName(
 	node: LogicNode,
-	effectLabels: EffectLabel[]
+	effectLabels: EffectLabel[],
 ): boolean {
 	if (node.type === 'AND') {
 		return (

@@ -20,12 +20,12 @@ export const RecipeGrid = memo(function RecipeGrid(props: Props) {
 				display: 'grid',
 				/* ↓ util関数
 				 * gridTemplateColumns用にカードの最大幅を割り出す
-				 * 下の要素に width:fit-content; を設定してから実行すること
+				 * GridItemに width:fit-content; を設定してから実行すること
 				 *
 				 * Array.from(document.querySelectorAll('[data-name="recipe-card"]')).reduce((max, e) => Math.max(max, e.offsetWidth),0)
 				 *
 				 */
-				gridTemplateColumns: 'repeat(auto-fit, 263px)',
+				gridTemplateColumns: 'repeat(auto-fit, 281px)',
 				gridTemplateRows: 'auto auto auto',
 				alignItems: 'start',
 				columnGap: 1,
@@ -56,6 +56,7 @@ function GridItem(props: CardProps) {
 				p: 2,
 				px: 1.5,
 				marginBottom: 4,
+				// width: 'fit-content', //最適なwidthを割り出す用
 			}}
 		>
 			<Typography

@@ -1,5 +1,6 @@
 import { ITEM_NAME } from '@/constants/ITEM_NAMES.ts'
 import { RECIPE_LIST } from '@/constants/RECIPE_LIST.ts'
+import { usePersistentSet } from '@/hooks/usePersistentSet.ts'
 import {
 	type EffectName,
 	type IngredientName,
@@ -11,6 +12,7 @@ import {
 } from '@/utils/queryMatchFilter.tsx'
 import { filterRecipes } from '@/utils/recipeFilter.ts'
 import Autocomplete from '@mui/material/Autocomplete'
+import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
 import FormControl from '@mui/material/FormControl'
@@ -25,21 +27,32 @@ import { IngredientQueryAutoComplete } from './IngredientQueryAutoComplete.tsx'
 import { QueriedEffectNamesProvider } from './queried-effect-names-context/Provider.tsx'
 import { QueriedIngredientNamesProvider } from './queried-ingredient-names-context/Provider.tsx'
 import { RecipeGrid } from './recipe-grid/RecipeGrid.tsx'
-import Box from '@mui/material/Box'
+import { usePersistentState } from '@/hooks/usePersistentState.ts'
 
 export const Filters = memo(function Filters() {
-	const [itemNameSearchTerm, setItemNameSearchTerm] = useState('')
-	const [effectNameQuery, setEffectNameQuery] = useState<string>('')
-	const [ingredientQuery, setIngredientQuery] = useState<string>('')
+	const [itemNameSearchTerm, setItemNameSearchTerm] = usePersistentState(
+		'itemNameSearchTerm',
+		'',
+	)
+	const [effectNameQuery, setEffectNameQuery] = usePersistentState(
+		'effectNameQuery',
+		'',
+	)
+	const [ingredientQuery, setIngredientQuery] = usePersistentState(
+		'ingredientQuery',
+		'',
+	)
 
 	// フィルタリングロジック
 	const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>(RECIPE_LIST)
 
 	// 検索された必要素材をハイライトする
-	const [queriedIngredientNames, setQueriedIngredientNames] = useState<
-		IngredientName[]
-	>([])
-	const [queriedEffectNames, setQueriedEffectNames] = useState<EffectName[]>([])
+	const { set: queriedIngredientNames, setAll: setQueriedIngredientNames } =
+		usePersistentSet<IngredientName>('queriedIngredientNames')
+
+	// 検索されたエフェクトをハイライトする
+	const { set: queriedEffectNames, setAll: setQueriedEffectNames } =
+		usePersistentSet<EffectName>('queriedEffectNames')
 
 	function handleSearchSubmit() {
 		setFilteredRecipes(
@@ -47,7 +60,7 @@ export const Filters = memo(function Filters() {
 				ingredientQuery: ingredientQuery,
 				itemNameSearchTerm: itemNameSearchTerm,
 				effectNameQuery: effectNameQuery,
-			})
+			}),
 		)
 		setQueriedIngredientNames(ingredientNameQueryMatchFilter(ingredientQuery))
 		// HPで検索すると最大HPにもヒットするので
@@ -64,6 +77,7 @@ export const Filters = memo(function Filters() {
 					<FormControl fullWidth>
 						<FormLabel component='legend'>アイテム名でフィルター</FormLabel>
 						<Autocomplete
+							freeSolo
 							options={ITEM_NAME}
 							onInputChange={handleItemNameSearchTermChange}
 							inputValue={itemNameSearchTerm}
