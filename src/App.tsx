@@ -1,5 +1,6 @@
 import { EmptyStripeBackground } from '@/components/EmptyStripeBackground.tsx'
 import { usePersistentSet } from '@/hooks/usePersistentSet.ts'
+import { useSet } from '@/hooks/useSet.ts'
 import { MarkedIngredientsProvider } from '@/marked-ingredients/marked-ingredients-context/MarkedIngredientsProvider'
 import { MarkedIngredients } from '@/marked-ingredients/MarkedIngredients.tsx'
 import { ToggleMarkedIngredientProvider } from '@/marked-ingredients/toggle-marked-ingredient/ToggleMarkedIngredientProvider.tsx'
@@ -27,14 +28,19 @@ export function App() {
 	const [tab, setTab] = useState<number>(0)
 	const {
 		set: markedIngredients,
-		toggle: toggleIngredient,
+		toggle: toggleMarkedIngredient,
 		setAll: setMarkedIngredients,
 	} = usePersistentSet<IngredientName>('markedIngredients')
+	const {
+		set: tempMarkedIngredients,
+		toggle: toggleTempMarkedIngredients,
+		setAll: setTempMarkedIngredient,
+	} = useSet<IngredientName>(markedIngredients)
 
 	return (
 		<MarkedIngredientsProvider value={markedIngredients}>
 			<SetMarkedIngredientsProvider value={setMarkedIngredients}>
-				<ToggleMarkedIngredientProvider value={toggleIngredient}>
+				<ToggleMarkedIngredientProvider value={toggleMarkedIngredient}>
 					<Container sx={{ p: { xs: 0, sm: 2 } }}>
 						<Box component='header'>
 							<Typography variant='h1' fontSize='2rem' color='primary.main'>
@@ -47,7 +53,7 @@ export function App() {
 						<Tabs
 							aria-label='ツールを選択'
 							value={tab}
-							onChange={handleTabClick}
+							onChange={handleTabChange}
 							variant='scrollable'
 							scrollButtons='auto'
 							sx={{ mb: 4 }}
@@ -58,6 +64,7 @@ export function App() {
 								aria-selected={tab === 0}
 								aria-controls='tabpanel-search'
 								label='レシピ検索'
+								onClick={updateMarkedIngredients}
 							/>
 							<Tab
 								id='tab-unmakeableIngredients'
@@ -72,6 +79,7 @@ export function App() {
 								aria-selected={tab === 2}
 								aria-controls='tabpanel-marked-ingredients'
 								label='マークした材料'
+								onClick={updateTempMarkedIngredients}
 							/>
 						</Tabs>
 						<Box
@@ -119,7 +127,11 @@ export function App() {
 										}
 							}
 						>
-							<MarkedIngredients />
+							<MarkedIngredients
+								markedIngredients={markedIngredients}
+								tempMarkedIngredients={tempMarkedIngredients}
+								toggleTemp={toggleTempMarkedIngredients}
+							/>
 						</Box>
 						<EmptyStripeBackground />
 					</Container>
@@ -128,7 +140,15 @@ export function App() {
 		</MarkedIngredientsProvider>
 	)
 
-	function handleTabClick(_: unknown, newValue: number) {
+	function updateTempMarkedIngredients() {
+		setTempMarkedIngredient(markedIngredients)
+	}
+
+	function updateMarkedIngredients() {
+		setMarkedIngredients(tempMarkedIngredients)
+	}
+
+	function handleTabChange(_: unknown, newValue: number) {
 		setTab(newValue)
 	}
 }

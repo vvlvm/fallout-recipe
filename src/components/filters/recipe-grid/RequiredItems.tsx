@@ -61,7 +61,7 @@ function RequiredItem(props: ItemProps) {
 	const textColor = isHighlighted ? 'highlight' : 'text.primary' //text.primaryにしないとButtonのprimary色を継承しちゃう
 	const [optimisticMarked, addOptimistic] = useOptimistic<boolean>(isMarked)
 	const title = useMemo(() => {
-		return requiredItemName + isMarked ? 'をマークから外す' : 'をマークする'
+		return requiredItemName + (isMarked ? 'をマークから外す' : 'をマークする')
 	}, [isMarked, requiredItemName])
 
 	return (
