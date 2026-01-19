@@ -45,7 +45,7 @@ function ListItem({ effect, isHighlighted }: TagProps) {
 	const { effectName } = effect
 	const label = EFFECT_LABEL_MAP[effectName]
 	const isSingleColumn =
-		effectName === 'Caffeine' || effectName === 'CarryWeight'
+		effectName === 'caffeine' || effectName === 'carryWeight'
 	const hasOverTime = 'isOverTime' in effect && effect.isOverTime
 	const hasAmount = 'amount' in effect
 	const textColor = isHighlighted ? 'highlight' : undefined

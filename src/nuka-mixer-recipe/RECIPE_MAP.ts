@@ -4,23 +4,23 @@ export const RECIPE_MAP: RecipeMap = {
 	'ニューカ・コーラ': {
 		itemName: 'ニューカ・コーラ',
 		effects: {
-			Caffeine: { effectName: 'Caffeine' },
-			HP: {
-				effectName: 'HP',
+			caffeine: { effectName: 'caffeine' },
+			hp: {
+				effectName: 'hp',
 				amount: 300,
 				isOverTime: true,
 			},
-			AP: {
-				effectName: 'AP',
+			ap: {
+				effectName: 'ap',
 				amount: 50,
 				isOverTime: true,
 			},
-			Weight: {
-				effectName: 'Weight',
+			weight: {
+				effectName: 'weight',
 				amount: 1,
 			},
-			Value: {
-				effectName: 'Value',
+			value: {
+				effectName: 'value',
 				amount: 20,
 			},
 		},
@@ -38,28 +38,28 @@ export const RECIPE_MAP: RecipeMap = {
 	'ヌカ・エクストリーム': {
 		itemName: 'ヌカ・エクストリーム',
 		effects: {
-			Caffeine: { effectName: 'Caffeine' },
-			MaxAP: {
-				effectName: 'MaxAP',
+			caffeine: { effectName: 'caffeine' },
+			maxAp: {
+				effectName: 'maxAp',
 				amount: 10,
 				isOverTime: true,
 			},
-			MaxHP: {
-				effectName: 'MaxHP',
+			maxHp: {
+				effectName: 'maxHp',
 				amount: 30,
 				isOverTime: true,
 			},
-			Rads: {
-				effectName: 'Rads',
+			rads: {
+				effectName: 'rads',
 				amount: -500,
 				isOverTime: true,
 			},
-			Weight: {
-				effectName: 'Weight',
+			weight: {
+				effectName: 'weight',
 				amount: 1,
 			},
-			Value: {
-				effectName: 'Value',
+			value: {
+				effectName: 'value',
 				amount: 20,
 			},
 		},
@@ -81,33 +81,33 @@ export const RECIPE_MAP: RecipeMap = {
 	'ヌカ・クーラー': {
 		itemName: 'ヌカ・クーラー',
 		effects: {
-			Caffeine: { effectName: 'Caffeine' },
-			HP: {
-				effectName: 'HP',
+			caffeine: { effectName: 'caffeine' },
+			hp: {
+				effectName: 'hp',
 				amount: 3600,
 				isOverTime: true,
 			},
-			MaxHP: {
-				effectName: 'MaxHP',
+			maxHp: {
+				effectName: 'maxHp',
 				amount: 50,
 				isOverTime: true,
 			},
-			AP: {
-				effectName: 'AP',
+			ap: {
+				effectName: 'ap',
 				amount: 1049,
 				isOverTime: true,
 			},
-			MaxAP: {
-				effectName: 'MaxAP',
+			maxAp: {
+				effectName: 'maxAp',
 				amount: 20,
 				isOverTime: true,
 			},
-			Weight: {
-				effectName: 'Weight',
+			weight: {
+				effectName: 'weight',
 				amount: 1,
 			},
-			Value: {
-				effectName: 'Value',
+			value: {
+				effectName: 'value',
 				amount: 20,
 			},
 		},
@@ -129,41 +129,41 @@ export const RECIPE_MAP: RecipeMap = {
 	'ヌカ・サイド': {
 		itemName: 'ヌカ・サイド',
 		effects: {
-			CarryWeight: {
-				effectName: 'CarryWeight',
+			carryWeight: {
+				effectName: 'carryWeight',
 				amount: 35,
 			},
-			HP: {
-				effectName: 'HP',
+			hp: {
+				effectName: 'hp',
 				amount: 75,
 				isOverTime: true,
 			},
-			AP: {
-				effectName: 'AP',
+			ap: {
+				effectName: 'ap',
 				amount: 300,
 				isOverTime: true,
 			},
-			MaxAP: {
-				effectName: 'MaxAP',
+			maxAp: {
+				effectName: 'maxAp',
 				amount: 20,
 				isOverTime: true,
 			},
-			MaxHP: {
-				effectName: 'MaxHP',
+			maxHp: {
+				effectName: 'maxHp',
 				amount: 50,
 				isOverTime: true,
 			},
-			RadResist: {
-				effectName: 'RadResist',
+			radResist: {
+				effectName: 'radResist',
 				amount: 35,
 				isOverTime: true,
 			},
-			Weight: {
-				effectName: 'Weight',
+			weight: {
+				effectName: 'weight',
 				amount: 1,
 			},
-			Value: {
-				effectName: 'Value',
+			value: {
+				effectName: 'value',
 				amount: 20,
 			},
 		},
@@ -178,28 +178,28 @@ export const RECIPE_MAP: RecipeMap = {
 	'ヌカ・サンライズ': {
 		itemName: 'ヌカ・サンライズ',
 		effects: {
-			Caffeine: { effectName: 'Caffeine' },
-			HP: {
-				effectName: 'HP',
+			caffeine: { effectName: 'caffeine' },
+			hp: {
+				effectName: 'hp',
 				amount: 150,
 				isOverTime: true,
 			},
-			AP: {
-				effectName: 'AP',
+			ap: {
+				effectName: 'ap',
 				amount: 50,
 				isOverTime: true,
 			},
-			RadResist: {
-				effectName: 'RadResist',
+			radResist: {
+				effectName: 'radResist',
 				amount: 25,
 				isOverTime: true,
 			},
-			Weight: {
-				effectName: 'Weight',
+			weight: {
+				effectName: 'weight',
 				amount: 1,
 			},
-			Value: {
-				effectName: 'Value',
+			value: {
+				effectName: 'value',
 				amount: 20,
 			},
 		},
@@ -211,23 +211,23 @@ export const RECIPE_MAP: RecipeMap = {
 	'ヌカ・ツイン': {
 		itemName: 'ヌカ・ツイン',
 		effects: {
-			Caffeine: { effectName: 'Caffeine' },
-			HP: {
-				effectName: 'HP',
+			caffeine: { effectName: 'caffeine' },
+			hp: {
+				effectName: 'hp',
 				amount: 150,
 				isOverTime: true,
 			},
-			AP: {
-				effectName: 'AP',
+			ap: {
+				effectName: 'ap',
 				amount: 50,
 				isOverTime: true,
 			},
-			Weight: {
-				effectName: 'Weight',
+			weight: {
+				effectName: 'weight',
 				amount: 1,
 			},
-			Value: {
-				effectName: 'Value',
+			value: {
+				effectName: 'value',
 				amount: 20,
 			},
 		},
@@ -239,11 +239,11 @@ export const RECIPE_MAP: RecipeMap = {
 	'ヌカ・ハーティ': {
 		itemName: 'ヌカ・ハーティ',
 		effects: {
-			CarryWeight: { effectName: 'CarryWeight', amount: 25 },
-			HP: { effectName: 'HP', amount: 225, isOverTime: true },
-			AP: { effectName: 'AP', amount: 50, isOverTime: true },
-			Weight: { effectName: 'Weight', amount: 1 },
-			Value: { effectName: 'Value', amount: 20 },
+			carryWeight: { effectName: 'carryWeight', amount: 25 },
+			hp: { effectName: 'hp', amount: 225, isOverTime: true },
+			ap: { effectName: 'ap', amount: 50, isOverTime: true },
+			weight: { effectName: 'weight', amount: 1 },
+			value: { effectName: 'value', amount: 20 },
 		},
 		requiredItems: [
 			{ requiredItemName: 'キャロットフラワー', amount: 1 },
@@ -255,23 +255,23 @@ export const RECIPE_MAP: RecipeMap = {
 	'ヌカ・バズ': {
 		itemName: 'ヌカ・バズ',
 		effects: {
-			Caffeine: { effectName: 'Caffeine' },
-			HP: { effectName: 'HP', amount: 52, isOverTime: true },
-			AP: { effectName: 'AP', amount: 125, isOverTime: true },
-			Weight: { effectName: 'Weight', amount: 1 },
-			Value: { effectName: 'Value', amount: 20 },
+			caffeine: { effectName: 'caffeine' },
+			hp: { effectName: 'hp', amount: 52, isOverTime: true },
+			ap: { effectName: 'ap', amount: 125, isOverTime: true },
+			weight: { effectName: 'weight', amount: 1 },
+			value: { effectName: 'value', amount: 20 },
 		},
 		requiredItems: [{ requiredItemName: 'ヌカ・コーラ・ワイルド', amount: 2 }],
 	},
 	'ヌカ・パワー': {
 		itemName: 'ヌカ・パワー',
 		effects: {
-			CarryWeight: {
-				effectName: 'CarryWeight',
+			carryWeight: {
+				effectName: 'carryWeight',
 				amount: 60,
 			},
-			Weight: { effectName: 'Weight', amount: 1 },
-			Value: { effectName: 'Value', amount: 20 },
+			weight: { effectName: 'weight', amount: 1 },
+			value: { effectName: 'value', amount: 20 },
 		},
 		requiredItems: [
 			{ requiredItemName: 'ヌカ・コーラ', amount: 1 },
@@ -281,14 +281,14 @@ export const RECIPE_MAP: RecipeMap = {
 	'ヌカ・パンチ': {
 		itemName: 'ヌカ・パンチ',
 		effects: {
-			Caffeine: { effectName: 'Caffeine' },
-			MaxAP: { effectName: 'MaxAP', amount: 10, isOverTime: true },
-			MaxHP: { effectName: 'MaxHP', amount: 30, isOverTime: true },
-			Rads: { effectName: 'Rads', amount: -500, isOverTime: true },
-			HP: { effectName: 'HP', amount: 150, isOverTime: true },
-			AP: { effectName: 'AP', amount: 50, isOverTime: true },
-			Weight: { effectName: 'Weight', amount: 1 },
-			Value: { effectName: 'Value', amount: 20 },
+			caffeine: { effectName: 'caffeine' },
+			maxAp: { effectName: 'maxAp', amount: 10, isOverTime: true },
+			maxHp: { effectName: 'maxHp', amount: 30, isOverTime: true },
+			rads: { effectName: 'rads', amount: -500, isOverTime: true },
+			hp: { effectName: 'hp', amount: 150, isOverTime: true },
+			ap: { effectName: 'ap', amount: 50, isOverTime: true },
+			weight: { effectName: 'weight', amount: 1 },
+			value: { effectName: 'value', amount: 20 },
 		},
 		requiredItems: [
 			{ requiredItemName: 'ヌカ・グレープ', amount: 1 },
@@ -300,11 +300,11 @@ export const RECIPE_MAP: RecipeMap = {
 	'ヌカ・ファンシー': {
 		itemName: 'ヌカ・ファンシー',
 		effects: {
-			Caffeine: { effectName: 'Caffeine' },
-			HP: { effectName: 'HP', amount: 150, isOverTime: true },
-			AP: { effectName: 'AP', amount: 100, isOverTime: true },
-			Weight: { effectName: 'Weight', amount: 1 },
-			Value: { effectName: 'Value', amount: 20 },
+			caffeine: { effectName: 'caffeine' },
+			hp: { effectName: 'hp', amount: 150, isOverTime: true },
+			ap: { effectName: 'ap', amount: 100, isOverTime: true },
+			weight: { effectName: 'weight', amount: 1 },
+			value: { effectName: 'value', amount: 20 },
 		},
 		requiredItems: [
 			{ requiredItemName: 'ヌカ・コーラ・ワイルド', amount: 1 },
@@ -314,10 +314,10 @@ export const RECIPE_MAP: RecipeMap = {
 	'ヌカ・フリー': {
 		itemName: 'ヌカ・フリー',
 		effects: {
-			Caffeine: { effectName: 'Caffeine' },
-			HP: { effectName: 'HP', amount: 195, isOverTime: true },
-			Weight: { effectName: 'Weight', amount: 1 },
-			Value: { effectName: 'Value', amount: 20 },
+			caffeine: { effectName: 'caffeine' },
+			hp: { effectName: 'hp', amount: 195, isOverTime: true },
+			weight: { effectName: 'weight', amount: 1 },
+			value: { effectName: 'value', amount: 20 },
 		},
 		requiredItems: [
 			{ requiredItemName: 'ヌカ・コーラ', amount: 1 },
@@ -327,13 +327,13 @@ export const RECIPE_MAP: RecipeMap = {
 	'ヌカ・フルーティ': {
 		itemName: 'ヌカ・フルーティ',
 		effects: {
-			Caffeine: { effectName: 'Caffeine' },
-			HP: { effectName: 'HP', amount: 300, isOverTime: true },
-			AP: { effectName: 'AP', amount: 50, isOverTime: true },
-			Rads: { effectName: 'Rads', amount: -500, isOverTime: true },
-			RadResist: { effectName: 'RadResist', amount: 25, isOverTime: true },
-			Weight: { effectName: 'Weight', amount: 1 },
-			Value: { effectName: 'Value', amount: 20 },
+			caffeine: { effectName: 'caffeine' },
+			hp: { effectName: 'hp', amount: 300, isOverTime: true },
+			ap: { effectName: 'ap', amount: 50, isOverTime: true },
+			rads: { effectName: 'rads', amount: -500, isOverTime: true },
+			radResist: { effectName: 'radResist', amount: 25, isOverTime: true },
+			weight: { effectName: 'weight', amount: 1 },
+			value: { effectName: 'value', amount: 20 },
 		},
 		requiredItems: [
 			{ requiredItemName: 'ヌカ・グレープ', amount: 1 },
@@ -345,12 +345,12 @@ export const RECIPE_MAP: RecipeMap = {
 	'ヌカ・ベリー': {
 		itemName: 'ヌカ・ベリー',
 		effects: {
-			Caffeine: { effectName: 'Caffeine' },
-			HP: { effectName: 'HP', amount: 300, isOverTime: true },
-			AP: { effectName: 'AP', amount: 50, isOverTime: true },
-			Rads: { effectName: 'Rads', amount: -500, isOverTime: true },
-			Weight: { effectName: 'Weight', amount: 1 },
-			Value: { effectName: 'Value', amount: 20 },
+			caffeine: { effectName: 'caffeine' },
+			hp: { effectName: 'hp', amount: 300, isOverTime: true },
+			ap: { effectName: 'ap', amount: 50, isOverTime: true },
+			rads: { effectName: 'rads', amount: -500, isOverTime: true },
+			weight: { effectName: 'weight', amount: 1 },
+			value: { effectName: 'value', amount: 20 },
 		},
 		requiredItems: [
 			{ requiredItemName: 'ヌカ・グレープ', amount: 1 },
@@ -361,11 +361,11 @@ export const RECIPE_MAP: RecipeMap = {
 	'ヌカ・ボイド': {
 		itemName: 'ヌカ・ボイド',
 		effects: {
-			CarryWeight: { effectName: 'CarryWeight', amount: 25 },
-			MaxHP: { effectName: 'MaxHP', amount: 30, isOverTime: true },
-			MaxAP: { effectName: 'MaxAP', amount: 10, isOverTime: true },
-			Weight: { effectName: 'Weight', amount: 1 },
-			Value: { effectName: 'Value', amount: 20 },
+			carryWeight: { effectName: 'carryWeight', amount: 25 },
+			maxHp: { effectName: 'maxHp', amount: 30, isOverTime: true },
+			maxAp: { effectName: 'maxAp', amount: 10, isOverTime: true },
+			weight: { effectName: 'weight', amount: 1 },
+			value: { effectName: 'value', amount: 20 },
 		},
 		requiredItems: [
 			{ requiredItemName: 'ヌカ・コーラ・クアンタム', amount: 1 },
@@ -375,12 +375,12 @@ export const RECIPE_MAP: RecipeMap = {
 	'ヌカ・ボムドロップ': {
 		itemName: 'ヌカ・ボムドロップ',
 		effects: {
-			Caffeine: { effectName: 'Caffeine' },
-			STR: { effectName: 'STR', amount: 2, isOverTime: true },
-			END: { effectName: 'END', amount: 2, isOverTime: true },
-			AGI: { effectName: 'AGI', amount: 2, isOverTime: true },
-			Weight: { effectName: 'Weight', amount: 1 },
-			Value: { effectName: 'Value', amount: 20 },
+			caffeine: { effectName: 'caffeine' },
+			str: { effectName: 'str', amount: 2, isOverTime: true },
+			end: { effectName: 'end', amount: 2, isOverTime: true },
+			agi: { effectName: 'agi', amount: 2, isOverTime: true },
+			weight: { effectName: 'weight', amount: 1 },
+			value: { effectName: 'value', amount: 20 },
 		},
 		requiredItems: [
 			{ requiredItemName: 'ウォッカ', amount: 1 },
@@ -393,11 +393,11 @@ export const RECIPE_MAP: RecipeMap = {
 	'ヌカ・ラッシュ': {
 		itemName: 'ヌカ・ラッシュ',
 		effects: {
-			Caffeine: { effectName: 'Caffeine' },
-			HP: { effectName: 'HP', amount: 999, isOverTime: true },
-			AP: { effectName: 'AP', amount: 40, isOverTime: true },
-			Weight: { effectName: 'Weight', amount: 1 },
-			Value: { effectName: 'Value', amount: 20 },
+			caffeine: { effectName: 'caffeine' },
+			hp: { effectName: 'hp', amount: 999, isOverTime: true },
+			ap: { effectName: 'ap', amount: 40, isOverTime: true },
+			weight: { effectName: 'weight', amount: 1 },
+			value: { effectName: 'value', amount: 20 },
 		},
 		requiredItems: [
 			{ requiredItemName: 'ヌカ・コーラ・ビクトリー', amount: 1 },
@@ -407,11 +407,11 @@ export const RECIPE_MAP: RecipeMap = {
 	'ヌカ・ラブ': {
 		itemName: 'ヌカ・ラブ',
 		effects: {
-			Caffeine: { effectName: 'Caffeine' },
-			HP: { effectName: 'HP', amount: 150, isOverTime: true },
-			AP: { effectName: 'AP', amount: 300, isOverTime: true },
-			Weight: { effectName: 'Weight', amount: 1 },
-			Value: { effectName: 'Value', amount: 20 },
+			caffeine: { effectName: 'caffeine' },
+			hp: { effectName: 'hp', amount: 150, isOverTime: true },
+			ap: { effectName: 'ap', amount: 300, isOverTime: true },
+			weight: { effectName: 'weight', amount: 1 },
+			value: { effectName: 'value', amount: 20 },
 		},
 		requiredItems: [
 			{ requiredItemName: 'ヌカ・コーラ・クォーツ', amount: 1 },
@@ -421,12 +421,12 @@ export const RECIPE_MAP: RecipeMap = {
 	'ヌカ・リキサー': {
 		itemName: 'ヌカ・リキサー',
 		effects: {
-			Caffeine: { effectName: 'Caffeine' },
-			HP: { effectName: 'HP', amount: 450, isOverTime: true },
-			RadResist: { effectName: 'RadResist', amount: 25, isOverTime: true },
-			DMGResist: { effectName: 'DMGResist', amount: 35, isOverTime: true },
-			Weight: { effectName: 'Weight', amount: 1 },
-			Value: { effectName: 'Value', amount: 20 },
+			caffeine: { effectName: 'caffeine' },
+			hp: { effectName: 'hp', amount: 450, isOverTime: true },
+			radResist: { effectName: 'radResist', amount: 25, isOverTime: true },
+			dmgResist: { effectName: 'dmgResist', amount: 35, isOverTime: true },
+			weight: { effectName: 'weight', amount: 1 },
+			value: { effectName: 'value', amount: 20 },
 		},
 		requiredItems: [
 			{ requiredItemName: 'Med-X', amount: 1 },

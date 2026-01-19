@@ -43,80 +43,80 @@ export type Effect =
 	| DMGResistEffect
 
 export interface HPEffect extends BaseEffect {
-	effectName: 'HP'
+	effectName: 'hp'
 	amount: number
 	isOverTime: boolean
 }
 
 export interface APEffect extends BaseEffect {
-	effectName: 'AP'
+	effectName: 'ap'
 	amount: number
 	isOverTime: boolean
 }
 
 export interface WeightEffect extends BaseEffect {
-	effectName: 'Weight'
+	effectName: 'weight'
 	amount: number
 }
 
 export interface ValueEffect extends BaseEffect {
-	effectName: 'Value'
+	effectName: 'value'
 	amount: number
 }
 
 export interface MaxHPEffect extends BaseEffect {
-	effectName: 'MaxHP'
+	effectName: 'maxHp'
 	amount: number
 	isOverTime: boolean
 }
 
 export interface MaxAPEffect extends BaseEffect {
-	effectName: 'MaxAP'
+	effectName: 'maxAp'
 	amount: number
 	isOverTime: boolean
 }
 
 export interface RadsEffect extends BaseEffect {
-	effectName: 'Rads'
+	effectName: 'rads'
 	amount: number
 	isOverTime: boolean
 }
 
 export interface RadResistEffect extends BaseEffect {
-	effectName: 'RadResist'
+	effectName: 'radResist'
 	amount: number
 	isOverTime: boolean
 }
 
 export interface CarryWeightEffect extends BaseEffect {
-	effectName: 'CarryWeight'
+	effectName: 'carryWeight'
 	amount: number
 }
 
 export function isCarryWeightEffect(
 	effect: Effect,
 ): effect is CarryWeightEffect {
-	return effect.effectName === 'CarryWeight'
+	return effect.effectName === 'carryWeight'
 }
 
 export interface CaffeineEffect extends BaseEffect {
-	effectName: 'Caffeine'
+	effectName: 'caffeine'
 }
 
 export interface STREffect extends BaseEffect {
-	effectName: 'STR'
+	effectName: 'str'
 	amount: number
 	isOverTime: boolean
 }
 
 export interface ENDEffect extends BaseEffect {
-	effectName: 'END'
+	effectName: 'end'
 	amount: number
 	isOverTime: boolean
 }
 
 export interface AGIEffect extends BaseEffect {
-	effectName: 'AGI'
+	effectName: 'agi'
 	amount: number
 	isOverTime: boolean
 }
@@ -128,20 +128,20 @@ export interface DMGResistEffect extends BaseEffect {
 }
 
 export type EffectMap = {
-	HP?: HPEffect
-	AP?: APEffect
-	Weight?: WeightEffect
-	Value?: ValueEffect
-	MaxHP?: MaxHPEffect
-	MaxAP?: MaxAPEffect
-	Rads?: RadsEffect
-	RadResist?: RadResistEffect
-	CarryWeight?: CarryWeightEffect
-	Caffeine?: CaffeineEffect
-	STR?: STREffect
-	END?: ENDEffect
-	AGI?: AGIEffect
-	DMGResist?: DMGResistEffect
+	hp?: HPEffect
+	ap?: APEffect
+	weight?: WeightEffect
+	value?: ValueEffect
+	maxHp?: MaxHPEffect
+	maxAp?: MaxAPEffect
+	rads?: RadsEffect
+	radResist?: RadResistEffect
+	carryWeight?: CarryWeightEffect
+	caffeine?: CaffeineEffect
+	str?: STREffect
+	end?: ENDEffect
+	agi?: AGIEffect
+	dmgResist?: DMGResistEffect
 }
 
 export type Recipe = {
