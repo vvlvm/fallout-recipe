@@ -2,5 +2,5 @@ import type { MarkedIngredientsValue } from '@/marked-ingredients/marked-ingredi
 import { createContext } from 'react'
 
 export const MarkedIngredientsContext = createContext<MarkedIngredientsValue>(
-	[]
+	new Set(),
 )
