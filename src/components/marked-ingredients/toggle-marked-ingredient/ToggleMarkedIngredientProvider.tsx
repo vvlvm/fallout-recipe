@@ -1,5 +1,5 @@
-import { ToggleMarkedIngredientContext } from '@/marked-ingredients/toggle-marked-ingredient/ToggleMarkedIngredientContext.tsx'
-import type { ToggleMarkedIngredientValue } from '@/marked-ingredients/toggle-marked-ingredient/ToggleMarkedIngredientValue.tsx'
+import { ToggleMarkedIngredientContext } from '@/components/marked-ingredients/toggle-marked-ingredient/ToggleMarkedIngredientContext.tsx'
+import type { ToggleMarkedIngredientValue } from '@/components/marked-ingredients/toggle-marked-ingredient/ToggleMarkedIngredientValue.tsx'
 import { type PropsWithChildren } from 'react'
 
 interface Props extends PropsWithChildren {

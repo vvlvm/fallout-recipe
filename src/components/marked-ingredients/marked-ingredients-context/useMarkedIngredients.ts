@@ -1,4 +1,4 @@
-import { MarkedIngredientsContext } from '@/marked-ingredients/marked-ingredients-context/MarkedIngredientsContext.tsx'
+import { MarkedIngredientsContext } from '@/components/marked-ingredients/marked-ingredients-context/MarkedIngredientsContext.tsx'
 import { useContext } from 'react'
 
 export function useMarkedIngredients() {

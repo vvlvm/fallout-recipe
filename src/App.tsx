@@ -1,9 +1,9 @@
 import { EmptyStripeBackground } from '@/components/EmptyStripeBackground.tsx'
 import { usePersistentSet } from '@/hooks/usePersistentSet.ts'
 import { useSet } from '@/hooks/useSet.ts'
-import { MarkedIngredientsProvider } from '@/marked-ingredients/marked-ingredients-context/MarkedIngredientsProvider'
-import { MarkedIngredients } from '@/marked-ingredients/MarkedIngredients.tsx'
-import { ToggleMarkedIngredientProvider } from '@/marked-ingredients/toggle-marked-ingredient/ToggleMarkedIngredientProvider.tsx'
+import { MarkedIngredientsProvider } from '@/components/marked-ingredients/marked-ingredients-context/MarkedIngredientsProvider'
+import { MarkedIngredients } from '@/components/marked-ingredients/MarkedIngredients.tsx'
+import { ToggleMarkedIngredientProvider } from '@/components/marked-ingredients/toggle-marked-ingredient/ToggleMarkedIngredientProvider.tsx'
 import { type IngredientName } from '@/types/RecipieType.ts'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
@@ -17,7 +17,7 @@ import { useState } from 'react'
 import { Filters } from './components/filters/index.tsx'
 import { INGREDIENT_NAMES } from './constants/INGREDIENT_NAMES.ts'
 import { RECIPE_MAP } from './constants/RECIPE_MAP.ts'
-import { SetMarkedIngredientsProvider } from './marked-ingredients/set-marked-ingredients-context/SetMarkedIngredientsProvider.tsx'
+import { SetMarkedIngredientsProvider } from '@/components//marked-ingredients/set-marked-ingredients-context/SetMarkedIngredientsProvider.tsx'
 
 const RECIPE_NAMES = Object.keys(RECIPE_MAP)
 const UNMAKEABLE_INGREDIENTS = INGREDIENT_NAMES.filter(

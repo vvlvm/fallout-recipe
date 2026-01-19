@@ -1,5 +1,5 @@
-import { SetMarkedIngredientsContext } from '@/marked-ingredients/set-marked-ingredients-context/SetMarkedIngredientsContext'
-import type { SetMarkedIngredientsValue } from '@/marked-ingredients/set-marked-ingredients-context/SetMarkedIngredientsValue.tsx'
+import { SetMarkedIngredientsContext } from '@/components/marked-ingredients/set-marked-ingredients-context/SetMarkedIngredientsContext'
+import type { SetMarkedIngredientsValue } from '@/components/marked-ingredients/set-marked-ingredients-context/SetMarkedIngredientsValue.tsx'
 import { type FC, type PropsWithChildren } from 'react'
 
 interface ProviderProps extends PropsWithChildren {
