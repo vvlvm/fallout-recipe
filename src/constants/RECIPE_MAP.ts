@@ -117,7 +117,7 @@ export const RECIPE_MAP: RecipeMap = {
 				amount: 1,
 			},
 			{
-				requiredItemName: 'ヌカ・コーラ・クオーツ',
+				requiredItemName: 'ヌカ・コーラ・クォーツ',
 				amount: 1,
 			},
 			{
@@ -172,7 +172,7 @@ export const RECIPE_MAP: RecipeMap = {
 			{ requiredItemName: 'ヌカ・コーラ', amount: 1 },
 			{ requiredItemName: 'ヌカ・コーラ・オレンジ', amount: 1 },
 			{ requiredItemName: 'ヌカ・コーラ・クアンタム', amount: 1 },
-			{ requiredItemName: 'ヌカ・コーラ・クオーツ', amount: 1 },
+			{ requiredItemName: 'ヌカ・コーラ・クォーツ', amount: 1 },
 		],
 	},
 	'ヌカ・サンライズ': {
@@ -293,7 +293,7 @@ export const RECIPE_MAP: RecipeMap = {
 		requiredItems: [
 			{ requiredItemName: 'ヌカ・グレープ', amount: 1 },
 			{ requiredItemName: 'ヌカ・コーラ・オレンジ', amount: 1 },
-			{ requiredItemName: 'ヌカ・コーラ・クオーツ', amount: 1 },
+			{ requiredItemName: 'ヌカ・コーラ・クォーツ', amount: 1 },
 			{ requiredItemName: 'ヌカ・チェリー', amount: 1 },
 		],
 	},
