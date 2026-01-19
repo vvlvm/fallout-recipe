@@ -6,7 +6,7 @@ import type { EffectName, IngredientName } from '@/types/RecipieType'
 const TOKEN_SEPARATORS = /[&()（）\u3000、,|。]+/
 
 export function ingredientNameQueryMatchFilter(
-	query: string
+	query: string,
 ): IngredientName[] {
 	if (!query) return []
 	const tokens = query.split(TOKEN_SEPARATORS).filter(Boolean)
@@ -20,7 +20,7 @@ export function ingredientNameQueryMatchFilter(
 			} else {
 				return name.includes(token)
 			}
-		})
+		}),
 	)
 }
 
@@ -40,6 +40,6 @@ export function effectNameQueryMatchFilter(query: string): EffectName[] {
 			} else {
 				return lowerCaseLabel.includes(lowerCaseTerm)
 			}
-		})
+		}),
 	)
 }

@@ -15,7 +15,7 @@ function filterOptions(options: string[], state: FilterOptionsState<string>) {
 	const match = state.inputValue.match(lastTokenRegex)
 	const searchTerm = match ? match[0].trim() : ''
 	return options.filter((option) =>
-		option.toLowerCase().includes(searchTerm.toLowerCase())
+		option.toLowerCase().includes(searchTerm.toLowerCase()),
 	)
 }
 
@@ -30,7 +30,7 @@ export function EffectNameQueryAutoComplete(props: Props) {
 	function handleInputChange(
 		_: unknown,
 		newInputValue: string,
-		reason: AutocompleteInputChangeReason
+		reason: AutocompleteInputChangeReason,
 	) {
 		if (reason !== 'reset') {
 			setInputValue(newInputValue)
@@ -40,7 +40,7 @@ export function EffectNameQueryAutoComplete(props: Props) {
 	function handleChange(
 		_: unknown,
 		newValue: string | null,
-		reason: AutocompleteChangeReason
+		reason: AutocompleteChangeReason,
 	) {
 		if (reason === 'selectOption' && typeof newValue === 'string') {
 			const match = inputValue.match(lastTokenRegex)
