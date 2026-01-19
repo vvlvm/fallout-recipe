@@ -1,7 +1,12 @@
+import { EmptyStripeBackground } from '@/components/EmptyStripeBackground.tsx'
+import { usePersistentSet } from '@/hooks/usePersistentSet.ts'
+import { MarkedIngredientsProvider } from '@/marked-ingredients/marked-ingredients-context/MarkedIngredientsProvider'
 import { MarkedIngredients } from '@/marked-ingredients/MarkedIngredients.tsx'
-import { useMarkedIngredientsWithLocalStorage } from '@/marked-ingredients/useMarkedIngredientsWithLocalStorage.ts'
+import { ToggleMarkedIngredientProvider } from '@/marked-ingredients/toggle-marked-ingredient/ToggleMarkedIngredientProvider.tsx'
+import { type IngredientName } from '@/types/RecipieType.ts'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
+import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import Paper from '@mui/material/Paper'
 import Tab from '@mui/material/Tab'
@@ -11,11 +16,7 @@ import { useState } from 'react'
 import { Filters } from './components/filters/index.tsx'
 import { INGREDIENT_NAMES } from './constants/INGREDIENT_NAMES.ts'
 import { RECIPE_MAP } from './constants/RECIPE_MAP.ts'
-import { MarkedIngredientsProvider } from '@/marked-ingredients/marked-ingredients-context/MarkedIngredientsProvider'
 import { SetMarkedIngredientsProvider } from './marked-ingredients/set-marked-ingredients-context/SetMarkedIngredientsProvider.tsx'
-import { ToggleMarkedIngredientProvider } from '@/marked-ingredients/toggle-marked-ingredient/ToggleMarkedIngredientProvider.tsx'
-import { EmptyStripeBackground } from '@/components/EmptyStripeBackground.tsx'
-import List from '@mui/material/List'
 
 const RECIPE_NAMES = Object.keys(RECIPE_MAP)
 const UNMAKEABLE_INGREDIENTS = INGREDIENT_NAMES.filter(
@@ -24,8 +25,11 @@ const UNMAKEABLE_INGREDIENTS = INGREDIENT_NAMES.filter(
 
 export function App() {
 	const [tab, setTab] = useState<number>(0)
-	const { markedIngredients, toggleIngredient, setMarkedIngredients } =
-		useMarkedIngredientsWithLocalStorage()
+	const {
+		set: markedIngredients,
+		toggle: toggleIngredient,
+		setAll: setMarkedIngredients,
+	} = usePersistentSet<IngredientName>('markedIngredients')
 
 	return (
 		<MarkedIngredientsProvider value={markedIngredients}>
