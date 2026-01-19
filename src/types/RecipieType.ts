@@ -1,6 +1,6 @@
-import { EFFECT_NAMES } from '../constants/EFFECT_NAMES'
-import type { ITEM_NAME } from '../constants/ITEM_NAMES'
-import { INGREDIENT_NAMES } from '../constants/INGREDIENT_NAMES'
+import { EFFECT_NAMES } from '@/constants/EFFECT_NAMES'
+import type { ITEM_NAME } from '@/constants/ITEM_NAMES'
+import { INGREDIENT_NAMES } from '@/constants/INGREDIENT_NAMES'
 import type { EFFECT_LABELS } from '@/constants/EFFECT_LABELS'
 
 /* ItemNameと統合しないほうが
@@ -94,7 +94,7 @@ export interface CarryWeightEffect extends BaseEffect {
 }
 
 export function isCarryWeightEffect(
-	effect: Effect
+	effect: Effect,
 ): effect is CarryWeightEffect {
 	return effect.effectName === 'CarryWeight'
 }
