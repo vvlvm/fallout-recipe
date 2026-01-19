@@ -133,7 +133,6 @@ export const Filters = memo(function Filters() {
 	)
 
 	function handleItemNameSearchTermChange(_: unknown, newValue: string) {
-		console.log(newValue)
 		setItemNameSearchTerm(newValue)
 	}
 })
