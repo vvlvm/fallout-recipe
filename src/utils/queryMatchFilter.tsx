@@ -1,7 +1,10 @@
-import { EFFECT_LABEL_MAP } from '@/constants/EFFECT_LABELS'
-import { EFFECT_NAMES } from '@/constants/EFFECT_NAMES'
-import { INGREDIENT_NAMES } from '@/constants/INGREDIENT_NAMES'
-import type { EffectName, IngredientName } from '@/types/RecipieType'
+import { EFFECT_LABEL_MAP } from '@/nuka-mixer-recipe/EFFECT_LABELS'
+import { EFFECT_NAMES } from '@/nuka-mixer-recipe/EFFECT_NAMES'
+import { INGREDIENT_NAMES } from '@/nuka-mixer-recipe/INGREDIENT_NAMES'
+import type {
+	EffectName,
+	IngredientName,
+} from '@/nuka-mixer-recipe/RecipieType'
 
 const TOKEN_SEPARATORS = /[&()（）\u3000、,|。]+/
 

@@ -2,7 +2,10 @@ import { AlignedTwoColumnGrid } from '@/components/aligned-two-column-grid/Align
 import { AlignedTwoColumnGridItem } from '@/components/aligned-two-column-grid/AlignedTwoColumnGridItem'
 import { useMarkedIngredients } from '@/components/marked-ingredients/marked-ingredients-context/useMarkedIngredients'
 import { useToggleMarkedIngredient } from '@/components/marked-ingredients/toggle-marked-ingredient/useToggleMarkedIngredient'
-import type { IngredientName, RequiredItem } from '@/types/RecipieType'
+import type {
+	IngredientName,
+	RequiredItem,
+} from '@/nuka-mixer-recipe/RecipieType'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import { useTheme } from '@mui/material/styles'

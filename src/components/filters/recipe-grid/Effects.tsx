@@ -1,11 +1,11 @@
 import { AlignedTwoColumnGrid } from '@/components/aligned-two-column-grid/AlignedTwoColumnGrid.tsx'
 import { AlignedTwoColumnGridItem } from '@/components/aligned-two-column-grid/AlignedTwoColumnGridItem.tsx'
-import { EFFECT_LABEL_MAP } from '@/constants/EFFECT_LABELS'
+import { EFFECT_LABEL_MAP } from '@/nuka-mixer-recipe/EFFECT_LABELS'
 import {
 	isCarryWeightEffect,
 	type Effect,
 	type EffectMap,
-} from '@/types/RecipieType'
+} from '@/nuka-mixer-recipe/RecipieType'
 import Box from '@mui/material/Box'
 import SvgIcon from '@mui/material/SvgIcon'
 import Typography from '@mui/material/Typography'

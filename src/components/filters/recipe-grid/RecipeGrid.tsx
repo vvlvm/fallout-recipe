@@ -1,4 +1,4 @@
-import type { Recipe } from '@/types/RecipieType'
+import type { Recipe } from '@/nuka-mixer-recipe/RecipieType'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'

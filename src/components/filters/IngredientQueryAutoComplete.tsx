@@ -1,4 +1,4 @@
-import { INGREDIENT_NAMES } from '@/constants/INGREDIENT_NAMES'
+import { INGREDIENT_NAMES } from '@/nuka-mixer-recipe/INGREDIENT_NAMES'
 import Autocomplete, {
 	type AutocompleteChangeReason,
 } from '@mui/material/Autocomplete'

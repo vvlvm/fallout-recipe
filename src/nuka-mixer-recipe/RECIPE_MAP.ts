@@ -1,4 +1,4 @@
-import type { RecipeMap } from '../types/RecipieType'
+import type { RecipeMap } from '@/nuka-mixer-recipe/RecipieType'
 
 export const RECIPE_MAP: RecipeMap = {
 	'ニューカ・コーラ': {

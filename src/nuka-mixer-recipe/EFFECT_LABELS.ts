@@ -1,4 +1,4 @@
-import type { EffectLabel, EffectName } from '../types/RecipieType'
+import type { EffectLabel, EffectName } from '@/nuka-mixer-recipe/RecipieType'
 
 export const EFFECT_LABELS = [
 	'HP',

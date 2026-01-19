@@ -1,11 +1,11 @@
-import { ITEM_NAME } from '@/constants/ITEM_NAMES.ts'
-import { RECIPE_LIST } from '@/constants/RECIPE_LIST.ts'
+import { ITEM_NAME } from '@/nuka-mixer-recipe/ITEM_NAMES.ts'
+import { RECIPE_LIST } from '@/nuka-mixer-recipe/RECIPE_LIST.ts'
 import { usePersistentSet } from '@/hooks/usePersistentSet.ts'
 import {
 	type EffectName,
 	type IngredientName,
 	type Recipe,
-} from '@/types/RecipieType.ts'
+} from '@/nuka-mixer-recipe/RecipieType'
 import {
 	effectNameQueryMatchFilter,
 	ingredientNameQueryMatchFilter,

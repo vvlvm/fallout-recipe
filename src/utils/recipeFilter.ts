@@ -1,6 +1,10 @@
-import { EFFECT_LABEL_MAP } from '@/constants/EFFECT_LABELS'
-import { RECIPE_LIST } from '@/constants/RECIPE_LIST'
-import type { EffectLabel, IngredientName, Recipe } from '@/types/RecipieType'
+import { EFFECT_LABEL_MAP } from '@/nuka-mixer-recipe/EFFECT_LABELS'
+import { RECIPE_LIST } from '@/nuka-mixer-recipe/RECIPE_LIST'
+import type {
+	EffectLabel,
+	IngredientName,
+	Recipe,
+} from '@/nuka-mixer-recipe/RecipieType'
 
 type LogicNode =
 	| { type: 'AND'; left: LogicNode; right: LogicNode }

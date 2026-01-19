@@ -1,4 +1,4 @@
-import { EFFECT_LABELS } from '@/constants/EFFECT_LABELS'
+import { EFFECT_LABELS } from '@/nuka-mixer-recipe/EFFECT_LABELS'
 import Autocomplete, {
 	type AutocompleteChangeReason,
 } from '@mui/material/Autocomplete'

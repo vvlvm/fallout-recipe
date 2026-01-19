@@ -2,7 +2,7 @@ import {
 	FaStar as FilledStar,
 	FaRegStar as OutlinedStar,
 } from 'react-icons/fa6'
-import type { IngredientName } from '@/types/RecipieType'
+import type { IngredientName } from '@/nuka-mixer-recipe/RecipieType'
 import Button from '@mui/material/Button'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
