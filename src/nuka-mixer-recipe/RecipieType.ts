@@ -1,7 +1,7 @@
-import { EFFECT_NAMES } from '@/constants/EFFECT_NAMES'
-import type { ITEM_NAME } from '@/constants/ITEM_NAMES'
-import { INGREDIENT_NAMES } from '@/constants/INGREDIENT_NAMES'
-import type { EFFECT_LABELS } from '@/constants/EFFECT_LABELS'
+import { EFFECT_NAMES } from '@/nuka-mixer-recipe/EFFECT_NAMES'
+import type { ITEM_NAME } from '@/nuka-mixer-recipe/ITEM_NAMES'
+import { INGREDIENT_NAMES } from '@/nuka-mixer-recipe/INGREDIENT_NAMES'
+import type { EFFECT_LABELS } from '@/nuka-mixer-recipe/EFFECT_LABELS'
 
 /* ItemNameと統合しないほうが
  * レシピで生成できないアイテムとして区別できてよさそう
