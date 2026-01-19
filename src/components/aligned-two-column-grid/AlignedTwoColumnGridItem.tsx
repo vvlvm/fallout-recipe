@@ -14,6 +14,7 @@ export const AlignedTwoColumnGridItem = styled(Box, {
 	padding: '3px 6px',
 	borderRadius: '3px',
 	background: 'rgba(0, 0, 0, 0.2)',
+	alignItems: 'center',
 
 	...(singleColumn && {
 		gridTemplateColumns: 'none',

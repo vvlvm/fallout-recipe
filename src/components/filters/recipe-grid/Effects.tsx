@@ -10,33 +10,40 @@ import Box from '@mui/material/Box'
 import SvgIcon from '@mui/material/SvgIcon'
 import Typography from '@mui/material/Typography'
 import { IoIosTimer } from 'react-icons/io'
-import { useQueriedEffectNames } from '../queried-effect-names-context/useQueriedIngredientNames'
+import { useQueriedEffectNames } from '../queried-effect-names-context/useQueriedEffectNames'
 
 interface Props {
 	effects: EffectMap
 }
 
 export function Effects({ effects }: Props) {
+	const queriedEffectNames = useQueriedEffectNames()
+
 	return (
 		<AlignedTwoColumnGrid>
-			{Object.values(effects).map((effect) => (
-				<ListItem effect={effect} key={effect.effectName} />
-			))}
+			{Object.values(effects).map((effect) => {
+				const isHighlighted = queriedEffectNames.has(effect.effectName)
+
+				return (
+					<ListItem
+						effect={effect}
+						isHighlighted={isHighlighted}
+						key={effect.effectName}
+					/>
+				)
+			})}
 		</AlignedTwoColumnGrid>
 	)
 }
 
 interface TagProps {
 	effect: Effect
+	isHighlighted: boolean
 }
 
-function ListItem({ effect }: TagProps) {
+function ListItem({ effect, isHighlighted }: TagProps) {
 	const { effectName } = effect
 	const label = EFFECT_LABEL_MAP[effectName]
-	const queriedEffectNames = useQueriedEffectNames()
-	const isHighlighted = queriedEffectNames.some(
-		(queried) => effectName === queried
-	)
 	const isSingleColumn =
 		effectName === 'Caffeine' || effectName === 'CarryWeight'
 	const hasOverTime = 'isOverTime' in effect && effect.isOverTime

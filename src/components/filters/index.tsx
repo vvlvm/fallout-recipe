@@ -26,6 +26,7 @@ import { QueriedEffectNamesProvider } from './queried-effect-names-context/Provi
 import { QueriedIngredientNamesProvider } from './queried-ingredient-names-context/Provider.tsx'
 import { RecipeGrid } from './recipe-grid/RecipeGrid.tsx'
 import Box from '@mui/material/Box'
+import { useSet } from '@/hooks/useSet.tsx'
 
 export const Filters = memo(function Filters() {
 	const [itemNameSearchTerm, setItemNameSearchTerm] = useState('')
@@ -36,10 +37,10 @@ export const Filters = memo(function Filters() {
 	const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>(RECIPE_LIST)
 
 	// 検索された必要素材をハイライトする
-	const [queriedIngredientNames, setQueriedIngredientNames] = useState<
-		IngredientName[]
-	>([])
-	const [queriedEffectNames, setQueriedEffectNames] = useState<EffectName[]>([])
+	const { set: queriedIngredientNames, setAll: setQueriedIngredientNames } =
+		useSet<IngredientName>()
+	const { set: queriedEffectNames, setAll: setQueriedEffectNames } =
+		useSet<EffectName>()
 
 	function handleSearchSubmit() {
 		setFilteredRecipes(
@@ -47,7 +48,7 @@ export const Filters = memo(function Filters() {
 				ingredientQuery: ingredientQuery,
 				itemNameSearchTerm: itemNameSearchTerm,
 				effectNameQuery: effectNameQuery,
-			})
+			}),
 		)
 		setQueriedIngredientNames(ingredientNameQueryMatchFilter(ingredientQuery))
 		// HPで検索すると最大HPにもヒットするので

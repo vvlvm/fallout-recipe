@@ -14,10 +14,12 @@ import { RECIPE_MAP } from './constants/RECIPE_MAP.ts'
 import { MarkedIngredientsProvider } from '@/marked-ingredients/marked-ingredients-context/MarkedIngredientsProvider'
 import { SetMarkedIngredientsProvider } from './marked-ingredients/set-marked-ingredients-context/SetMarkedIngredientsProvider.tsx'
 import { ToggleMarkedIngredientProvider } from '@/marked-ingredients/toggle-marked-ingredient/ToggleMarkedIngredientProvider.tsx'
+import { EmptyStripeBackground } from '@/components/EmptyStripeBackground.tsx'
+import List from '@mui/material/List'
 
 const RECIPE_NAMES = Object.keys(RECIPE_MAP)
 const UNMAKEABLE_INGREDIENTS = INGREDIENT_NAMES.filter(
-	(e) => !RECIPE_NAMES.includes(e)
+	(e) => !RECIPE_NAMES.includes(e),
 )
 
 export function App() {
@@ -42,6 +44,8 @@ export function App() {
 							aria-label='ツールを選択'
 							value={tab}
 							onChange={handleTabClick}
+							variant='scrollable'
+							scrollButtons='auto'
 							sx={{ mb: 4 }}
 						>
 							<Tab
@@ -80,7 +84,8 @@ export function App() {
 						>
 							<Filters />
 						</Box>
-						<Paper
+						<List
+							dense
 							id='tabpanel-unmakeableIngredients'
 							role='tabpanel'
 							aria-labelledby='tab-unmakeableIngredients'
@@ -93,11 +98,11 @@ export function App() {
 							}
 						>
 							{UNMAKEABLE_INGREDIENTS.map((itemName) => (
-								<ListItem component={Paper} dense sx={{ mb: 1 }} key={itemName}>
+								<ListItem component={Paper} sx={{ mb: 1 }} key={itemName}>
 									{itemName}
 								</ListItem>
 							))}
-						</Paper>
+						</List>
 						<Box
 							id='tabpanel-marked-ingredients'
 							role='tabpanel'
@@ -112,7 +117,7 @@ export function App() {
 						>
 							<MarkedIngredients />
 						</Box>
-						<Box sx={{ height: '100vh' }} />
+						<EmptyStripeBackground />
 					</Container>
 				</ToggleMarkedIngredientProvider>
 			</SetMarkedIngredientsProvider>
