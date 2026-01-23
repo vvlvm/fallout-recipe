@@ -34,3 +34,49 @@ export type ChemistryRecipeMap = Partial<
 
 // 空の雛形
 export const CHEMISTRY_RECIPE_MAP: ChemistryRecipeMap = {}
+
+export type Recipe = {
+	itemName: ChemistryItemName
+	effects: EffectMap
+	requiredItems: RequiredItem[]
+}
+
+export type RequiredItem = {
+	requiredItemName: ChemistryIngredientName
+	amount: number
+}
+
+export type EffectMap = {
+	hp?: HPEffect
+}
+
+type BaseEffect = {
+	effectName: EffectName
+}
+
+export type Effect = HPEffect
+
+export interface HPEffect extends BaseEffect {
+	effectName: 'hp'
+	amount: number
+	isOverTime: boolean
+}
+
+export const EFFECT_NAMES = [
+	'hp',
+	'ap',
+	'weight',
+	'value',
+	'maxHp',
+	'maxAp',
+	'rads',
+	'radResist',
+	'carryWeight',
+	'caffeine',
+	'str',
+	'end',
+	'agi',
+	'dmgResist',
+] as const
+
+export type EffectName = (typeof EFFECT_NAMES)[number]

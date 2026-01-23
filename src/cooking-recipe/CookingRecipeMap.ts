@@ -37,3 +37,49 @@ export type CookingRecipeMap = Partial<Record<CookingItemName, CookingRecipe>>
 
 // 空の雛形
 export const COOKING_RECIPE_MAP: CookingRecipeMap = {}
+
+export type Recipe = {
+	itemName: CookingIngredientName
+	effects: EffectMap
+	requiredItems: RequiredItem[]
+}
+
+export type RequiredItem = {
+	requiredItemName: CookingIngredientName
+	amount: number
+}
+
+export type EffectMap = {
+	hp?: HPEffect
+}
+
+type BaseEffect = {
+	effectName: EffectName
+}
+
+export type Effect = HPEffect
+
+export interface HPEffect extends BaseEffect {
+	effectName: 'hp'
+	amount: number
+	isOverTime: boolean
+}
+
+export const EFFECT_NAMES = [
+	'hp',
+	'ap',
+	'weight',
+	'value',
+	'maxHp',
+	'maxAp',
+	'rads',
+	'radResist',
+	'carryWeight',
+	'caffeine',
+	'str',
+	'end',
+	'agi',
+	'dmgResist',
+] as const
+
+export type EffectName = (typeof EFFECT_NAMES)[number]
