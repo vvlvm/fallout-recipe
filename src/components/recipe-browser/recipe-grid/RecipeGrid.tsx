@@ -9,10 +9,11 @@ import { RequiredItems } from './RequiredItems'
 
 interface Props {
 	filteredRecipes: Recipe[]
+	itemWidth: number
 }
 
 export const RecipeGrid = memo(function RecipeGrid(props: Props) {
-	const { filteredRecipes } = props
+	const { filteredRecipes, itemWidth } = props
 
 	return (
 		<Box
@@ -25,7 +26,7 @@ export const RecipeGrid = memo(function RecipeGrid(props: Props) {
 				 * Array.from(document.querySelectorAll('[data-name="recipe-card"]')).reduce((max, e) => Math.max(max, e.offsetWidth),0)
 				 *
 				 */
-				gridTemplateColumns: 'repeat(auto-fit, 281px)',
+				gridTemplateColumns: `repeat(auto-fit, ${itemWidth}px)`,
 				gridTemplateRows: 'auto auto auto',
 				alignItems: 'start',
 				columnGap: 1,

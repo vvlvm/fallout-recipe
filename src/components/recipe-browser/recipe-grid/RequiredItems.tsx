@@ -80,16 +80,18 @@ function RequiredItem(props: ItemProps) {
 					sx={{
 						p: 0,
 						mr: 1,
+						alignItems: 'start',
 						'& .MuiButton-startIcon': {
 							ml: 0,
 							mr: 0.5,
 						},
 						'& .MuiButton-startIcon > *:first-of-type': {
 							fontSize: '1em',
+							mt: '4px',
 						},
 					}}
 				>
-					<Typography sx={{ whiteSpace: 'nowrap' }} color={textColor}>
+					<Typography textAlign='left' color={textColor}>
 						{item.requiredItemName}
 					</Typography>
 				</Button>
