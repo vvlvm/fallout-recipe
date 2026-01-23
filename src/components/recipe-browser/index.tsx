@@ -28,8 +28,9 @@ import { QueriedEffectNamesProvider } from './queried-effect-names-context/Provi
 import { QueriedIngredientNamesProvider } from './queried-ingredient-names-context/Provider.tsx'
 import { RecipeGrid } from './recipe-grid/RecipeGrid.tsx'
 import { usePersistentState } from '@/hooks/usePersistentState.ts'
+import NumberField from '@/components/mui/NumberField'
 
-export const Filters = memo(function Filters() {
+export const RecipeBrowser = memo(function RecipeBrowser() {
 	const [itemNameSearchTerm, setItemNameSearchTerm] = usePersistentState(
 		'itemNameSearchTerm',
 		'',
@@ -53,6 +54,11 @@ export const Filters = memo(function Filters() {
 	// 検索されたエフェクトをハイライトする
 	const { set: queriedEffectNames, setAll: setQueriedEffectNames } =
 		usePersistentSet<EffectName>('queriedEffectNames')
+
+	const [gridItemWidth, setGridItemWidth] = usePersistentState<number>(
+		'gridItemWidth',
+		290,
+	)
 
 	function handleSearchSubmit() {
 		setFilteredRecipes(
@@ -120,13 +126,26 @@ export const Filters = memo(function Filters() {
 
 			<Divider sx={{ my: 4 }} />
 
-			<Typography variant='body1' sx={{ my: 2 }}>
-				ヒット数: {filteredRecipes.length} 件
-			</Typography>
+			<Stack direction='row' alignItems='center' gap={3} sx={{ my: 2 }}>
+				<Typography variant='body1'>
+					ヒット数: {filteredRecipes.length} 件
+				</Typography>
+
+				<NumberField
+					size='small'
+					step={10}
+					value={gridItemWidth}
+					onValueChange={handleGridItemWidthChanged}
+					label='レシピの幅を調整する'
+				/>
+			</Stack>
 
 			<QueriedIngredientNamesProvider value={queriedIngredientNames}>
 				<QueriedEffectNamesProvider value={queriedEffectNames}>
-					<RecipeGrid filteredRecipes={filteredRecipes} />
+					<RecipeGrid
+						filteredRecipes={filteredRecipes}
+						itemWidth={gridItemWidth}
+					/>
 				</QueriedEffectNamesProvider>
 			</QueriedIngredientNamesProvider>
 		</>
@@ -134,5 +153,13 @@ export const Filters = memo(function Filters() {
 
 	function handleItemNameSearchTermChange(_: unknown, newValue: string) {
 		setItemNameSearchTerm(newValue)
+	}
+
+	function handleGridItemWidthChanged(value: number | null) {
+		if (value === null) {
+			console.error('gridItemWidth changed but value is null. value:', value)
+			return
+		}
+		setGridItemWidth(value)
 	}
 })

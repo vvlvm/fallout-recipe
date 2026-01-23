@@ -14,7 +14,7 @@ import Tab from '@mui/material/Tab'
 import Tabs from '@mui/material/Tabs'
 import Typography from '@mui/material/Typography'
 import { useState } from 'react'
-import { Filters } from './components/recipe-browser/index.tsx'
+import { RecipeBrowser } from './components/recipe-browser/index.tsx'
 import { INGREDIENT_NAMES } from './nuka-mixer-recipe/INGREDIENT_NAMES.ts'
 import { RECIPE_MAP } from './nuka-mixer-recipe/RECIPE_MAP.ts'
 import { SetMarkedIngredientsProvider } from '@/components//marked-ingredients/set-marked-ingredients-context/SetMarkedIngredientsProvider.tsx'
@@ -94,7 +94,7 @@ export function App() {
 										}
 							}
 						>
-							<Filters />
+							<RecipeBrowser />
 						</Box>
 						<List
 							dense
