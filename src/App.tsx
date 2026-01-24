@@ -16,7 +16,7 @@ import ListItem from '@mui/material/ListItem'
 import Paper from '@mui/material/Paper'
 import Tabs from '@mui/material/Tabs'
 import Typography from '@mui/material/Typography'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { RecipeBrowser } from './components/recipe-browser/index.tsx'
 import { INGREDIENT_NAMES } from './nuka-mixer-recipe/INGREDIENT_NAMES.ts'
 import { RECIPE_MAP } from './nuka-mixer-recipe/RECIPE_MAP.ts'
@@ -33,11 +33,33 @@ export function App() {
 		toggle: toggleMarkedIngredient,
 		setAll: setMarkedIngredients,
 	} = usePersistentSet<IngredientName>('markedIngredients')
+	/**
+	 * <MarkedIngredients>でお気に入りを外した瞬間リストから材料が消えないようにするためのステート
+	 */
 	const {
 		set: tempMarkedIngredients,
 		toggle: toggleTempMarkedIngredients,
 		setAll: setTempMarkedIngredient,
 	} = useSet<IngredientName>(markedIngredients)
+
+	const prevTab = useRef<ViewTabId>(tab)
+	useEffect(() => {
+		const isLeavingMarkedIngredients =
+			prevTab.current === 'markedIngredients' && tab !== 'markedIngredients'
+
+		if (isLeavingMarkedIngredients) {
+			setMarkedIngredients(tempMarkedIngredients)
+		}
+
+		const isEnteringMarkedIngredients =
+			prevTab.current !== 'markedIngredients' && tab === 'markedIngredients'
+
+		if (isEnteringMarkedIngredients) {
+			setTempMarkedIngredient(markedIngredients)
+		}
+
+		prevTab.current = tab
+	}, [tab])
 
 	return (
 		<MarkedIngredientsProvider value={markedIngredients}>
@@ -65,13 +87,11 @@ export function App() {
 								tabId='recipeBrowser'
 								value='recipeBrowser' // valueはここで指定しないとエラーになる。詳細はViewTabで
 								label='レシピ検索'
-								onClick={updateMarkedIngredients}
 							/>
 							<ViewTab
 								tabId='markedIngredients'
 								value='markedIngredients' // valueはここで指定しないとエラーになる。詳細はViewTabで
 								label='マークした材料'
-								onClick={updateTempMarkedIngredients}
 							/>
 							<ViewTab
 								tabId='unmakeableIngredients'
@@ -107,14 +127,6 @@ export function App() {
 			</SetMarkedIngredientsProvider>
 		</MarkedIngredientsProvider>
 	)
-
-	function updateTempMarkedIngredients() {
-		setTempMarkedIngredient(markedIngredients)
-	}
-
-	function updateMarkedIngredients() {
-		setMarkedIngredients(tempMarkedIngredients)
-	}
 
 	function handleTabChange(_: unknown, newValue: ViewTabId) {
 		if (isViewTabId(newValue)) {
