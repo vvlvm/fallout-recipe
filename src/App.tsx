@@ -46,18 +46,14 @@ export function App() {
 	useEffect(() => {
 		const isLeavingMarkedIngredients =
 			prevTab.current === 'markedIngredients' && tab !== 'markedIngredients'
-
 		if (isLeavingMarkedIngredients) {
 			setMarkedIngredients(tempMarkedIngredients)
 		}
-
 		const isEnteringMarkedIngredients =
 			prevTab.current !== 'markedIngredients' && tab === 'markedIngredients'
-
 		if (isEnteringMarkedIngredients) {
 			setTempMarkedIngredient(markedIngredients)
 		}
-
 		prevTab.current = tab
 	}, [tab])
 
