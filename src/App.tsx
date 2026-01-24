@@ -39,8 +39,6 @@ export function App() {
 		setAll: setTempMarkedIngredient,
 	} = useSet<IngredientName>(markedIngredients)
 
-	console.log('App', tab)
-
 	return (
 		<MarkedIngredientsProvider value={markedIngredients}>
 			<SetMarkedIngredientsProvider value={setMarkedIngredients}>
