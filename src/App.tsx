@@ -11,6 +11,7 @@ import { useSet } from '@/hooks/useSet.ts'
 import {
 	isIngredientName,
 	type IngredientName,
+	type ItemName,
 } from '@/nuka-mixer-recipe/RecipieType'
 import { isViewTabId, type ViewTabId } from '@/types/ViewTabId.ts'
 import Box from '@mui/material/Box'
@@ -23,11 +24,10 @@ import Typography from '@mui/material/Typography'
 import { useEffect, useRef } from 'react'
 import { RecipeBrowser } from './components/recipe-browser/index.tsx'
 import { INGREDIENT_NAMES } from './nuka-mixer-recipe/INGREDIENT_NAMES.ts'
-import { RECIPE_MAP } from './nuka-mixer-recipe/RECIPE_MAP.ts'
+import { ITEM_NAME } from '@/nuka-mixer-recipe/ITEM_NAMES.ts'
 
-const RECIPE_NAMES = Object.keys(RECIPE_MAP)
 const UNMAKEABLE_INGREDIENTS = INGREDIENT_NAMES.filter(
-	(e) => !RECIPE_NAMES.includes(e),
+	(e) => !ITEM_NAME.includes(e as ItemName),
 )
 
 export function App() {

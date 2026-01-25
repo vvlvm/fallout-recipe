@@ -1,8 +1,10 @@
 import { EFFECT_LABEL_MAP } from '@/nuka-mixer-recipe/EFFECT_LABELS'
-import { RECIPE_LIST } from '@/nuka-mixer-recipe/RECIPE_LIST'
+import { ITEM_NAME } from '@/nuka-mixer-recipe/ITEM_NAMES'
+import { RECIPE_MAP } from '@/nuka-mixer-recipe/RECIPE_MAP'
 import type {
 	EffectLabel,
 	IngredientName,
+	ItemName,
 	Recipe,
 } from '@/nuka-mixer-recipe/RecipieType'
 
@@ -19,33 +21,62 @@ interface Props {
 	ingredientQuery: string
 }
 
+const INGREDIENT_NAME_MAP: Record<ItemName, IngredientName[]> =
+	ITEM_NAME.reduce(
+		(acc, itemName: ItemName) => {
+			acc[itemName] = Object.values(RECIPE_MAP[itemName].requiredItems).map(
+				(e) => e.requiredItemName,
+			)
+			return acc
+		},
+		{} as Record<ItemName, IngredientName[]>,
+	)
+
+const EFFECT_NAME_MAP: Record<ItemName, EffectLabel[]> = ITEM_NAME.reduce(
+	(acc, itemName: ItemName) => {
+		acc[itemName] = Object.values(RECIPE_MAP[itemName].effects).map(
+			(e) => EFFECT_LABEL_MAP[e.effectName],
+		)
+		return acc
+	},
+	{} as Record<ItemName, EffectLabel[]>,
+)
+
 export function filterRecipes(props: Props): Recipe[] {
 	const { itemNameSearchTerm, ingredientQuery, effectNameQuery } = props
 
-	const ingredientAst = createAst(ingredientQuery, ingredientNameEvaluate)
-	const effectNameAst = createAst(effectNameQuery, evaluateEffectName)
+	let matchesItemNames: ItemName[] = itemNameSearchTerm
+		? ITEM_NAME.filter((e) => e.includes(itemNameSearchTerm))
+		: [...ITEM_NAME]
 
-	return RECIPE_LIST.filter((recipe) => {
-		const matchesItemName = recipe.itemName.includes(itemNameSearchTerm)
+	const ingredientAst = createAst<IngredientName>(
+		ingredientQuery,
+		ingredientNameEvaluate,
+	)
 
-		// ASTがない場合は条件なしとしてtrueを返す
-		const matchesIngredientQuery =
-			ingredientAst === null
-				? true
-				: ingredientAst(recipe.requiredItems.map((e) => e.requiredItemName))
+	matchesItemNames =
+		ingredientAst === null
+			? matchesItemNames
+			: matchesItemNames.filter((itemName) => {
+					return ingredientAst(INGREDIENT_NAME_MAP[itemName])
+				})
 
-		// ASTがない場合は条件なしとしてtrueを返す
-		const matchesEffectNameQuery =
-			effectNameAst === null
-				? true
-				: effectNameAst(
-						Object.values(recipe.effects).map(
-							(e) => EFFECT_LABEL_MAP[e.effectName],
-						),
-					)
-		return matchesItemName && matchesIngredientQuery && matchesEffectNameQuery
-	})
+	const effectNameAst = createAst<EffectLabel>(
+		effectNameQuery,
+		evaluateEffectName,
+	)
+
+	matchesItemNames =
+		effectNameAst === null
+			? matchesItemNames
+			: matchesItemNames.filter((itemName) => {
+					return effectNameAst(EFFECT_NAME_MAP[itemName])
+				})
+
+	return matchesItemNames.map((e) => RECIPE_MAP[e])
 }
+
+const astCache = new Map<string, LogicNode>()
 
 /*
  * Ast=Abstract Syntax Treeらしい
@@ -62,18 +93,25 @@ function createAst<T extends string>(
 	const trimmedQuery = query.trim()
 	if (!trimmedQuery) return null
 
+	if (astCache.has(trimmedQuery)) {
+		const cached = astCache.get(trimmedQuery)
+		return cached ? (targets: T[]) => evaluateFunc(cached, targets) : null
+	}
+
 	const tokens = tokenize(trimmedQuery)
 	if (tokens.length === 0) return null
 
 	let node: LogicNode
 	try {
 		node = parse(tokens)
+		astCache.set(trimmedQuery, node)
 	} catch (error: unknown) {
 		// 構文エラーなどがある場合（入力途中など）、安全のため空配列または全件を返す
 		// ここでは入力途中でも極力ヒットさせるため、エラー時はフィルタリングせず空を返すか、
 		// あるいは単純検索にフォールバックする等の戦略が考えられますが、
 		// 明示的な論理検索なのでエラー時はヒットなしとします。
 		console.warn(error)
+		astCache.delete(trimmedQuery)
 		return null
 	}
 
