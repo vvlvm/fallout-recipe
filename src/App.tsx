@@ -3,9 +3,11 @@ import { EmptyStripeBackground } from '@/components/EmptyStripeBackground.tsx'
 import { MarkedIngredientsProvider } from '@/components/marked-ingredients/marked-ingredients-context/MarkedIngredientsProvider'
 import { MarkedIngredients } from '@/components/marked-ingredients/MarkedIngredients.tsx'
 import { ToggleMarkedIngredientProvider } from '@/components/marked-ingredients/toggle-marked-ingredient/ToggleMarkedIngredientProvider.tsx'
+import { RecipesFromIngredients } from '@/components/recipes-from-ingredients/index.tsx'
 import { ViewTab } from '@/components/view-tab/ViewTab.tsx'
 import { ViewTabPanel } from '@/components/view-tab/ViewTabPanel.tsx'
 import { usePersistentSet } from '@/hooks/usePersistentSet.ts'
+import { usePersistentState } from '@/hooks/usePersistentState.ts'
 import { useSet } from '@/hooks/useSet.ts'
 import { type IngredientName } from '@/nuka-mixer-recipe/RecipieType'
 import { isViewTabId, type ViewTabId } from '@/types/ViewTabId.ts'
@@ -16,11 +18,10 @@ import ListItem from '@mui/material/ListItem'
 import Paper from '@mui/material/Paper'
 import Tabs from '@mui/material/Tabs'
 import Typography from '@mui/material/Typography'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { RecipeBrowser } from './components/recipe-browser/index.tsx'
 import { INGREDIENT_NAMES } from './nuka-mixer-recipe/INGREDIENT_NAMES.ts'
 import { RECIPE_MAP } from './nuka-mixer-recipe/RECIPE_MAP.ts'
-import { RecipesFromIngredients } from '@/components/recipes-from-ingredients/index.tsx'
 
 const RECIPE_NAMES = Object.keys(RECIPE_MAP)
 const UNMAKEABLE_INGREDIENTS = INGREDIENT_NAMES.filter(
@@ -28,7 +29,10 @@ const UNMAKEABLE_INGREDIENTS = INGREDIENT_NAMES.filter(
 )
 
 export function App() {
-	const [tab, setTab] = useState<ViewTabId>('recipeBrowser')
+	const [tab, setTab] = usePersistentState<ViewTabId>(
+		'viewTabId',
+		'recipeBrowser',
+	)
 	const {
 		set: markedIngredients,
 		toggle: toggleMarkedIngredient,
