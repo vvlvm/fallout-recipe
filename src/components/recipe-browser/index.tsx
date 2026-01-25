@@ -1,6 +1,4 @@
-import { IngredientQueryAutoComplete } from '@/components/recipe-browser/IngredientQueryAutoComplete.tsx'
 import NumberField from '@/components/mui/NumberField'
-import { RecipeGrid } from '@/components/recipe-grid/RecipeGrid.tsx'
 import { usePersistentSet } from '@/hooks/usePersistentSet.ts'
 import { usePersistentState } from '@/hooks/usePersistentState.ts'
 import { ITEM_NAME } from '@/nuka-mixer-recipe/ITEM_NAMES.ts'
@@ -31,8 +29,10 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { memo, useState } from 'react'
 import { EffectNameQueryAutoComplete } from './EffectNameQueryAutoComplete.tsx'
+import { IngredientQueryAutoComplete } from './IngredientQueryAutoComplete.tsx'
 import { QueriedEffectNamesProvider } from './queried-effect-names-context/Provider.tsx'
 import { QueriedIngredientNamesProvider } from './queried-ingredient-names-context/Provider.tsx'
+import { RecipeGrid } from './recipe-grid/RecipeGrid.tsx'
 
 export const RecipeBrowser = memo(function RecipeBrowser() {
 	const [itemNameSearchTerm, setItemNameSearchTerm] = usePersistentState(
