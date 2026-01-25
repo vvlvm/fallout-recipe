@@ -5,7 +5,7 @@ import Autocomplete, {
 import TextField from '@mui/material/TextField'
 import type { FilterOptionsState } from '@mui/material/useAutocomplete'
 import type { AutocompleteInputChangeReason } from 'node_modules/@mui/material'
-import { QueryExplain } from '@/components/QueryExplain'
+import { QueryExplain } from '@/components/recipe-browser/QueryExplain'
 
 // 「、」「,」はor。「全角スペース」「。」「&」はand。
 const lastTokenRegex = /[^&|()（）\u3000、,。]+$/

@@ -1,4 +1,4 @@
-import { IngredientQueryAutoComplete } from '@/components/IngredientQueryAutoComplete.tsx'
+import { IngredientQueryAutoComplete } from '@/components/recipe-browser/IngredientQueryAutoComplete.tsx'
 import NumberField from '@/components/mui/NumberField'
 import { RecipeGrid } from '@/components/recipe-grid/RecipeGrid.tsx'
 import { usePersistentSet } from '@/hooks/usePersistentSet.ts'

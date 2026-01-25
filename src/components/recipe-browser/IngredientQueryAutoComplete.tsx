@@ -1,4 +1,4 @@
-import { QueryExplain } from '@/components/QueryExplain'
+import { QueryExplain } from '@/components/recipe-browser/QueryExplain'
 import { INGREDIENT_NAMES } from '@/nuka-mixer-recipe/INGREDIENT_NAMES'
 import Autocomplete, {
 	type AutocompleteChangeReason,
