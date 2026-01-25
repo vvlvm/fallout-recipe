@@ -14,8 +14,8 @@ const Container = (props: ListProps) => (
 			gridTemplateColumns: 'auto 1fr',
 			p: 0,
 			m: 0,
-			ml: (theme) => ({ xs: theme.spacing(0.5), sm: theme.spacing(1) }),
-			mt: (theme) => ({ xs: theme.spacing(0.5), sm: theme.spacing(1) }),
+			ml: (theme) => ({ xs: theme.spacing(0.5), sm: theme.spacing(2) }),
+			mt: 0.5,
 			columnGap: (theme) => ({
 				xs: theme.spacing(1),
 				sm: theme.spacing(3),
@@ -42,7 +42,13 @@ const Row = (props: ListItemProps) => (
 )
 
 const Head = (props: TypographyProps) => {
-	return <Typography variant='body2' {...props} />
+	return (
+		<Typography
+			variant='body2'
+			sx={{ color: (theme) => theme.palette.text.secondary }}
+			{...props}
+		/>
+	)
 }
 
 const WrappableStack = (props: StackProps) => (

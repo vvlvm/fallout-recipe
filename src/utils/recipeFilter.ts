@@ -19,6 +19,8 @@ interface Props {
 	effectNameQuery: string
 	/** @param ingredientQuery 入力された検索クエリ (例: "Meat & (Water | Rice)"" */
 	ingredientQuery: string
+	/** markedIngredients用 */
+	ingredientNameFilter: Set<IngredientName> | undefined
 }
 
 const INGREDIENT_NAME_MAP: Record<ItemName, IngredientName[]> =
@@ -43,7 +45,12 @@ const EFFECT_NAME_MAP: Record<ItemName, EffectLabel[]> = ITEM_NAME.reduce(
 )
 
 export function filterRecipes(props: Props): Recipe[] {
-	const { itemNameSearchTerm, ingredientQuery, effectNameQuery } = props
+	const {
+		itemNameSearchTerm,
+		ingredientQuery,
+		effectNameQuery,
+		ingredientNameFilter,
+	} = props
 
 	let matchesItemNames: ItemName[] = itemNameSearchTerm
 		? ITEM_NAME.filter((e) => e.includes(itemNameSearchTerm))
@@ -71,6 +78,15 @@ export function filterRecipes(props: Props): Recipe[] {
 			? matchesItemNames
 			: matchesItemNames.filter((itemName) => {
 					return effectNameAst(EFFECT_NAME_MAP[itemName])
+				})
+
+	matchesItemNames =
+		ingredientNameFilter === undefined
+			? matchesItemNames
+			: matchesItemNames.filter((itemName) => {
+					return INGREDIENT_NAME_MAP[itemName].some((ingredient) =>
+						ingredientNameFilter.has(ingredient),
+					)
 				})
 
 	return matchesItemNames.map((e) => RECIPE_MAP[e])

@@ -70,7 +70,11 @@ export function EffectNameQueryAutoComplete(props: Props) {
 				onChange={handleChange}
 				filterOptions={filterOptions}
 				renderInput={(params) => (
-					<TextField {...params} placeholder='HP&最大AP...' />
+					<TextField
+						{...params}
+						placeholder='HP&最大AP...'
+						label='効果名でフィルター'
+					/>
 				)}
 			/>
 			<QueryExplain />
