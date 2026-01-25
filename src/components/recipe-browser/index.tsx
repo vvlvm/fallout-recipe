@@ -1,11 +1,17 @@
+import { IngredientQueryAutoComplete } from '@/components/IngredientQueryAutoComplete.tsx'
+import NumberField from '@/components/mui/NumberField'
+import { RecipeGrid } from '@/components/recipe-grid/RecipeGrid.tsx'
+import { usePersistentSet } from '@/hooks/usePersistentSet.ts'
+import { usePersistentState } from '@/hooks/usePersistentState.ts'
 import { ITEM_NAME } from '@/nuka-mixer-recipe/ITEM_NAMES.ts'
 import { RECIPE_LIST } from '@/nuka-mixer-recipe/RECIPE_LIST.ts'
-import { usePersistentSet } from '@/hooks/usePersistentSet.ts'
 import {
 	type EffectName,
 	type IngredientName,
 	type Recipe,
 } from '@/nuka-mixer-recipe/RecipieType'
+import { isNumber } from '@/utils/isNumber'
+import { isString } from '@/utils/isString'
 import {
 	effectNameQueryMatchFilter,
 	ingredientNameQueryMatchFilter,
@@ -23,25 +29,24 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { memo, useState } from 'react'
 import { EffectNameQueryAutoComplete } from './EffectNameQueryAutoComplete.tsx'
-import { IngredientQueryAutoComplete } from '@/components/IngredientQueryAutoComplete.tsx'
 import { QueriedEffectNamesProvider } from './queried-effect-names-context/Provider.tsx'
 import { QueriedIngredientNamesProvider } from './queried-ingredient-names-context/Provider.tsx'
-import { RecipeGrid } from '@/components/recipe-grid/RecipeGrid.tsx'
-import { usePersistentState } from '@/hooks/usePersistentState.ts'
-import NumberField from '@/components/mui/NumberField'
 
 export const RecipeBrowser = memo(function RecipeBrowser() {
 	const [itemNameSearchTerm, setItemNameSearchTerm] = usePersistentState(
 		'RecipeBrowser-itemNameSearchTerm',
 		'',
+		isString,
 	)
 	const [effectNameQuery, setEffectNameQuery] = usePersistentState(
 		'RecipeBrowser-effectNameQuery',
 		'',
+		isString,
 	)
 	const [ingredientQuery, setIngredientQuery] = usePersistentState(
 		'RecipeBrowser-ingredientQuery',
 		'',
+		isString,
 	)
 
 	// フィルタリングロジック
@@ -58,6 +63,7 @@ export const RecipeBrowser = memo(function RecipeBrowser() {
 	const [gridItemWidth, setGridItemWidth] = usePersistentState<number>(
 		'gridItemWidth',
 		290,
+		isNumber,
 	)
 
 	function handleSearchSubmit() {

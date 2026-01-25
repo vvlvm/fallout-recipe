@@ -32,6 +32,7 @@ export function App() {
 	const [tab, setTab] = usePersistentState<ViewTabId>(
 		'viewTabId',
 		'recipeBrowser',
+		isViewTabId,
 	)
 	const {
 		set: markedIngredients,

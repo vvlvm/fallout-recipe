@@ -6,6 +6,8 @@ import { INGREDIENT_NAMES } from '@/nuka-mixer-recipe/INGREDIENT_NAMES'
 import { RECIPE_COUNT_BY_INGREDIENT } from '@/nuka-mixer-recipe/RECIPE_COUNT_BY_INGREDIENT'
 import { RECIPES_FROM_INGREDIENTS } from '@/nuka-mixer-recipe/RECIPES_FROM_INGREDIENTS'
 import type { IngredientName } from '@/nuka-mixer-recipe/RecipieType'
+import { isBoolean } from '@/utils/isBoolean'
+import { isString } from '@/utils/isString'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Accordion from '@mui/material/Accordion'
 import AccordionDetails from '@mui/material/AccordionDetails'
@@ -40,10 +42,12 @@ export function RecipesFromIngredients() {
 		usePersistentState<boolean>(
 			'RecipesFromIngredients-filterByMarkedIngredients',
 			false,
+			isBoolean,
 		)
 	const [ingredientQuery, setIngredientQuery] = usePersistentState(
 		'RecipesFromIngredients-ingredientQuery',
 		'',
+		isString,
 	)
 
 	const [filteredIngredients, setFilteredIngredients] = useState<
