@@ -32,15 +32,15 @@ import NumberField from '@/components/mui/NumberField'
 
 export const RecipeBrowser = memo(function RecipeBrowser() {
 	const [itemNameSearchTerm, setItemNameSearchTerm] = usePersistentState(
-		'itemNameSearchTerm',
+		'RecipeBrowser-itemNameSearchTerm',
 		'',
 	)
 	const [effectNameQuery, setEffectNameQuery] = usePersistentState(
-		'effectNameQuery',
+		'RecipeBrowser-effectNameQuery',
 		'',
 	)
 	const [ingredientQuery, setIngredientQuery] = usePersistentState(
-		'ingredientQuery',
+		'RecipeBrowser-ingredientQuery',
 		'',
 	)
 
@@ -49,11 +49,11 @@ export const RecipeBrowser = memo(function RecipeBrowser() {
 
 	// 検索された必要素材をハイライトする
 	const { set: queriedIngredientNames, setAll: setQueriedIngredientNames } =
-		usePersistentSet<IngredientName>('queriedIngredientNames')
+		usePersistentSet<IngredientName>('RecipeBrowser-queriedIngredientNames')
 
 	// 検索されたエフェクトをハイライトする
 	const { set: queriedEffectNames, setAll: setQueriedEffectNames } =
-		usePersistentSet<EffectName>('queriedEffectNames')
+		usePersistentSet<EffectName>('RecipeBrowser-queriedEffectNames')
 
 	const [gridItemWidth, setGridItemWidth] = usePersistentState<number>(
 		'gridItemWidth',
