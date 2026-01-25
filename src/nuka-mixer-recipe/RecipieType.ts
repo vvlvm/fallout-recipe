@@ -22,8 +22,37 @@ export function isEffectName(e: unknown): e is EffectName {
 	return EFFECT_NAMES.includes(e as EffectName)
 }
 
-type BaseEffect = {
+export interface BaseEffect {
 	effectName: EffectName
+}
+
+export interface AmountEffect extends BaseEffect {
+	amount: number
+}
+
+export interface AmountWithOverTimeEffect extends AmountEffect {
+	isOverTime: boolean
+}
+
+export function isEffect(e: unknown): e is Effect {
+	return (
+		typeof e === 'object' &&
+		e !== null &&
+		'effectName' in e &&
+		typeof e?.effectName === 'string'
+	)
+}
+
+export function isAmountEffect(e: unknown): e is AmountEffect {
+	return isEffect(e) && 'amount' in e && typeof e.amount === 'number'
+}
+
+export function isAmountWithOverTimeEffect(
+	e: unknown,
+): e is AmountWithOverTimeEffect {
+	return (
+		isAmountEffect(e) && 'isOverTime' in e && typeof e.isOverTime === 'boolean'
+	)
 }
 
 export type Effect =
@@ -42,65 +71,63 @@ export type Effect =
 	| AGIEffect
 	| DMGResistEffect
 
-export interface HPEffect extends BaseEffect {
+export interface HPEffect extends AmountWithOverTimeEffect {
 	effectName: 'hp'
 	amount: number
 	isOverTime: boolean
 }
 
-export interface APEffect extends BaseEffect {
+export interface APEffect extends AmountWithOverTimeEffect {
 	effectName: 'ap'
 	amount: number
 	isOverTime: boolean
 }
 
-export interface WeightEffect extends BaseEffect {
+export interface WeightEffect extends AmountEffect {
 	effectName: 'weight'
 	amount: number
 }
 
-export interface ValueEffect extends BaseEffect {
+export interface ValueEffect extends AmountEffect {
 	effectName: 'value'
 	amount: number
 }
 
-export interface MaxHPEffect extends BaseEffect {
+export interface MaxHPEffect extends AmountWithOverTimeEffect {
 	effectName: 'maxHp'
 	amount: number
 	isOverTime: boolean
 }
 
-export interface MaxAPEffect extends BaseEffect {
+export interface MaxAPEffect extends AmountWithOverTimeEffect {
 	effectName: 'maxAp'
 	amount: number
 	isOverTime: boolean
 }
 
-export interface RadsEffect extends BaseEffect {
+export interface RadsEffect extends AmountWithOverTimeEffect {
 	effectName: 'rads'
 	amount: number
 	isOverTime: boolean
 }
 
-export interface RadResistEffect extends BaseEffect {
+export interface RadResistEffect extends AmountWithOverTimeEffect {
 	effectName: 'radResist'
 	amount: number
 	isOverTime: boolean
 }
 
-export interface CarryWeightEffect extends BaseEffect {
+export interface CarryWeightEffect extends AmountEffect {
 	effectName: 'carryWeight'
 	amount: number
 }
 
-export function isCarryWeightEffect(
-	effect: Effect,
-): effect is CarryWeightEffect {
-	return effect.effectName === 'carryWeight'
-}
-
 export interface CaffeineEffect extends BaseEffect {
 	effectName: 'caffeine'
+}
+
+export function isCaffeineEffect(e: unknown): e is CaffeineEffect {
+	return isEffect(e) && e.effectName === 'caffeine'
 }
 
 export interface STREffect extends BaseEffect {
