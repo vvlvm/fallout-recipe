@@ -3,7 +3,6 @@ import { EmptyStripeBackground } from '@/components/EmptyStripeBackground.tsx'
 import { MarkedIngredientsProvider } from '@/components/marked-ingredients/marked-ingredients-context/MarkedIngredientsProvider'
 import { MarkedIngredients } from '@/components/marked-ingredients/MarkedIngredients.tsx'
 import { ToggleMarkedIngredientProvider } from '@/components/marked-ingredients/toggle-marked-ingredient/ToggleMarkedIngredientProvider.tsx'
-import { RecipesFromIngredients } from '@/components/recipes-from-ingredients/index.tsx'
 import { ViewTab } from '@/components/view-tab/ViewTab.tsx'
 import { ViewTabPanel } from '@/components/view-tab/ViewTabPanel.tsx'
 import { usePersistentSet } from '@/hooks/usePersistentSet.ts'
@@ -104,11 +103,6 @@ export function App() {
 								label='マークした材料'
 							/>
 							<ViewTab
-								tabId='recipesFromIngredients'
-								value='recipesFromIngredients' // valueはここで指定しないとエラーになる。詳細はViewTabで
-								label='材料からレシピ'
-							/>
-							<ViewTab
 								tabId='unmakeableIngredients'
 								value='unmakeableIngredients' // valueはここで指定しないとエラーになる。詳細はViewTabで
 								label='レシピで作れない材料リスト'
@@ -128,9 +122,6 @@ export function App() {
 									{itemName}
 								</ListItem>
 							))}
-						</ViewTabPanel>
-						<ViewTabPanel tabId='recipesFromIngredients' activeTab={tab}>
-							<RecipesFromIngredients />
 						</ViewTabPanel>
 						<ViewTabPanel tabId='markedIngredients' activeTab={tab}>
 							<MarkedIngredients
