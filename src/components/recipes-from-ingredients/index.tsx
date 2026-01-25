@@ -80,6 +80,15 @@ export function RecipesFromIngredients() {
 
 			<Stack spacing={3}>
 				<FormControl fullWidth>
+					<FormLabel component='legend'>素材名で検索</FormLabel>
+					<Box sx={{ m: 1 }}>
+						<IngredientQueryAutoComplete
+							inputValue={ingredientQuery}
+							setInputValue={setIngredientQuery}
+						/>
+					</Box>
+				</FormControl>
+				<FormControl fullWidth>
 					<FormLabel component='legend'>マークした材料のみ表示する</FormLabel>
 					<FormControlLabel
 						control={
@@ -91,15 +100,6 @@ export function RecipesFromIngredients() {
 						label={`マークした材料のみ表示する (${markedIngredients.size}件)`}
 						sx={{ my: 0, ml: 0 }}
 					/>
-				</FormControl>
-				<FormControl fullWidth>
-					<FormLabel component='legend'>素材名で検索</FormLabel>
-					<Box sx={{ m: 1 }}>
-						<IngredientQueryAutoComplete
-							inputValue={ingredientQuery}
-							setInputValue={setIngredientQuery}
-						/>
-					</Box>
 				</FormControl>
 			</Stack>
 
