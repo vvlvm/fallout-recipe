@@ -9,7 +9,10 @@ import { ViewTabPanel } from '@/components/view-tab/ViewTabPanel.tsx'
 import { usePersistentSet } from '@/hooks/usePersistentSet.ts'
 import { usePersistentState } from '@/hooks/usePersistentState.ts'
 import { useSet } from '@/hooks/useSet.ts'
-import { type IngredientName } from '@/nuka-mixer-recipe/RecipieType'
+import {
+	isIngredientName,
+	type IngredientName,
+} from '@/nuka-mixer-recipe/RecipieType'
 import { isViewTabId, type ViewTabId } from '@/types/ViewTabId.ts'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
@@ -35,15 +38,19 @@ export function App() {
 		isViewTabId,
 	)
 	const {
-		set: markedIngredients,
+		values: markedIngredients,
 		toggle: toggleMarkedIngredient,
 		setAll: setMarkedIngredients,
-	} = usePersistentSet<IngredientName>('markedIngredients')
+	} = usePersistentSet<IngredientName>(
+		'markedIngredients',
+		[],
+		isIngredientName,
+	)
 	/**
 	 * <MarkedIngredients>でお気に入りを外した瞬間リストから材料が消えないようにするためのステート
 	 */
 	const {
-		set: tempMarkedIngredients,
+		values: tempMarkedIngredients,
 		toggle: toggleTempMarkedIngredients,
 		setAll: setTempMarkedIngredient,
 	} = useSet<IngredientName>(markedIngredients)

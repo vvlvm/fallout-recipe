@@ -6,6 +6,8 @@ import { usePersistentState } from '@/hooks/usePersistentState.ts'
 import { ITEM_NAME } from '@/nuka-mixer-recipe/ITEM_NAMES.ts'
 import { RECIPE_LIST } from '@/nuka-mixer-recipe/RECIPE_LIST.ts'
 import {
+	isEffectName,
+	isIngredientName,
 	type EffectName,
 	type IngredientName,
 	type Recipe,
@@ -53,12 +55,20 @@ export const RecipeBrowser = memo(function RecipeBrowser() {
 	const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>(RECIPE_LIST)
 
 	// 検索された必要素材をハイライトする
-	const { set: queriedIngredientNames, setAll: setQueriedIngredientNames } =
-		usePersistentSet<IngredientName>('RecipeBrowser-queriedIngredientNames')
+	const { values: queriedIngredientNames, setAll: setQueriedIngredientNames } =
+		usePersistentSet<IngredientName>(
+			'RecipeBrowser-queriedIngredientNames',
+			[],
+			isIngredientName,
+		)
 
 	// 検索されたエフェクトをハイライトする
-	const { set: queriedEffectNames, setAll: setQueriedEffectNames } =
-		usePersistentSet<EffectName>('RecipeBrowser-queriedEffectNames')
+	const { values: queriedEffectNames, setAll: setQueriedEffectNames } =
+		usePersistentSet<EffectName>(
+			'RecipeBrowser-queriedEffectNames',
+			[],
+			isEffectName,
+		)
 
 	const [gridItemWidth, setGridItemWidth] = usePersistentState<number>(
 		'gridItemWidth',
