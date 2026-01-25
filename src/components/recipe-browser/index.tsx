@@ -17,7 +17,7 @@ import {
 	effectNameQueryMatchFilter,
 	ingredientNameQueryMatchFilter,
 } from '@/utils/queryMatchFilter.tsx'
-import { filterRecipes } from '@/utils/recipeFilter.ts'
+import { filterRecipes } from '@/utils/filterRecipes.ts'
 import Autocomplete from '@mui/material/Autocomplete'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
