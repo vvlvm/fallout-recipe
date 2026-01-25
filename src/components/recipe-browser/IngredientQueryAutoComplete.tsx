@@ -61,7 +61,6 @@ export function IngredientQueryAutoComplete(props: Props) {
 	return (
 		<>
 			<Autocomplete
-				id='ingredient-query-autocomplete'
 				freeSolo
 				options={INGREDIENT_NAMES}
 				inputValue={inputValue}
