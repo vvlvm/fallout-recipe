@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
+import { type LocalStorageKey } from '@/local-storage/LocalStorageKey'
 
 export function usePersistentState<T>(
-	key: string,
+	key: LocalStorageKey,
 	initial: T,
 	isValid: (data: unknown) => data is T,
 ): [T, React.Dispatch<React.SetStateAction<T>>] {
@@ -18,8 +19,11 @@ export function usePersistentState<T>(
 						parsed,
 					)
 				}
-			} catch {
-				// 壊れたデータは無視して初期値を使う
+			} catch (error) {
+				console.error(
+					`[usePersistentState] Failed to parse JSON for key "${key}".`,
+					{ raw, error },
+				)
 			}
 		}
 		return initial

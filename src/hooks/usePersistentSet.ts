@@ -1,9 +1,10 @@
 import { isArrayEvery } from '@/utils/isArrayEvery'
 import { useEffect } from 'react'
 import { useSet } from './useSet'
+import type { LocalStorageKey } from '@/local-storage/LocalStorageKey'
 
 export function usePersistentSet<T>(
-	key: string,
+	key: LocalStorageKey,
 	initial: Iterable<T>,
 	isValid: (value: unknown) => value is T,
 ) {
