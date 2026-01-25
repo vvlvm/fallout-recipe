@@ -1,3 +1,4 @@
+import { QueryExplain } from '@/components/QueryExplain'
 import { INGREDIENT_NAMES } from '@/nuka-mixer-recipe/INGREDIENT_NAMES'
 import Autocomplete, {
 	type AutocompleteChangeReason,
@@ -5,7 +6,6 @@ import Autocomplete, {
 import TextField from '@mui/material/TextField'
 import type { FilterOptionsState } from '@mui/material/useAutocomplete'
 import type { AutocompleteInputChangeReason } from 'node_modules/@mui/material'
-import { QueryExplain } from '@/components/QueryExplain'
 
 // 「、」「,」はor。全角スペース・スペースはand。
 const lastTokenRegex = /[^&|()（）\u3000、, ]+$/
