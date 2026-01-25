@@ -12,7 +12,7 @@ export function Recipes({ recipes }: RecipesProps) {
 		const { itemName, effects, requiredItems } = recipe
 
 		return (
-			<Box>
+			<Box key={recipe.itemName}>
 				<Box>{itemName}</Box>
 				<Box>
 					<Effects effects={effects} />

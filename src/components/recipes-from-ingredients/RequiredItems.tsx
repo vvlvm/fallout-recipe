@@ -10,7 +10,7 @@ export function RequiredItems({
 		const { requiredItemName, amount } = requiredItem
 
 		return (
-			<Box>
+			<Box key={requiredItemName}>
 				<Box>{requiredItemName}</Box>
 				<Box>{amount}</Box>
 			</Box>
