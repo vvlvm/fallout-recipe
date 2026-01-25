@@ -26,7 +26,7 @@ import { EffectNameQueryAutoComplete } from './EffectNameQueryAutoComplete.tsx'
 import { IngredientQueryAutoComplete } from '@/components/IngredientQueryAutoComplete.tsx'
 import { QueriedEffectNamesProvider } from './queried-effect-names-context/Provider.tsx'
 import { QueriedIngredientNamesProvider } from './queried-ingredient-names-context/Provider.tsx'
-import { RecipeGrid } from './recipe-grid/RecipeGrid.tsx'
+import { RecipeGrid } from '@/components/recipe-grid/RecipeGrid.tsx'
 import { usePersistentState } from '@/hooks/usePersistentState.ts'
 import NumberField from '@/components/mui/NumberField'
 
