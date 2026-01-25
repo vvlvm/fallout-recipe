@@ -177,7 +177,7 @@ export type Recipe = {
 	requiredItems: RequiredItem[]
 }
 
-export type RecipeMap = Partial<Record<ItemName, Recipe>>
+export type RecipeMap = Record<ItemName, Recipe>
 
 export type RequiredItem = {
 	requiredItemName: IngredientName
