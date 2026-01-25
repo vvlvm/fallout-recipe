@@ -1,4 +1,3 @@
-import { IngredientQueryAutoComplete } from '@/components/IngredientQueryAutoComplete'
 import { useMarkedIngredients } from '@/components/marked-ingredients/marked-ingredients-context/useMarkedIngredients'
 import { Recipes } from '@/components/recipes-from-ingredients/Recipes'
 import { usePersistentState } from '@/hooks/usePersistentState'
@@ -23,18 +22,8 @@ import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import { useMemo, useState } from 'react'
-
-/**
- *   <Autocomplete multiple ... />   // 材料入力
-  <ToggleButtonGroup ... />       // AND/OR 切り替え
-  <Slider ... />                  // 調理時間フィルタ
-  <Button variant="contained">検索</Button>
-
-  <Grid container spacing={2}>
-    <RecipeCard ... />            // 結果表示
-  </Grid>
-
- */
+import { filterIngredientsByQuery } from './filterIngredientsByQuery'
+import { IngredientQueryAutoComplete } from './IngredientQueryAutoComplete'
 
 export function RecipesFromIngredients() {
 	const markedIngredients = useMarkedIngredients()
@@ -50,26 +39,29 @@ export function RecipesFromIngredients() {
 		isString,
 	)
 
-	const [filteredIngredients, setFilteredIngredients] = useState<
+	const [matchedIngredients, setMatchedIngredients] = useState<
 		IngredientName[]
 	>([...INGREDIENT_NAMES])
 
 	const matchedRecipeCount = useMemo(
 		() =>
-			filteredIngredients.reduce(
+			matchedIngredients.reduce(
 				(sum, ingredient) =>
 					sum + (RECIPE_COUNT_BY_INGREDIENT.get(ingredient) ?? 0),
 				0,
 			),
-		[filteredIngredients],
+		[matchedIngredients],
 	)
 
 	function handleSearchSubmit() {
-		setFilteredIngredients(
-			filterByMarkedIngredients
-				? Array.from(markedIngredients)
-				: [...INGREDIENT_NAMES],
+		const sourceIngredients = filterByMarkedIngredients
+			? Array.from(markedIngredients)
+			: [...INGREDIENT_NAMES]
+		const matchedIngredients: IngredientName[] = filterIngredientsByQuery(
+			sourceIngredients,
+			ingredientQuery,
 		)
+		setMatchedIngredients(matchedIngredients)
 	}
 
 	return (
@@ -94,7 +86,7 @@ export function RecipesFromIngredients() {
 						control={
 							<Checkbox
 								checked={filterByMarkedIngredients}
-								onChange={handleFilterByMarkedIngredients}
+								onChange={handleFilterByMarkedIngredientsChanged}
 							/>
 						}
 						label={`マークした材料のみ表示する (${markedIngredients.size}件)`}
@@ -114,13 +106,13 @@ export function RecipesFromIngredients() {
 			<Divider sx={{ my: 4 }} />
 
 			<Typography variant='body1' sx={{ my: 1 }}>
-				ヒットした材料数: {filteredIngredients.length} 件
+				ヒットした材料数: {matchedIngredients.length} 件
 			</Typography>
 			<Typography variant='body1' sx={{ my: 1, mb: 4 }}>
 				ヒットしたレシピ数: {matchedRecipeCount} 件
 			</Typography>
 
-			{filteredIngredients.map((ingredientName) => (
+			{matchedIngredients.map((ingredientName) => (
 				<Accordion
 					slotProps={{ heading: { component: 'h3' } }}
 					key={ingredientName}
@@ -140,7 +132,10 @@ export function RecipesFromIngredients() {
 		</Paper>
 	)
 
-	function handleFilterByMarkedIngredients(_: unknown, checked: boolean) {
+	function handleFilterByMarkedIngredientsChanged(
+		_: unknown,
+		checked: boolean,
+	) {
 		setFilterByMarkedIngredients(checked)
 	}
 }
