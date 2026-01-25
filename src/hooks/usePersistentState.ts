@@ -18,8 +18,11 @@ export function usePersistentState<T>(
 						parsed,
 					)
 				}
-			} catch {
-				// 壊れたデータは無視して初期値を使う
+			} catch (error) {
+				console.error(
+					`[usePersistentState] Failed to parse JSON for key "${key}".`,
+					{ raw, error },
+				)
 			}
 		}
 		return initial
