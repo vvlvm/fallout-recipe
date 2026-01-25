@@ -8,12 +8,12 @@ import { Effects } from './Effects'
 import { RequiredItems } from './RequiredItems'
 
 interface Props {
-	filteredRecipes: Recipe[]
+	recipes: Recipe[]
 	itemWidth: number
 }
 
 export const RecipeGrid = memo(function RecipeGrid(props: Props) {
-	const { filteredRecipes, itemWidth } = props
+	const { recipes, itemWidth } = props
 
 	return (
 		<Box
@@ -32,7 +32,7 @@ export const RecipeGrid = memo(function RecipeGrid(props: Props) {
 				columnGap: 1,
 			}}
 		>
-			{filteredRecipes.map((recipe) => (
+			{recipes.map((recipe) => (
 				<GridItem recipe={recipe} key={recipe.itemName} />
 			))}
 		</Box>

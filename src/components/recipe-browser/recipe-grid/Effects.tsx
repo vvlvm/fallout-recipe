@@ -1,16 +1,12 @@
 import { AlignedTwoColumnGrid } from '@/components/aligned-two-column-grid/AlignedTwoColumnGrid.tsx'
 import { AlignedTwoColumnGridItem } from '@/components/aligned-two-column-grid/AlignedTwoColumnGridItem.tsx'
+import { useQueriedEffectNames } from '@/components/recipe-browser/queried-effect-names-context/useQueriedEffectNames'
 import { EFFECT_LABEL_MAP } from '@/nuka-mixer-recipe/EFFECT_LABELS'
-import {
-	isCarryWeightEffect,
-	type Effect,
-	type EffectMap,
-} from '@/nuka-mixer-recipe/RecipieType'
+import { type Effect, type EffectMap } from '@/nuka-mixer-recipe/RecipieType'
 import Box from '@mui/material/Box'
 import SvgIcon from '@mui/material/SvgIcon'
 import Typography from '@mui/material/Typography'
 import { IoIosTimer } from 'react-icons/io'
-import { useQueriedEffectNames } from '../queried-effect-names-context/useQueriedEffectNames'
 
 interface Props {
 	effects: EffectMap
@@ -54,7 +50,9 @@ function ListItem({ effect, isHighlighted }: TagProps) {
 		<AlignedTwoColumnGridItem singleColumn={isSingleColumn}>
 			{isSingleColumn && (
 				<Typography component='span' color={textColor}>
-					{isCarryWeightEffect(effect) ? `${label}+${effect.amount}` : label}
+					{effect.effectName === 'carryWeight'
+						? `${label}+${effect.amount}`
+						: label}
 				</Typography>
 			)}
 

@@ -6,8 +6,12 @@ import { ToggleMarkedIngredientProvider } from '@/components/marked-ingredients/
 import { ViewTab } from '@/components/view-tab/ViewTab.tsx'
 import { ViewTabPanel } from '@/components/view-tab/ViewTabPanel.tsx'
 import { usePersistentSet } from '@/hooks/usePersistentSet.ts'
+import { usePersistentState } from '@/hooks/usePersistentState.ts'
 import { useSet } from '@/hooks/useSet.ts'
-import { type IngredientName } from '@/nuka-mixer-recipe/RecipieType'
+import {
+	isIngredientName,
+	type IngredientName,
+} from '@/nuka-mixer-recipe/RecipieType'
 import { isViewTabId, type ViewTabId } from '@/types/ViewTabId.ts'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
@@ -16,7 +20,7 @@ import ListItem from '@mui/material/ListItem'
 import Paper from '@mui/material/Paper'
 import Tabs from '@mui/material/Tabs'
 import Typography from '@mui/material/Typography'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { RecipeBrowser } from './components/recipe-browser/index.tsx'
 import { INGREDIENT_NAMES } from './nuka-mixer-recipe/INGREDIENT_NAMES.ts'
 import { RECIPE_MAP } from './nuka-mixer-recipe/RECIPE_MAP.ts'
@@ -27,17 +31,25 @@ const UNMAKEABLE_INGREDIENTS = INGREDIENT_NAMES.filter(
 )
 
 export function App() {
-	const [tab, setTab] = useState<ViewTabId>('recipeBrowser')
+	const [tab, setTab] = usePersistentState<ViewTabId>(
+		'viewTabId',
+		'recipeBrowser',
+		isViewTabId,
+	)
 	const {
-		set: markedIngredients,
+		values: markedIngredients,
 		toggle: toggleMarkedIngredient,
 		setAll: setMarkedIngredients,
-	} = usePersistentSet<IngredientName>('markedIngredients')
+	} = usePersistentSet<IngredientName>(
+		'markedIngredients',
+		[],
+		isIngredientName,
+	)
 	/**
 	 * <MarkedIngredients>でお気に入りを外した瞬間リストから材料が消えないようにするためのステート
 	 */
 	const {
-		set: tempMarkedIngredients,
+		values: tempMarkedIngredients,
 		toggle: toggleTempMarkedIngredients,
 		setAll: setTempMarkedIngredient,
 	} = useSet<IngredientName>(markedIngredients)
@@ -55,6 +67,7 @@ export function App() {
 			setTempMarkedIngredient(markedIngredients)
 		}
 		prevTab.current = tab
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [tab])
 
 	return (

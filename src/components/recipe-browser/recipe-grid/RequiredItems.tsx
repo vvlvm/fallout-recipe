@@ -2,6 +2,7 @@ import { AlignedTwoColumnGrid } from '@/components/aligned-two-column-grid/Align
 import { AlignedTwoColumnGridItem } from '@/components/aligned-two-column-grid/AlignedTwoColumnGridItem'
 import { useMarkedIngredients } from '@/components/marked-ingredients/marked-ingredients-context/useMarkedIngredients'
 import { useToggleMarkedIngredient } from '@/components/marked-ingredients/toggle-marked-ingredient/useToggleMarkedIngredient'
+import { useQueriedIngredientNames } from '@/components/recipe-browser/queried-ingredient-names-context/useQueriedIngredientNames'
 import type {
 	IngredientName,
 	RequiredItem,
@@ -15,7 +16,6 @@ import {
 	FaStar as FilledStar,
 	FaRegStar as OutlinedStar,
 } from 'react-icons/fa6'
-import { useQueriedIngredientNames } from '../queried-ingredient-names-context/useQueriedIngredientNames'
 
 interface Props {
 	requiredItems: RequiredItem[]

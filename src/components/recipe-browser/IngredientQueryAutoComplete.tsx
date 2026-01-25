@@ -1,11 +1,11 @@
+import { QueryExplain } from '@/components/recipe-browser/QueryExplain'
 import { INGREDIENT_NAMES } from '@/nuka-mixer-recipe/INGREDIENT_NAMES'
 import Autocomplete, {
 	type AutocompleteChangeReason,
+	type AutocompleteInputChangeReason,
 } from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
 import type { FilterOptionsState } from '@mui/material/useAutocomplete'
-import type { AutocompleteInputChangeReason } from 'node_modules/@mui/material'
-import { QueryExplain } from './query-explain/QueryExplain'
 
 // 「、」「,」はor。全角スペース・スペースはand。
 const lastTokenRegex = /[^&|()（）\u3000、, ]+$/
@@ -61,7 +61,6 @@ export function IngredientQueryAutoComplete(props: Props) {
 	return (
 		<>
 			<Autocomplete
-				id='ingredient-query-autocomplete'
 				freeSolo
 				options={INGREDIENT_NAMES}
 				inputValue={inputValue}

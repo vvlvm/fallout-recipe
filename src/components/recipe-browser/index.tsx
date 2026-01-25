@@ -1,11 +1,17 @@
+import NumberField from '@/components/mui/NumberField'
+import { usePersistentSet } from '@/hooks/usePersistentSet.ts'
+import { usePersistentState } from '@/hooks/usePersistentState.ts'
 import { ITEM_NAME } from '@/nuka-mixer-recipe/ITEM_NAMES.ts'
 import { RECIPE_LIST } from '@/nuka-mixer-recipe/RECIPE_LIST.ts'
-import { usePersistentSet } from '@/hooks/usePersistentSet.ts'
 import {
+	isEffectName,
+	isIngredientName,
 	type EffectName,
 	type IngredientName,
 	type Recipe,
 } from '@/nuka-mixer-recipe/RecipieType'
+import { isNumber } from '@/utils/isNumber'
+import { isString } from '@/utils/isString'
 import {
 	effectNameQueryMatchFilter,
 	ingredientNameQueryMatchFilter,
@@ -27,37 +33,47 @@ import { IngredientQueryAutoComplete } from './IngredientQueryAutoComplete.tsx'
 import { QueriedEffectNamesProvider } from './queried-effect-names-context/Provider.tsx'
 import { QueriedIngredientNamesProvider } from './queried-ingredient-names-context/Provider.tsx'
 import { RecipeGrid } from './recipe-grid/RecipeGrid.tsx'
-import { usePersistentState } from '@/hooks/usePersistentState.ts'
-import NumberField from '@/components/mui/NumberField'
 
 export const RecipeBrowser = memo(function RecipeBrowser() {
 	const [itemNameSearchTerm, setItemNameSearchTerm] = usePersistentState(
-		'itemNameSearchTerm',
+		'RecipeBrowser-itemNameSearchTerm',
 		'',
+		isString,
 	)
 	const [effectNameQuery, setEffectNameQuery] = usePersistentState(
-		'effectNameQuery',
+		'RecipeBrowser-effectNameQuery',
 		'',
+		isString,
 	)
 	const [ingredientQuery, setIngredientQuery] = usePersistentState(
-		'ingredientQuery',
+		'RecipeBrowser-ingredientQuery',
 		'',
+		isString,
 	)
 
 	// フィルタリングロジック
 	const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>(RECIPE_LIST)
 
 	// 検索された必要素材をハイライトする
-	const { set: queriedIngredientNames, setAll: setQueriedIngredientNames } =
-		usePersistentSet<IngredientName>('queriedIngredientNames')
+	const { values: queriedIngredientNames, setAll: setQueriedIngredientNames } =
+		usePersistentSet<IngredientName>(
+			'RecipeBrowser-queriedIngredientNames',
+			[],
+			isIngredientName,
+		)
 
 	// 検索されたエフェクトをハイライトする
-	const { set: queriedEffectNames, setAll: setQueriedEffectNames } =
-		usePersistentSet<EffectName>('queriedEffectNames')
+	const { values: queriedEffectNames, setAll: setQueriedEffectNames } =
+		usePersistentSet<EffectName>(
+			'RecipeBrowser-queriedEffectNames',
+			[],
+			isEffectName,
+		)
 
 	const [gridItemWidth, setGridItemWidth] = usePersistentState<number>(
 		'gridItemWidth',
 		290,
+		isNumber,
 	)
 
 	function handleSearchSubmit() {
@@ -142,10 +158,7 @@ export const RecipeBrowser = memo(function RecipeBrowser() {
 
 			<QueriedIngredientNamesProvider value={queriedIngredientNames}>
 				<QueriedEffectNamesProvider value={queriedEffectNames}>
-					<RecipeGrid
-						filteredRecipes={filteredRecipes}
-						itemWidth={gridItemWidth}
-					/>
+					<RecipeGrid recipes={filteredRecipes} itemWidth={gridItemWidth} />
 				</QueriedEffectNamesProvider>
 			</QueriedIngredientNamesProvider>
 		</>

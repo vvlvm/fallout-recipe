@@ -1,10 +1,10 @@
-import { useState, useCallback } from 'react'
+import { useCallback, useState } from 'react'
 
-export function useSet<T>(initial?: Iterable<T>) {
-	const [set, setSet] = useState(() => new Set(initial))
+export function useSet<T>(initial: Iterable<T>) {
+	const [values, setValues] = useState(() => new Set(initial))
 
 	const add = useCallback((value: T) => {
-		setSet((prev) => {
+		setValues((prev) => {
 			const next = new Set(prev)
 			next.add(value)
 			return next
@@ -12,7 +12,7 @@ export function useSet<T>(initial?: Iterable<T>) {
 	}, [])
 
 	const remove = useCallback((value: T) => {
-		setSet((prev) => {
+		setValues((prev) => {
 			const next = new Set(prev)
 			next.delete(value)
 			return next
@@ -20,7 +20,7 @@ export function useSet<T>(initial?: Iterable<T>) {
 	}, [])
 
 	const toggle = useCallback((value: T) => {
-		setSet((prev) => {
+		setValues((prev) => {
 			const next = new Set(prev)
 			if (next.has(value)) {
 				next.delete(value)
@@ -31,15 +31,13 @@ export function useSet<T>(initial?: Iterable<T>) {
 		})
 	}, [])
 
-	const has = useCallback((value: T) => set.has(value), [set])
-
 	const clear = useCallback(() => {
-		setSet(() => new Set())
+		setValues(() => new Set())
 	}, [])
 
 	const setAll = useCallback((values: Iterable<T>) => {
-		setSet(new Set(values))
+		setValues(() => new Set(values))
 	}, [])
 
-	return { set, setAll, add, remove, toggle, has, clear }
+	return { values, setAll, add, remove, toggle, clear }
 }
