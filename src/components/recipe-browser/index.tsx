@@ -142,10 +142,7 @@ export const RecipeBrowser = memo(function RecipeBrowser() {
 
 			<QueriedIngredientNamesProvider value={queriedIngredientNames}>
 				<QueriedEffectNamesProvider value={queriedEffectNames}>
-					<RecipeGrid
-						filteredRecipes={filteredRecipes}
-						itemWidth={gridItemWidth}
-					/>
+					<RecipeGrid recipes={filteredRecipes} itemWidth={gridItemWidth} />
 				</QueriedEffectNamesProvider>
 			</QueriedIngredientNamesProvider>
 		</>
