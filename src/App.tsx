@@ -20,6 +20,7 @@ import { useEffect, useRef, useState } from 'react'
 import { RecipeBrowser } from './components/recipe-browser/index.tsx'
 import { INGREDIENT_NAMES } from './nuka-mixer-recipe/INGREDIENT_NAMES.ts'
 import { RECIPE_MAP } from './nuka-mixer-recipe/RECIPE_MAP.ts'
+import { RecipesFromIngredients } from '@/components/recipes-from-ingredients/index.tsx'
 
 const RECIPE_NAMES = Object.keys(RECIPE_MAP)
 const UNMAKEABLE_INGREDIENTS = INGREDIENT_NAMES.filter(
@@ -55,6 +56,7 @@ export function App() {
 			setTempMarkedIngredient(markedIngredients)
 		}
 		prevTab.current = tab
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [tab])
 
 	return (
@@ -90,6 +92,11 @@ export function App() {
 								label='マークした材料'
 							/>
 							<ViewTab
+								tabId='recipesFromIngredients'
+								value='recipesFromIngredients' // valueはここで指定しないとエラーになる。詳細はViewTabで
+								label='材料からレシピ'
+							/>
+							<ViewTab
 								tabId='unmakeableIngredients'
 								value='unmakeableIngredients' // valueはここで指定しないとエラーになる。詳細はViewTabで
 								label='レシピで作れない材料リスト'
@@ -109,6 +116,9 @@ export function App() {
 									{itemName}
 								</ListItem>
 							))}
+						</ViewTabPanel>
+						<ViewTabPanel tabId='recipesFromIngredients' activeTab={tab}>
+							<RecipesFromIngredients />
 						</ViewTabPanel>
 						<ViewTabPanel tabId='markedIngredients' activeTab={tab}>
 							<MarkedIngredients
