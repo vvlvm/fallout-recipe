@@ -69,7 +69,11 @@ export function IngredientQueryAutoComplete(props: Props) {
 				onChange={handleChange}
 				filterOptions={filterOptions}
 				renderInput={(params) => (
-					<TextField {...params} placeholder='クアンタム&チェリー' />
+					<TextField
+						{...params}
+						placeholder='クアンタム&チェリー'
+						label='必要素材でフィルター'
+					/>
 				)}
 			/>
 			<QueryExplain />

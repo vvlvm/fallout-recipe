@@ -1,3 +1,4 @@
+import { useMarkedIngredients } from '@/components/marked-ingredients/marked-ingredients-context/useMarkedIngredients.ts'
 import NumberField from '@/components/mui/NumberField'
 import { usePersistentSet } from '@/hooks/usePersistentSet.ts'
 import { usePersistentState } from '@/hooks/usePersistentState.ts'
@@ -20,9 +21,9 @@ import { filterRecipes } from '@/utils/recipeFilter.ts'
 import Autocomplete from '@mui/material/Autocomplete'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
+import Checkbox from '@mui/material/Checkbox'
 import Divider from '@mui/material/Divider'
-import FormControl from '@mui/material/FormControl'
-import FormLabel from '@mui/material/FormLabel'
+import FormControlLabel from '@mui/material/FormControlLabel'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
@@ -76,12 +77,24 @@ export const RecipeBrowser = memo(function RecipeBrowser() {
 		isNumber,
 	)
 
+	const [filterByMarkedIngredient, setFilterByMarkedIngredient] =
+		usePersistentState<boolean>(
+			'RecipeBrowser-filterByMarkedIngredient',
+			false,
+			(value) => typeof value === 'boolean',
+		)
+
+	const markedIngredients: Set<IngredientName> = useMarkedIngredients()
+
 	function handleSearchSubmit() {
 		setFilteredRecipes(
 			filterRecipes({
 				ingredientQuery: ingredientQuery,
 				itemNameSearchTerm: itemNameSearchTerm,
 				effectNameQuery: effectNameQuery,
+				ingredientNameFilter: filterByMarkedIngredient
+					? markedIngredients
+					: undefined,
 			}),
 		)
 		setQueriedIngredientNames(ingredientNameQueryMatchFilter(ingredientQuery))
@@ -91,53 +104,57 @@ export const RecipeBrowser = memo(function RecipeBrowser() {
 
 	return (
 		<>
-			<Paper component='section' sx={{ p: 2, px: { xs: 0.5, sm: 2 } }}>
-				<Typography variant='h2' sx={{ fontSize: '1.5rem', mb: 2 }}>
+			<Paper component='section' sx={{ p: 2, pb: 4, px: { xs: 0.5, sm: 2 } }}>
+				<Typography variant='h2' sx={{ fontSize: '1.5rem' }}>
 					検索フォーム
 				</Typography>
-				<Stack spacing={3}>
-					<FormControl fullWidth>
-						<FormLabel component='legend'>アイテム名でフィルター</FormLabel>
-						<Autocomplete
-							freeSolo
-							options={ITEM_NAME}
-							onInputChange={handleItemNameSearchTermChange}
-							inputValue={itemNameSearchTerm}
-							renderInput={(params) => (
-								<TextField {...params} placeholder='アイテム名を入力...' />
-							)}
-							sx={{ m: 1 }}
+
+				<Autocomplete
+					freeSolo
+					options={ITEM_NAME}
+					onInputChange={handleItemNameSearchTermChanged}
+					inputValue={itemNameSearchTerm}
+					renderInput={(params) => (
+						<TextField
+							{...params}
+							placeholder='アイテム名を入力...'
+							label='アイテム名でフィルター'
 						/>
-					</FormControl>
+					)}
+					sx={{ mt: 4 }}
+				/>
 
-					<FormControl fullWidth>
-						<FormLabel component='legend'>必要素材(検索クエリ)</FormLabel>
-						<Box sx={{ m: 1 }}>
-							<IngredientQueryAutoComplete
-								inputValue={ingredientQuery}
-								setInputValue={setIngredientQuery}
+				<Box mt={7}>
+					<IngredientQueryAutoComplete
+						inputValue={ingredientQuery}
+						setInputValue={setIngredientQuery}
+					/>
+				</Box>
+
+				<Box mt={6}>
+					<EffectNameQueryAutoComplete
+						inputValue={effectNameQuery}
+						setInputValue={setEffectNameQuery}
+					/>
+				</Box>
+
+				<Box mt={4} ml={0.5}>
+					<FormControlLabel
+						control={
+							<Checkbox
+								checked={filterByMarkedIngredient}
+								onChange={handleFilterByMarkedIngredientChanged}
 							/>
-						</Box>
-					</FormControl>
+						}
+						label='マークした材料を含むものだけ表示する'
+					/>
+				</Box>
 
-					<FormControl fullWidth>
-						<FormLabel component='legend'>効果名でフィルター</FormLabel>
-						<Box sx={{ m: 1 }}>
-							<EffectNameQueryAutoComplete
-								inputValue={effectNameQuery}
-								setInputValue={setEffectNameQuery}
-							/>
-						</Box>
-					</FormControl>
-				</Stack>
-
-				<Button
-					variant='contained'
-					onClick={handleSearchSubmit}
-					sx={{ mt: 2, ml: { xs: 2, sm: 0 } }}
-				>
-					検索
-				</Button>
+				<Box mt={4} ml={2}>
+					<Button variant='contained' onClick={handleSearchSubmit}>
+						検索
+					</Button>
+				</Box>
 			</Paper>
 
 			<Divider sx={{ my: 4 }} />
@@ -164,7 +181,7 @@ export const RecipeBrowser = memo(function RecipeBrowser() {
 		</>
 	)
 
-	function handleItemNameSearchTermChange(_: unknown, newValue: string) {
+	function handleItemNameSearchTermChanged(_: unknown, newValue: string) {
 		setItemNameSearchTerm(newValue)
 	}
 
@@ -174,5 +191,9 @@ export const RecipeBrowser = memo(function RecipeBrowser() {
 			return
 		}
 		setGridItemWidth(value)
+	}
+
+	function handleFilterByMarkedIngredientChanged(_: unknown, checked: boolean) {
+		setFilterByMarkedIngredient(checked)
 	}
 })

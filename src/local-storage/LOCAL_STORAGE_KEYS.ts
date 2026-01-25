@@ -7,4 +7,5 @@ export const LOCAL_STORAGE_KEYS = [
 	'markedIngredients',
 	'RecipeBrowser-queriedIngredientNames',
 	'RecipeBrowser-queriedEffectNames',
+	'RecipeBrowser-filterByMarkedIngredient',
 ] as const
